@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لیست قیمت فروشگاه ورزشی</title>
+    <style>
+        /* ===== استایل کلی ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #1a1a2e;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 16px;
+            padding: 40px 50px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+        
+        /* ===== هدر ===== */
+        .header {
+            border-bottom: 3px solid #e94560;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            color: #16213e;
+        }
+        
+        .header h1 span {
+            color: #e94560;
+        }
+        
+        .badge {
+            background-color: #e94560;
+            color: white;
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        /* ===== باکس اطلاع‌رسانی ===== */
+        .info-box {
+            background-color: #f1f3f6;
+            border-right: 5px solid #e94560;
+            padding: 16px 22px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            font-size: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .info-box .date {
+            color: #e94560;
+            font-weight: bold;
+        }
+        
+        /* ===== جدول قیمت‌ها ===== */
+        .table-wrapper {
+            overflow-x: auto;
+            margin-bottom: 30px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 16px;
+        }
+        
+        thead {
+            background-color: #16213e;
+            color: white;
+        }
+        
+        th {
+            padding: 14px 18px;
+            text-align: right;
+            font-weight: 600;
+        }
+        
+        td {
+            padding: 12px 18px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        tbody tr:hover {
+            background-color: #f8f9fa;
+            transition: background-color 0.2s;
+        }
+        
+        .price {
+            font-weight: bold;
+            color: #e94560;
+            font-size: 17px;
+        }
+        
+        .stock {
+            font-size: 13px;
+            padding: 4px 12px;
+            border-radius: 12px;
+            display: inline-block;
+        }
+        
+        .stock.available {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        .stock.unavailable {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        
+        /* ===== دسته‌بندی محصولات ===== */
+        .category-section {
+            margin-top: 35px;
+            padding-top: 25px;
+            border-top: 2px dashed #dee2e6;
+        }
+        
+        .category-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #16213e;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .category-title .emoji {
+            font-size: 26px;
+        }
+        
+        /* ===== فوتر ===== */
+        .footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #e9ecef;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            font-size: 14px;
+            color: #6c757d;
+        }
+        
+        .footer .contact {
+            color: #16213e;
+            font-weight: 500;
+        }
+        
+        /* ===== واکنش‌گرایی ===== */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 22px;
+            }
+            
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .info-box {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            
+            table {
+                font-size: 14px;
+            }
+            
+            th, td {
+                padding: 10px 12px;
+            }
+            
+            .footer {
+                flex-direction: column;
+                gap: 8px;
+                text-align: center;
+            }
+        }
+        
+        @media print {
+            .container {
+                box-shadow: none;
+                padding: 20px;
+            }
+            body {
+                background: white;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    
+    <!-- ===== هدر ===== -->
+    <div class="header">
+        <h1>🏋️ <span>فروشگاه</span> ورزشی</h1>
+        <div class="badge">بروزرسانی: تیر ۱۴۰۵</div>
+    </div>
+    
+    <!-- ===== باکس اطلاع‌رسانی ===== -->
+    <div class="info-box">
+        <span>📋 لیست قیمت‌های فروشگاه ورزشی</span>
+        <span class="date">🔹 قیمت‌ها به تومان می‌باشد</span>
+    </div>
+    
+    <!-- ===== جدول اصلی قیمت‌ها ===== -->
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 45%;">نام محصول</th>
+                    <th style="width: 25%;">قیمت (تومان)</th>
+                    <th style="width: 20%;">وضعیت</th>
+                </tr>
+            </thead>
+            <tbody id="productTableBody">
+                <!-- محصولات توسط جاوااسکریپت در اینجا قرار می‌گیرند -->
+            </tbody>
+        </table>
+    </div>
+    
+    <!-- ===== دسته‌بندی‌های ورزشی (اختیاری) ===== -->
+    <div class="category-section">
+        <div class="category-title">
+            <span class="emoji">⚽</span> دسته‌بندی محصولات
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 5px;">
+            <span style="background: #e9ecef; padding: 6px 16px; border-radius: 20px; font-size: 14px;">⚽ فوتبال</span>
+            <span style="background: #e9ecef; padding: 6px 16px; border-radius: 20px; font-size: 14px;">🏀 بسکتبال</span>
+            <span style="background: #e9ecef; padding: 6px 16px; border-radius: 20px; font-size: 14px;">🏸 بدمینتون</span>
+            <span style="background: #e9ecef; padding: 6px 16px; border-radius: 20px; font-size: 14px;">🏋️ بدنسازی</span>
+            <span style="background: #e9ecef; padding: 6px 16px; border-radius: 20px; font-size: 14px;">👟 کفش ورزشی</span>
+            <span style="background: #e9ecef; padding: 6px 16px; border-radius: 20px; font-size: 14px;">🧥 پوشاک</span>
+        </div>
+    </div>
+    
+    <!-- ===== فوتر ===== -->
+    <div class="footer">
+        <span class="contact">📞 برای خرید تماس بگیرید: ۰۹۱۲-XXX-XXXX</span>
+        <span>📧 info@sportshop.com</span>
+    </div>
+    
+</div>
+
+<script>
+    // ============================================================
+    //  آرایه‌ی محصولات ورزشی - اینجا می‌توانید ویرایش کنید
+    // ============================================================
+    const products = [
+        // ----- فوتبال -----
+        { name: "توپ فوتبال مدل پرو", price: 850000, stock: true },
+        { name: "توپ فوتبال مدل استاندارد", price: 420000, stock: true },
+        { name: "ساق‌بند حرفه‌ای", price: 320000, stock: false },
+        { name: "دستکش دروازه‌بانی", price: 580000, stock: true },
+        
+        // ----- بسکتبال -----
+        { name: "توپ بسکتبال سایز ۷", price: 620000, stock: true },
+        { name: "توپ بسکتبال سایز ۶ (زنان)", price: 550000, stock: false },
+        { name: "حلقه بسکتبال قابل حمل", price: 1450000, stock: true },
+        
+        // ----- بدنسازی -----
+        { name: "دمبل ۵ کیلویی (جفت)", price: 780000, stock: true },
+        { name: "دمبل ۱۰ کیلویی (جفت)", price: 1350000, stock: true },
+        { name: "هالتر ۲۰ کیلویی", price: 2200000, stock: false },
+        { name: "کمربند بدنسازی", price: 450000, stock: true },
+        { name: "مچ‌بند ورزشی", price: 180000, stock: true },
+        
+        // ----- کفش و پوشاک -----
+        { name: "کفش فوتبال (چمن مصنوعی)", price: 1250000, stock: true },
+        { name: "کفش ورزشی مردانه", price: 980000, stock: true },
+        { name: "کفش ورزشی زنانه", price: 920000, stock: false },
+        { name: "لباس ورزشی مردانه (ست)", price: 680000, stock: true },
+        { name: "لباس ورزشی زنانه (ست)", price: 650000, stock: true },
+        
+        // ----- سایر -----
+        { name: "دستگاه تردمیل خانگی", price: 18500000, stock: true },
+        { name: "طناب پرش", price: 120000, stock: true },
+        { name: "تیرک کششی (بارفیکس)", price: 780000, stock: false },
+    ];
+
+    // ============================================================
+    //  تابع برای نمایش محصولات در جدول
+    // ============================================================
+    function renderProducts() {
+        const tbody = document.getElementById('productTableBody');
+        tbody.innerHTML = ''; // خالی کردن جدول
+        
+        products.forEach(product => {
+            const row = document.createElement('tr');
+            
+            // ستون نام محصول
+            const nameCell = document.createElement('td');
+            nameCell.textContent = product.name;
+            
+            // ستون قیمت
+            const priceCell = document.createElement('td');
+            priceCell.className = 'price';
+            // فرمت کردن قیمت با جداکننده هزارگان
+            priceCell.textContent = new Intl.NumberFormat('fa-IR').format(product.price);
+            
+            // ستون وضعیت موجودی
+            const stockCell = document.createElement('td');
+            const stockBadge = document.createElement('span');
+            stockBadge.className = `stock ${product.stock ? 'available' : 'unavailable'}`;
+            stockBadge.textContent = product.stock ? '✅ موجود' : '❌ ناموجود';
+            stockCell.appendChild(stockBadge);
+            
+            // اضافه کردن سلول‌ها به ردیف
+            row.appendChild(nameCell);
+            row.appendChild(priceCell);
+            row.appendChild(stockCell);
+            
+            tbody.appendChild(row);
+        });
+    }
+
+    // ============================================================
+    //  اجرای تابع هنگام بارگذاری صفحه
+    // ============================================================
+    document.addEventListener('DOMContentLoaded', renderProducts);
+</script>
+
+</body>
+</html>
