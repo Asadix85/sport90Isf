@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فروشگاه ورزشی اسپرت ۹۰</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <!-- ===== هدر ===== -->
+    <div class="header">
+        <h1>🏋️ <span>اسپرت ۹۰</span></h1>
+        <div class="header-actions">
+            <div class="badge">بروزرسانی: تیر ۱۴۰۵</div>
+            <button class="theme-toggle" id="themeToggle">
+                <span class="icon" id="themeIcon">🌙</span>
+                <span id="themeLabel">تاریک</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- ===== بخش جستجو ===== -->
+    <div class="search-section" style="margin-bottom: 20px;">
+        <div class="search-box" style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap; background: var(--bg-card); padding: 8px 15px; border-radius: 30px; border: 2px solid var(--border-color); transition: all 0.3s;">
+            <span style="font-size: 18px;">🔍</span>
+            <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="جستجوی محصول (اسم یا کد کالا)..."
+                    style="flex: 1; min-width: 150px; padding: 10px 5px; border: none; background: transparent; font-size: 15px; color: var(--text-primary); outline: none;"
+            >
+            <button id="searchClear" style="background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 18px; display: none; padding: 5px;">✕</button>
+            <button id="searchButton" style="background: var(--primary-color); color: white; border: none; padding: 8px 20px; border-radius: 20px; cursor: pointer; font-size: 14px; font-weight: bold; transition: all 0.3s;">
+                جستجو
+            </button>
+        </div>
+        <div style="font-size: 12px; color: var(--text-muted); margin-top: 5px; padding-right: 15px;">
+            💡 می‌توانید با اسم محصول یا کد کالا (مثل P123456) جستجو کنید
+        </div>
+    </div>
+
+    <!-- ===== دکمه بازگشت ===== -->
+    <button class="back-btn hidden" id="backBtn">← بازگشت</button>
+
+    <!-- ============================================================ -->
+    <!-- ===== صفحه ۱: دسته‌بندی‌های اصلی ===== -->
+    <!-- ============================================================ -->
+    <div id="page-main" class="page active">
+        <div class="info-box">
+            <span>📋 لطفاً یک دسته‌بندی را انتخاب کنید</span>
+        </div>
+        <div class="categories-grid" id="categoriesContainer">
+            <!-- توسط app ساخته می‌شود -->
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ===== صفحه ۲: زیردسته‌ها ===== -->
+    <!-- ============================================================ -->
+    <div id="page-sub" class="page">
+        <h2 class="section-title" id="subCategoryTitle">
+            <span class="emoji">📂</span> زیردسته‌ها
+        </h2>
+        <div class="subcategories-grid" id="subcategoriesContainer">
+            <!-- توسط app ساخته می‌شود -->
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ===== صفحه ۳: لیست محصولات ===== -->
+    <!-- ============================================================ -->
+    <div id="page-products" class="page">
+        <h2 class="section-title" id="productsTitle">
+            <span class="emoji">📦</span> محصولات
+        </h2>
+        <div class="products-grid" id="productsContainer">
+            <!-- توسط app ساخته می‌شود -->
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ===== صفحه ۴: جزئیات محصول ===== -->
+    <!-- ============================================================ -->
+    <div id="page-detail" class="page">
+        <div class="product-detail" id="productDetailContainer">
+            <!-- توسط app ساخته می‌شود -->
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ===== صفحه ۵: نتایج جستجو ===== -->
+    <!-- ============================================================ -->
+    <div id="page-search" class="page">
+        <div id="searchContainer" style="display: none;">
+            <div id="searchResults"></div>
+        </div>
+    </div>
+
+    <!-- ===== فوتر ===== -->
+    <div class="footer">
+        <span class="contact">📞 @ziaei_1405  برای سفارش به این آیدی در ایتا پیام دهید</span>
+        <span>eataa.com/sport_90_isfahan</span>
+    </div>
+
+</div>
+
+<!-- ============================================================ -->
+<!-- ===== بارگذاری فایل‌های جاوااسکریپت (ترتیب مهمه!) ===== -->
+<!-- ============================================================ -->
+
+<!-- ===== ۱. Enumها (مقادیر ثابت) ===== -->
+<script src="js/enums/Enums.js"></script>
+
+<!-- ===== ۲. کلاس‌های Abstract (پایه) ===== -->
+<script src="js/models/abstract/Product.js"></script>
+
+<!-- ===== ۳. کلاس‌های محصولات (به ترتیب وابستگی) ===== -->
+
+<!-- ---- دسته‌بندی: توپ‌ها ---- -->
+<script src="js/models/products/balls/Ball.js"></script>
+<script src="js/models/products/balls/FootballBall.js"></script>
+<script src="js/models/products/balls/BasketballBall.js"></script>
+<script src="js/models/products/balls/VolleyballBall.js"></script>
+<script src="js/models/products/balls/ExerciseBall.js"></script>
+<script src="js/models/products/balls/MedicineBall.js"></script>
+
+<!-- ---- دسته‌بندی: کفش‌ها ---- -->
+<script src="js/models/products/shoes/shoe.js"></script>
+<script src="js/models/products/shoes/FootballShoe.js"></script>
+<script src="js/models/products/shoes/VolleyballShoe.js"></script>
+<script src="js/models/products/shoes/WrestlingShoe.js"></script>
+<script src="js/models/products/shoes/SportsShoe.js"></script>
+
+<!-- ---- دسته‌بندی: پوشاک ---- -->
+<script src="js/models/products/clothings/Clothing.js"></script>
+<script src="js/models/products/clothings/Shirt.js"></script>
+<script src="js/models/products/clothings/Short.js"></script>
+<script src="js/models/products/clothings/Socks.js"></script>
+<script src="js/models/products/clothings/Swimsuit.js"></script>
+<script src="js/models/products/clothings/MartialArtsUniform.js"></script>
+
+<!-- ---- دسته‌بندی: تجهیزات بدنسازی ---- -->
+<script src="js/models/products/fitnessEquipment/FitnessEquipment.js"></script>
+<script src="js/models/products/fitnessEquipment/Barbell.js"></script>
+<script src="js/models/products/fitnessEquipment/PullUpBar.js"></script>
+<script src="js/models/products/fitnessEquipment/ResistanceBand.js"></script>
+<script src="js/models/products/fitnessEquipment/YogaMat.js"></script>
+
+<!-- ---- دسته‌بندی: لوازم جانبی ---- -->
+<script src="js/models/products/accessories/Accessory.js"></script>
+<script src="js/models/products/accessories/Glove.js"></script>
+<script src="js/models/products/accessories/Band.js"></script>
+<script src="js/models/products/accessories/Racket.js"></script>
+
+<!-- ---- دسته‌بندی: تورها ---- -->
+<script src="js/models/products/nets/Net.js"></script>
+<script src="js/models/products/nets/FootballNet.js"></script>
+
+<!-- ---- سایر محصولات ---- -->
+<script src="js/models/products/dumbbells/Dumbbell.js"></script>
+<script src="js/models/products/dumbbells/FixedDumbbell.js"></script>
+
+<!-- ===== ۴. سرویس‌ها ===== -->
+<script src="js/services/DataService.js"></script>
+<script src="js/services/SearchService.js"></script>
+
+<!-- ===== ۵. یوتیلیتی‌ها ===== -->
+<script src="js/utils/ThemeManager.js"></script>
+
+<!-- ===== ۶. کنترلر ===== -->
+<script src="js/controllers/AppController.js"></script>
+
+<!-- ===== ۷. نقطه ورود ===== -->
+<script src="js/main.js"></script>
+
+</body>
+</html>
