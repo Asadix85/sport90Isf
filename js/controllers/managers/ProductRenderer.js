@@ -432,6 +432,7 @@ export class ProductRenderer {
             console.error('❌ [ProductRenderer.renderProductDetail] خطا:', error);
         }
     }
-}export { ProductRenderer };
+}
+
 
 export { ProductRenderer };

@@ -108,4 +108,6 @@ export class SearchService {
         const results = this.search(query);
         return results.slice(0, limit);
     }
-}export { SearchService };
+}
+
+export { SearchService };

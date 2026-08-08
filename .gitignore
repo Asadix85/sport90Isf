@@ -5,10 +5,12 @@ node_modules/
 # Build artifacts
 dist/
 build/
-target/
+*.min.js
+*.bundle.js
 
-# Logs
+# Logs and temp files
 *.log
+*.tmp
 
 # Environment
 .env
@@ -19,13 +21,7 @@ target/
 .vscode/
 .idea/
 
-# Python
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-.Python
-venv/
-.venv/
-.env
+# OS
+.DS_Store
+Thumbs.db
 ```
