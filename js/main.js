@@ -104,3 +104,10 @@ window.addEventListener('load', function () {
         }
     }
 });
+
+window.loadingManager = app.loading;
+window.breadcrumb = app.breadcrumb;
+window.scrollManager = app.scrollManager;
+window.viewManager = app.viewManager;
+window.quickView = app.quickView;
+window.bottomNav = app.bottomNav;

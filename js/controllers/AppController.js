@@ -1,8 +1,5 @@
 /**
- * AppController.js - هماهنگ‌کننده اصلی (Facade Pattern)
- *
- * این کلاس فقط مدیرها را ایجاد و هماهنگ می‌کند.
- * هیچ منطق پیچیده‌ای ندارد.
+ * AppController.js - هماهنگ‌کننده اصلی (نسخه کامل با همه Manager ها)
  */
 class AppController {
     constructor(
@@ -31,14 +28,20 @@ class AppController {
         this.allProducts = dataService.getAllProducts();
         this.visibleProducts = [];
 
-        // ایجاد مدیرها (Managers)
+        // ===== ایجاد مدیرها =====
         this.ui = new UIManager();
+        this.loading = new LoadingManager();
         this.navigation = new NavigationManager(this.ui);
+        this.breadcrumb = new BreadcrumbManager();
+        this.scrollManager = new ScrollManager();
+        this.viewManager = new ViewManager();
         this.renderer = new ProductRenderer(this.ui, comparisonService, shareService);
         this.searchManager = new SearchManager(searchService, autocompleteService, this.ui);
         this.filterManager = new FilterManager(filterService, this.ui);
         this.comparisonManager = new ComparisonManager(comparisonService, this.ui);
         this.historyManager = new HistoryManager(historyService, this.ui);
+        this.quickView = new QuickViewManager(this.ui, comparisonService, shareService);
+        this.bottomNav = new BottomNavManager();
 
         console.log('🔧 AppController ساخته شد');
         this._init();
@@ -48,23 +51,36 @@ class AppController {
         try {
             // init مدیرها
             this.ui.init();
+            this.loading.init();
             this.searchManager.init();
             this.filterManager.init();
             this.comparisonManager.init();
             this.historyManager.init();
+            this.breadcrumb.init();
+            this.scrollManager.init();
+            this.viewManager.init();
+            this.quickView.init();
+            this.bottomNav.init();
 
             // اتصال callbacks
             this._setupCallbacks();
             this._setupNavigation();
             this._setupExport();
+            this._setupInfoPages();
             this._subscribeEvents();
 
             // نمایش صفحه اصلی
             this._renderMainPage();
             this.navigation.showPage('page-main');
             this._openFromUrl();
+
+            // نمایش bottom nav در موبایل
+            if (window.innerWidth <= 768) {
+                this.bottomNav.show();
+            }
         } catch (error) {
             console.error('❌ [AppController._init] خطا:', error);
+            this.loading.hide();
         }
     }
 
@@ -75,6 +91,11 @@ class AppController {
         this.renderer.onProductClick = (product) => this._showProductDetail(product);
         this.renderer.onToggleCompare = (product) => this._toggleCompare(product);
         this.renderer.onShare = (product) => this._shareProduct(product);
+
+        // Quick View
+        this.quickView.onProductOpen = (product) => this._showProductDetail(product);
+        this.quickView.onToggleCompare = (product) => this._toggleCompare(product);
+        this.quickView.onShare = (product) => this._shareProduct(product);
 
         // جستجو
         this.searchManager.onProductFound = (code) => {
@@ -89,6 +110,7 @@ class AppController {
         };
         this.searchManager.onClear = () => {
             this.navigation.showPage('page-main');
+            this.breadcrumb.reset();
         };
 
         // فیلتر
@@ -100,6 +122,16 @@ class AppController {
         this.historyManager.onItemClick = (code) => {
             const product = this._findProduct(code);
             if (product) this._showProductDetail(product);
+        };
+
+        // Breadcrumb navigation
+        this.breadcrumb.onNavigate = (page, index) => {
+            this._handleBreadcrumbNav(page, index);
+        };
+
+        // Bottom navigation
+        this.bottomNav.onNavigate = (action) => {
+            this._handleBottomNav(action);
         };
     }
 
@@ -141,6 +173,27 @@ class AppController {
         }
     }
 
+    _setupInfoPages() {
+        const aboutBtn = document.getElementById('aboutBtn');
+        const faqBtn = document.getElementById('faqBtn');
+
+        if (aboutBtn) {
+            aboutBtn.addEventListener('click', () => {
+                this.navigation.showPage('page-about');
+                this.breadcrumb.setPath([{ label: 'درباره ما', page: 'about' }]);
+                this.scrollManager.scrollToTop();
+            });
+        }
+
+        if (faqBtn) {
+            faqBtn.addEventListener('click', () => {
+                this.navigation.showPage('page-faq');
+                this.breadcrumb.setPath([{ label: 'سوالات متداول', page: 'faq' }]);
+                this.scrollManager.scrollToTop();
+            });
+        }
+    }
+
     _subscribeEvents() {
         eventBus.on(AppEvents.COMPARISON_CHANGED, () => {
             this.comparisonManager.updateTray();
@@ -148,6 +201,10 @@ class AppController {
 
         eventBus.on(AppEvents.HISTORY_CHANGED, () => {
             this.historyManager.render();
+        });
+
+        eventBus.on(AppEvents.PAGE_CHANGED, (pageId) => {
+            this.scrollManager.scrollToTop();
         });
     }
 
@@ -166,6 +223,8 @@ class AppController {
         this.navigation.pushState('page-main');
         this.navigation.showPage('page-sub');
         this._renderSubcategories(category);
+        this.breadcrumb.push(category.name || 'دسته‌بندی', 'sub');
+        this.scrollManager.scrollToTop();
     }
 
     _renderSubcategories(category) {
@@ -181,6 +240,8 @@ class AppController {
 
         this.visibleProducts = products;
         this.renderer.renderProducts(products, document.getElementById('productsContainer'));
+        this.breadcrumb.push('لیست محصولات', 'products');
+        this.scrollManager.scrollToTop();
     }
 
     _showProductDetail(product) {
@@ -190,6 +251,8 @@ class AppController {
 
         const container = document.getElementById('productDetailContainer');
         this.renderer.renderProductDetail(product, container);
+        this.breadcrumb.push(product.name || 'جزئیات', 'detail');
+        this.scrollManager.scrollToTop();
     }
 
     _toggleCompare(product) {
@@ -206,8 +269,11 @@ class AppController {
         const lastPage = this.navigation.goBack();
         if (!lastPage) return;
 
+        this.breadcrumb.pop();
+
         if (lastPage === 'page-main') {
             this.navigation.showPage('page-main');
+            this.breadcrumb.reset();
         } else if (lastPage === 'page-sub') {
             this.navigation.showPage('page-sub');
             if (this.navigation.currentCategory) {
@@ -219,6 +285,98 @@ class AppController {
                 this.renderer.renderProducts(this.navigation.currentSubcategory, document.getElementById('productsContainer'));
             }
         }
+        this.scrollManager.scrollToTop();
+    }
+
+    _handleBreadcrumbNav(page, index) {
+        if (page === 'main') {
+            this.navigation.showPage('page-main');
+            this.breadcrumb.reset();
+        } else if (page === 'sub' && this.navigation.currentCategory) {
+            this.navigation.showPage('page-sub');
+            this._renderSubcategories(this.navigation.currentCategory);
+        } else if (page === 'products' && this.navigation.currentSubcategory) {
+            this.navigation.showPage('page-products');
+            this.renderer.renderProducts(this.navigation.currentSubcategory, document.getElementById('productsContainer'));
+        }
+        this.scrollManager.scrollToTop();
+    }
+
+    _handleBottomNav(action) {
+        switch (action) {
+            case 'home':
+                this.navigation.showPage('page-main');
+                this.breadcrumb.reset();
+                break;
+            case 'compare':
+                if (this.comparisonService.getCount() >= 2) {
+                    this.comparisonManager._renderModal();
+                    document.getElementById('comparisonModal').style.display = 'flex';
+                } else {
+                    this.ui.showToast('حداقل ۲ محصول برای مقایسه انتخاب کنید', 'info');
+                }
+                break;
+            case 'history':
+                const historySection = document.getElementById('historySection');
+                if (historySection) {
+                    this.scrollManager.scrollToElement(historySection);
+                }
+                break;
+            case 'info':
+                // باز کردن پنل اطلاعات (About/FAQ)
+                this._showInfoMenu();
+                break;
+        }
+    }
+
+    /**
+     * نمایش منوی اطلاعات (About/FAQ)
+     */
+    _showInfoMenu() {
+        // ایجاد یک popup ساده برای انتخاب
+        const existing = document.getElementById('infoMenu');
+        if (existing) {
+            existing.remove();
+            return;
+        }
+
+        const menuHtml = `
+    <div id="infoMenu" class="info-menu">
+      <button class="info-menu-item" data-page="about">
+        🏪 درباره ما
+      </button>
+      <button class="info-menu-item" data-page="faq">
+        ❓ سوالات متداول
+      </button>
+    </div>
+  `;
+        document.body.insertAdjacentHTML('beforeend', menuHtml);
+
+        const menu = document.getElementById('infoMenu');
+
+        menu.querySelectorAll('.info-menu-item').forEach((item) => {
+            item.addEventListener('click', () => {
+                const page = item.dataset.page;
+                if (page === 'about') {
+                    this.navigation.showPage('page-about');
+                    this.breadcrumb.setPath([{ label: 'درباره ما', page: 'about' }]);
+                } else if (page === 'faq') {
+                    this.navigation.showPage('page-faq');
+                    this.breadcrumb.setPath([{ label: 'سوالات متداول', page: 'faq' }]);
+                }
+                menu.remove();
+                this.scrollManager.scrollToTop();
+            });
+        });
+
+        setTimeout(() => {
+            document.addEventListener('click', function closeMenu(e) {
+                if (!menu.contains(e.target)) {
+                    menu.remove();
+                    document.removeEventListener('click', closeMenu);
+                }
+            });
+        }, 100);
     }
 
     // ===== Filter Methods =====
@@ -243,6 +401,7 @@ class AppController {
         if (backBtn) backBtn.classList.remove('hidden');
 
         this.navigation.pushState('page-main');
+        this.breadcrumb.setPath([{ label: `جستجو: ${query}`, page: 'search' }]);
 
         const container = document.getElementById('searchResults');
         if (!container) return;
@@ -271,6 +430,7 @@ class AppController {
         grid.className = 'products-grid';
         container.appendChild(grid);
         this.renderer.renderProducts(results, grid);
+        this.scrollManager.scrollToTop();
     }
 
     // ===== Helpers =====

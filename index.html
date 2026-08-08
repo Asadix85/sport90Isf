@@ -6,17 +6,186 @@
     <title>فروشگاه ورزشی اسپرت ۹۰</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
+<!-- PWA -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#ff6b35">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="اسپرت ۹۰">
+<link rel="apple-touch-icon" href="images/icon-192.png">
+
+<script>
+    // ثبت Service Worker
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js')
+                .then((registration) => {
+                    console.log('✅ Service Worker registered:', registration.scope);
+                })
+                .catch((error) => {
+                    console.log('❌ Service Worker registration failed:', error);
+                });
+        });
+    }
+</script>
+
+<!-- Bottom Navigation (موبایل) --->
+<nav class="bottom-nav" id="bottomNav">
+    <button class="nav-item active" data-nav="home">
+        <span class="nav-icon">🏠</span>
+        <span class="nav-label">خانه</span>
+    </button>
+    <button class="nav-item" data-nav="search">
+        <span class="nav-icon">🔍</span>
+        <span class="nav-label">جستجو</span>
+    </button>
+    <button class="nav-item" data-nav="compare">
+        <span class="nav-icon">⚖️</span>
+        <span class="nav-label">مقایسه</span>
+        <span class="nav-badge" id="compareBadge" style="display:none;">0</span>
+    </button>
+    <button class="nav-item" data-nav="history">
+        <span class="nav-icon">🕘</span>
+        <span class="nav-label">تاریخچه</span>
+    </button>
+    <button class="nav-item" data-nav="info">
+        <span class="nav-icon">ℹ️</span>
+        <span class="nav-label">اطلاعات</span>
+    </button>
+</nav>
+
 <body>
+<!-- ============================================================ -->
+<!-- ===== صفحه درباره ما ===== -->
+<!-- ============================================================ -->
+<div id="page-about" class="page">
+    <div class="info-page">
+        <h2>🏪 درباره اسپرت ۹۰</h2>
+
+        <div class="info-section">
+            <h3>📖 داستان ما</h3>
+            <p>
+                فروشگاه ورزشی اسپرت ۹۰ از سال ۱۳۹۰ فعالیت خود را در شهر اصفهان آغاز کرد.
+                ما با بیش از یک دهه تجربه در زمینه فروش لوازم ورزشی، همواره تلاش کرده‌ایم
+                بهترین محصولات را با مناسب‌ترین قیمت به مشتریان عزیز ارائه دهیم.
+            </p>
+        </div>
+
+        <div class="info-section">
+            <h3>🎯 ماموریت ما</h3>
+            <p>
+                هدف ما فراهم کردن دسترسی آسان همه ورزشکاران به تجهیزات باکیفیت ورزشی است.
+                ما معتقدیم ورزش حق همه است و باید با هزینه‌ای منطقی در دسترس باشد.
+            </p>
+        </div>
+
+        <div class="info-section">
+            <h3>📊 آمار فروشگاه</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-top: 15px;">
+                <div style="text-align: center; padding: 20px; background: var(--bg-info); border-radius: var(--radius-md);">
+                    <div style="font-size: 32px; font-weight: 800; color: var(--primary);">۵۰۹+</div>
+                    <div style="font-size: 13px; color: var(--text-muted);">محصول</div>
+                </div>
+                <div style="text-align: center; padding: 20px; background: var(--bg-info); border-radius: var(--radius-md);">
+                    <div style="font-size: 32px; font-weight: 800; color: var(--primary);">۳۰+</div>
+                    <div style="font-size: 13px; color: var(--text-muted);">برند</div>
+                </div>
+                <div style="text-align: center; padding: 20px; background: var(--bg-info); border-radius: var(--radius-md);">
+                    <div style="font-size: 32px; font-weight: 800; color: var(--primary);">۱۰+</div>
+                    <div style="font-size: 13px; color: var(--text-muted);">سال تجربه</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h3>📞 تماس با ما</h3>
+            <p>📍 آدرس: اصفهان، خیابان ...</p>
+            <p>📱 ایتا: @ziaei_1405</p>
+            <p>🌐 eitaa.com/sport_90_isfahan</p>
+        </div>
+
+        <div class="info-section">
+            <h3>✅ ضمانت‌نامه</h3>
+            <p>
+                تمامی محصولات دارای ضمانت اصالت کالا هستند. در صورت هرگونه مشکل،
+                تا ۷ روز امکان مرجوعی وجود دارد.
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- ===== صفحه سوالات متداول ===== -->
+<!-- ============================================================ -->
+<div id="page-faq" class="page">
+    <div class="info-page">
+        <h2>❓ سوالات متداول</h2>
+
+        <div class="faq-item">
+            <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                <span>چگونه سفارش دهم؟</span>
+                <span class="faq-arrow">▼</span>
+            </div>
+            <div class="faq-answer">
+                برای سفارش، محصول مورد نظر را انتخاب کرده و روی دکمه «ثبت سفارش» کلیک کنید.
+                سپس از طریق ایتا با آیدی @ziaei_1405 در ارتباط باشید.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                <span>هزینه ارسال چقدر است؟</span>
+                <span class="faq-arrow">▼</span>
+            </div>
+            <div class="faq-answer">
+                هزینه ارسال بسته به وزن و ابعاد محصول متفاوت است.
+                برای اطلاع دقیق، قبل از سفارش با ما در ارتباط باشید.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                <span>امکان مرجوعی وجود دارد؟</span>
+                <span class="faq-arrow">▼</span>
+            </div>
+            <div class="faq-answer">
+                بله، تا ۷ روز پس از دریافت محصول، در صورت عدم استفاده و سالم بودن بسته‌بندی،
+                امکان مرجوعی وجود دارد.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                <span>آیا محصولات اورجینال هستند؟</span>
+                <span class="faq-arrow">▼</span>
+            </div>
+            <div class="faq-answer">
+                بله، تمامی محصولات دارای ضمانت اصالت هستند و از منابع معتبر تهیه می‌شوند.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                <span>روش‌های پرداخت چیست؟</span>
+                <span class="faq-arrow">▼</span>
+            </div>
+            <div class="faq-answer">
+                پرداخت از طریق کارت به کارت و پرداخت در محل (برای اصفهان) امکان‌پذیر است.
+            </div>
+        </div>
+    </div>
+</div>
 <div class="container">
 
+    <!-- ===== هدر ===== -->
     <!-- ===== هدر ===== -->
     <div class="header">
         <h1><span>اسپرت ۹۰</span></h1>
         <div class="header-actions">
             <div class="badge">بروزرسانی: مرداد ۱۴۰۵</div>
             <button class="theme-toggle" id="themeToggle">
-                <span class="icon" id="themeIcon">🌙</span>
-                <span id="themeLabel">تاریک</span>
+                <span class="icon" id="themeIcon">🎨</span>
+                <span id="themeLabel">تم‌ها</span>
             </button>
         </div>
     </div>
@@ -49,6 +218,8 @@
     <div class="main-actions">
         <button id="exportCSV" class="action-pill" title="خروجی اکسل">📊 CSV</button>
         <button id="exportJSON" class="action-pill" title="خروجی JSON">📄 JSON</button>
+        <button id="aboutBtn" class="action-pill" title="درباره ما">🏪 درباره ما</button>
+        <button id="faqBtn" class="action-pill" title="سوالات متداول">❓ سوالات</button>
     </div>
 
     <!-- ===== بخش تاریخچه مشاهده ===== -->
@@ -308,6 +479,12 @@
 <script src="js/controllers/managers/FilterManager.js"></script>
 <script src="js/controllers/managers/ComparisonManager.js"></script>
 <script src="js/controllers/managers/HistoryManager.js"></script>
+<script src="js/controllers/managers/LoadingManager.js"></script>
+<script src="js/controllers/managers/BreadcrumbManager.js"></script>
+<script src="js/controllers/managers/ScrollManager.js"></script>
+<script src="js/controllers/managers/ViewManager.js"></script>
+<script src="js/controllers/managers/QuickViewManager.js"></script>
+<script src="js/controllers/managers/BottomNavManager.js"></script>
 
 <!-- ۱۱. کنترلر اصلی -->
 <script src="js/controllers/AppController.js"></script>
