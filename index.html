@@ -3,18 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>فروشگاه ورزشی اسپرت ۹۰</title>
+    
+    <!-- SEO Meta Tags -->
+    <title>فروشگاه ورزشی اسپرت ۹۰ | لوازم ورزشی با کیفیت در اصفهان</title>
+    <meta name="description" content="فروشگاه آنلاین لوازم ورزشی اسپرت ۹۰ - بیش از ۵۰۰ محصول ورزشی شامل توپ، کفش، لباس و تجهیزات fitness با ضمانت اصالت و بهترین قیمت">
+    <meta name="keywords" content="لوازم ورزشی, فروشگاه ورزشی, کفش ورزشی, توپ فوتبال, تجهیزات بدنسازی, اسپرت ۹۰, اصفهان">
+    <meta name="author" content="اسپرت ۹۰">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://sport90.ir/">
+    <meta property="og:title" content="فروشگاه ورزشی اسپرت ۹۰">
+    <meta property="og:description" content="بیش از ۵۰۰ محصول ورزشی با ضمانت اصالت و بهترین قیمت">
+    <meta property="og:image" content="images/icon-512.png">
+    <meta property="og:locale" content="fa_IR">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="فروشگاه ورزشی اسپرت ۹۰">
+    <meta name="twitter:description" content="بیش از ۵۰۰ محصول ورزشی با ضمانت اصالت و بهترین قیمت">
+    <meta name="twitter:image" content="images/icon-512.png">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://sport90.ir/">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="images/icon-72.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/icon-72.png">
+    <link rel="apple-touch-icon" href="images/icon-192.png">
+    
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#ff6b35">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="اسپرت ۹۰">
+    
+    <!-- Security Headers (via meta) -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; font-src 'self' https://cdn.jsdelivr.net data:; img-src 'self' data: blob:;">
+    
     <link rel="stylesheet" href="css/style.css">
-</head>
-<!-- PWA -->
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#ff6b35">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="اسپرت ۹۰">
-<link rel="apple-touch-icon" href="images/icon-192.png">
-
-<script>
+    
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SportsStore",
+      "name": "فروشگاه ورزشی اسپرت ۹۰",
+      "url": "https://sport90.ir",
+      "logo": "https://sport90.ir/images/icon-512.png",
+      "description": "فروشگاه آنلاین لوازم ورزشی با بیش از ۱۰ سال تجربه",
+      "telephone": "+98-XXX-XXXXXXX",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "خیابان ...",
+        "addressLocality": "اصفهان",
+        "addressCountry": "IR"
+      },
+      "openingHours": "Sa-Th 09:00-21:00",
+      "priceRange": "$$"
+    }
+    </script>
+    
+    <script>
     // ثبت Service Worker
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
@@ -27,7 +82,8 @@
                 });
         });
     }
-</script>
+    </script>
+</head>
 
 <!-- Bottom Navigation (موبایل) --->
 <nav class="bottom-nav" id="bottomNav">
