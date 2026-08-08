@@ -82,4 +82,4 @@ class BottomNavManager {
     hide() {
         if (this.nav) this.nav.classList.remove('visible');
     }
-}
+}export { BottomNavManager };

@@ -250,4 +250,4 @@ class FilterManager {
             console.error('❌ [FilterManager._syncUI] خطا:', error);
         }
     }
-}
+}export { FilterManager };

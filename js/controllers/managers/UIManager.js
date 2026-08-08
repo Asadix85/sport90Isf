@@ -73,4 +73,4 @@ class UIManager {
             return fallback;
         }
     }
-}
+}export { UIManager };

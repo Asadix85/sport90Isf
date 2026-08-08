@@ -142,4 +142,4 @@ class ComparisonManager {
             console.error('❌ [ComparisonManager._renderModal] خطا:', error);
         }
     }
-}
+}export { ComparisonManager };

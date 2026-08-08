@@ -34,4 +34,4 @@ function throttle(func, limit = 250) {
             setTimeout(() => { waiting = false; }, limit);
         }
     };
-}
+}export { debounce };

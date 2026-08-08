@@ -129,4 +129,4 @@ class QuickViewManager {
     }
 }
 // قبلی: class="quickview-btn"
-// جدید: class="qv-btn"
+// جدید: class="qv-btn"export { QuickViewManager };

@@ -75,4 +75,4 @@ class LoadingManager {
     hideSkeleton(container) {
         if (container) container.innerHTML = '';
     }
-}
+}export { LoadingManager };

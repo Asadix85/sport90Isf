@@ -823,4 +823,4 @@ class DataService {
         this.products.push(product);
         this._organizeByCategory();
     }
-}
+}export { DataService };

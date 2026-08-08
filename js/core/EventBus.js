@@ -116,4 +116,4 @@ class EventBus {
 }
 
 // ساخت نمونه singleton
-const eventBus = new EventBus();
+const eventBus = new EventBus();export { EventBus, eventBus };

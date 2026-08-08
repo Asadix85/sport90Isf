@@ -144,4 +144,4 @@ class AutocompleteService {
             console.error('❌ [AutocompleteService.clearHistory] خطا:', error);
         }
     }
-}
+}export { AutocompleteService };

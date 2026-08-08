@@ -208,4 +208,4 @@ class ThemeManager {
             this.themePanel.classList.remove('visible');
         }
     }
-}
+}export { ThemeManager };

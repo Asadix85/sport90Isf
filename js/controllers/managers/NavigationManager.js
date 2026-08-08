@@ -71,4 +71,4 @@ class NavigationManager {
     canGoBack() {
         return this.historyStack.length > 0;
     }
-}
+}export { NavigationManager };

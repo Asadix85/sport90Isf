@@ -83,4 +83,4 @@ class ShareService {
             return false;
         }
     }
-}
+}export { ShareService };

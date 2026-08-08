@@ -14,4 +14,4 @@ function escapeHtml(value) {
         "'": '&#39;',
     };
     return str.replace(/[&<>"']/g, (m) => map[m]);
-}
+}export { escapeHtml };

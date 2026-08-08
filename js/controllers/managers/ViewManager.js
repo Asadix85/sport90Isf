@@ -76,4 +76,4 @@ class ViewManager {
     getView() {
         return this.currentView;
     }
-}
+}export { ViewManager };
