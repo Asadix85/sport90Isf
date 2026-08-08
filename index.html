@@ -7,14 +7,13 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-
 <div class="container">
 
     <!-- ===== هدر ===== -->
     <div class="header">
-        <h1> <span>اسپرت ۹۰</span></h1>
+        <h1><span>اسپرت ۹۰</span></h1>
         <div class="header-actions">
-            <div class="badge">بروزرسانی: تیر ۱۴۰۵</div>
+            <div class="badge">بروزرسانی: مرداد ۱۴۰۵</div>
             <button class="theme-toggle" id="themeToggle">
                 <span class="icon" id="themeIcon">🌙</span>
                 <span id="themeLabel">تاریک</span>
@@ -22,28 +21,44 @@
         </div>
     </div>
 
-    <!-- ===== بخش جستجو ===== -->
-    <div class="search-section" style="margin-bottom: 20px;">
-        <div class="search-box" style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap; background: var(--bg-card); padding: 8px 15px; border-radius: 30px; border: 2px solid var(--border-color); transition: all 0.3s;">
+    <!-- ===== دکمه بازگشت اصلی ===== -->
+    <button id="backBtn" class="back-button main-back hidden">
+        <span>↩️</span> بازگشت
+    </button>
+
+    <!-- ===== بخش جستجو با Autocomplete ===== -->
+    <div class="search-section">
+        <div class="search-box">
             <span style="font-size: 18px;">🔍</span>
             <input
                     type="text"
                     id="searchInput"
                     placeholder="جستجوی محصول (اسم یا کد کالا)..."
-                    style="flex: 1; min-width: 150px; padding: 10px 5px; border: none; background: transparent; font-size: 15px; color: var(--text-primary); outline: none;"
+                    autocomplete="off"
             >
-            <button id="searchClear" style="background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 18px; display: none; padding: 5px;">✕</button>
-            <button id="searchButton" style="background: var(--primary-color); color: white; border: none; padding: 8px 20px; border-radius: 20px; cursor: pointer; font-size: 14px; font-weight: bold; transition: all 0.3s;">
-                جستجو
-            </button>
+            <button id="searchClear" style="display:none;">✕</button>
+            <button id="searchButton">جستجو</button>
+            <ul id="suggestionList" class="suggestion-list" style="display:none;"></ul>
         </div>
-        <div style="font-size: 12px; color: var(--text-muted); margin-top: 5px; padding-right: 15px;">
+        <div class="search-hint">
             💡 می‌توانید با اسم محصول یا کد کالا (مثل P123456) جستجو کنید
         </div>
     </div>
 
-    <!-- ===== دکمه بازگشت ===== -->
-    <button class="back-btn hidden" id="backBtn">← بازگشت</button>
+    <!-- ===== دکمه‌های اصلی (Export) ===== -->
+    <div class="main-actions">
+        <button id="exportCSV" class="action-pill" title="خروجی اکسل">📊 CSV</button>
+        <button id="exportJSON" class="action-pill" title="خروجی JSON">📄 JSON</button>
+    </div>
+
+    <!-- ===== بخش تاریخچه مشاهده ===== -->
+    <div id="historySection" class="history-section" style="display:none;">
+        <div class="history-header">
+            <h3>🕘 آخرین مشاهده‌ها</h3>
+            <button id="clearHistory" class="text-btn">پاک کردن</button>
+        </div>
+        <div id="historyStrip" class="history-strip"></div>
+    </div>
 
     <!-- ============================================================ -->
     <!-- ===== صفحه ۱: دسته‌بندی‌های اصلی ===== -->
@@ -52,9 +67,7 @@
         <div class="info-box">
             <span>📋 لطفاً یک دسته‌بندی را انتخاب کنید</span>
         </div>
-        <div class="categories-grid" id="categoriesContainer">
-            <!-- توسط app ساخته می‌شود -->
-        </div>
+        <div class="categories-grid" id="categoriesContainer"></div>
     </div>
 
     <!-- ============================================================ -->
@@ -64,20 +77,35 @@
         <h2 class="section-title" id="subCategoryTitle">
             <span class="emoji">📂</span> زیردسته‌ها
         </h2>
-        <div class="subcategories-grid" id="subcategoriesContainer">
-            <!-- توسط app ساخته می‌شود -->
-        </div>
+        <div class="subcategories-grid" id="subcategoriesContainer"></div>
     </div>
 
     <!-- ============================================================ -->
-    <!-- ===== صفحه ۳: لیست محصولات ===== -->
+    <!-- ===== صفحه ۳: لیست محصولات (با دکمه‌های بازگشت) ===== -->
     <!-- ============================================================ -->
     <div id="page-products" class="page">
-        <h2 class="section-title" id="productsTitle">
-            <span class="emoji">📦</span> محصولات
-        </h2>
-        <div class="products-grid" id="productsContainer">
-            <!-- توسط app ساخته می‌شود -->
+        <!-- هدر لیست: بازگشت + عنوان + فیلتر -->
+        <div class="list-header">
+            <button id="goBackTop" class="back-button">
+                <span>↩️</span> بازگشت
+            </button>
+            <h2 class="section-title" id="productsTitle">
+                <span class="emoji">📦</span> محصولات
+            </h2>
+            <button id="toggleFilterBtn" class="filter-trigger">
+                <span>🔍</span> فیلتر
+                <span id="filterBadge" class="filter-badge" style="display:none;">0</span>
+            </button>
+        </div>
+
+        <!-- لیست محصولات -->
+        <div class="products-grid" id="productsContainer"></div>
+
+        <!-- دکمه بازگشت پایین -->
+        <div class="list-footer">
+            <button id="goBackBottom" class="back-button back-button-large">
+                ↩️ بازگشت به دسته‌بندی
+            </button>
         </div>
     </div>
 
@@ -85,95 +113,206 @@
     <!-- ===== صفحه ۴: جزئیات محصول ===== -->
     <!-- ============================================================ -->
     <div id="page-detail" class="page">
-        <div class="product-detail" id="productDetailContainer">
-            <!-- توسط app ساخته می‌شود -->
-        </div>
+        <div class="product-detail" id="productDetailContainer"></div>
     </div>
 
     <!-- ============================================================ -->
     <!-- ===== صفحه ۵: نتایج جستجو ===== -->
     <!-- ============================================================ -->
     <div id="page-search" class="page">
-        <div id="searchContainer" style="display: none;">
+        <div id="searchContainer">
             <div id="searchResults"></div>
         </div>
     </div>
 
     <!-- ===== فوتر ===== -->
     <div class="footer">
-        <span class="contact">(پیام ادمین: سایت در نسخه دمو هست و قیمت ها به مرور درست میشوند ، لطفا قبل از سفارش قیمت هارا چک کنید) @ziaei_1405  برای سفارش به این آیدی در ایتا پیام دهید</span>
+      <span class="contact">
+        (پیام ادمین: سایت در نسخه دمو هست و قیمت ها به مرور درست میشوند)
+        @ziaei_1405 برای سفارش به این آیدی در ایتا پیام دهید
+      </span>
         <span>eitaa.com/sport_90_isfahan</span>
     </div>
-
 </div>
 
 <!-- ============================================================ -->
-<!-- ===== بارگذاری فایل‌های جاوااسکریپت (ترتیب مهمه!) ===== -->
+<!-- ===== مودال فیلتر (Drawer) ===== -->
+<!-- ============================================================ -->
+<div id="filterDrawer" class="drawer-overlay">
+    <div class="drawer">
+        <div class="drawer-header">
+            <h2>🔍 فیلتر و مرتب‌سازی</h2>
+            <button id="closeFilterDrawer" class="drawer-close">✕</button>
+        </div>
+
+        <div class="drawer-body">
+            <!-- نتایج -->
+            <div class="filter-result-summary">
+                <span id="resultCount">0</span> محصول
+            </div>
+
+            <!-- مرتب‌سازی -->
+            <div class="filter-group">
+                <label>مرتب‌سازی:</label>
+                <select id="sortSelect">
+                    <option value="newest">جدیدترین</option>
+                    <option value="price_asc">ارزان‌ترین</option>
+                    <option value="price_desc">گران‌ترین</option>
+                    <option value="name_asc">نام (صعودی)</option>
+                    <option value="name_desc">نام (نزولی)</option>
+                </select>
+            </div>
+
+            <!-- محدوده قیمت -->
+            <div class="filter-group">
+                <label>محدوده قیمت (تومان):</label>
+                <div class="price-inputs">
+                    <input type="number" id="priceMin" placeholder="از">
+                    <input type="number" id="priceMax" placeholder="تا">
+                </div>
+            </div>
+
+            <!-- فیلتر برند -->
+            <div class="filter-group">
+                <label>برند:</label>
+                <div id="brandFilters" class="filter-checks"></div>
+            </div>
+
+            <!-- فیلتر دسته‌بندی -->
+            <div class="filter-group">
+                <label>دسته‌بندی:</label>
+                <div id="categoryFilters" class="filter-checks"></div>
+            </div>
+
+            <!-- فیلتر موجودی -->
+            <div class="filter-group">
+                <label>وضعیت موجودی:</label>
+                <div id="stockFilters" class="filter-checks"></div>
+            </div>
+        </div>
+
+        <div class="drawer-footer">
+            <button id="clearFilters" class="btn-secondary">پاک کردن فیلترها</button>
+            <button id="applyFilters" class="btn-primary">اعمال فیلتر</button>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- ===== مودال مقایسه ===== -->
+<!-- ============================================================ -->
+<div id="comparisonModal" class="modal-overlay" style="display:none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>⚖️ مقایسه محصولات</h2>
+            <button id="closeComparisonModal" class="modal-close">✕</button>
+        </div>
+        <div id="comparisonTable" class="modal-body"></div>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- ===== سینی مقایسه (floating tray) ===== -->
+<!-- ============================================================ -->
+<div id="comparisonTray" class="comparison-tray">
+    <div class="tray-header">
+        <h4>⚖️ مقایسه (<span id="comparisonCount">0</span>/3)</h4>
+    </div>
+    <div id="comparisonChips" class="tray-chips"></div>
+    <div class="tray-actions">
+        <button id="showComparison" class="btn-primary">مشاهده مقایسه</button>
+        <button id="clearComparison" class="btn-danger">پاک کردن</button>
+    </div>
+</div>
+
+<!-- ===== Toast container ===== -->
+<div id="toastRoot" class="toast-root"></div>
+
+<!-- ============================================================ -->
+<!-- ===== بارگذاری فایل‌های جاوااسکریپت ===== -->
 <!-- ============================================================ -->
 
-<!-- ===== ۱. Enumها (مقادیر ثابت) ===== -->
+<!-- ۱. Utils -->
+<script src="js/utils/escapeHtml.js"></script>
+<script src="js/utils/debounce.js"></script>
+
+<!-- ۲. Enums -->
 <script src="js/enums/Enums.js"></script>
 
-<!-- ===== ۲. کلاس‌های Abstract (پایه) ===== -->
+<!-- ۳. Core -->
+<script src="js/core/EventBus.js"></script>
+
+<!-- ۴. کلاس پایه -->
 <script src="js/models/abstract/Product.js"></script>
 
-<!-- ===== ۳. کلاس‌های محصولات (به ترتیب وابستگی) ===== -->
-
-<!-- ---- دسته‌بندی: توپ‌ها ---- -->
+<!-- ۵. کلاس‌های پایه محصولات -->
 <script src="js/models/products/balls/Ball.js"></script>
+<script src="js/models/products/shoes/shoe.js"></script>
+<script src="js/models/products/clothings/Clothing.js"></script>
+<script src="js/models/products/accessories/Accessory.js"></script>
+<script src="js/models/products/fitnessEquipment/FitnessEquipment.js"></script>
+<script src="js/models/products/dumbbells/Dumbbell.js"></script>
+<script src="js/models/products/nets/Net.js"></script>
+
+<!-- ۶. کلاس‌های فرزند -->
 <script src="js/models/products/balls/FootballBall.js"></script>
 <script src="js/models/products/balls/BasketballBall.js"></script>
 <script src="js/models/products/balls/VolleyballBall.js"></script>
 <script src="js/models/products/balls/ExerciseBall.js"></script>
 <script src="js/models/products/balls/MedicineBall.js"></script>
 
-<!-- ---- دسته‌بندی: کفش‌ها ---- -->
-<script src="js/models/products/shoes/shoe.js"></script>
 <script src="js/models/products/shoes/FootballShoe.js"></script>
 <script src="js/models/products/shoes/VolleyballShoe.js"></script>
 <script src="js/models/products/shoes/WrestlingShoe.js"></script>
 <script src="js/models/products/shoes/SportsShoe.js"></script>
 
-<!-- ---- دسته‌بندی: پوشاک ---- -->
-<script src="js/models/products/clothings/Clothing.js"></script>
 <script src="js/models/products/clothings/Shirt.js"></script>
 <script src="js/models/products/clothings/Short.js"></script>
 <script src="js/models/products/clothings/Socks.js"></script>
 <script src="js/models/products/clothings/Swimsuit.js"></script>
 <script src="js/models/products/clothings/MartialArtsUniform.js"></script>
 
-<!-- ---- دسته‌بندی: تجهیزات بدنسازی ---- -->
-<script src="js/models/products/fitnessEquipment/FitnessEquipment.js"></script>
 <script src="js/models/products/fitnessEquipment/Barbell.js"></script>
 <script src="js/models/products/fitnessEquipment/PullUpBar.js"></script>
 <script src="js/models/products/fitnessEquipment/ResistanceBand.js"></script>
 <script src="js/models/products/fitnessEquipment/YogaMat.js"></script>
 
-<!-- ---- دسته‌بندی: لوازم جانبی ---- -->
-<script src="js/models/products/accessories/Accessory.js"></script>
 <script src="js/models/products/accessories/Glove.js"></script>
 <script src="js/models/products/accessories/Band.js"></script>
 <script src="js/models/products/accessories/Racket.js"></script>
 
-<!-- ---- دسته‌بندی: تورها ---- -->
-<script src="js/models/products/nets/Net.js"></script>
 <script src="js/models/products/nets/FootballNet.js"></script>
 
-<!-- ---- سایر محصولات ---- -->
-<script src="js/models/products/dumbbells/Dumbbell.js"></script>
 <script src="js/models/products/dumbbells/FixedDumbbell.js"></script>
 
-<!-- ===== ۴. سرویس‌ها ===== -->
+<!-- ۷. سرویس‌های اصلی -->
 <script src="js/services/DataService.js"></script>
 <script src="js/services/SearchService.js"></script>
 
-<!-- ===== ۵. یوتیلیتی‌ها ===== -->
+<!-- ۸. سرویس‌های جدید -->
+<script src="js/services/FilterService.js"></script>
+<script src="js/services/ComparisonService.js"></script>
+<script src="js/services/HistoryService.js"></script>
+<script src="js/services/AutocompleteService.js"></script>
+<script src="js/services/ExportService.js"></script>
+<script src="js/services/ShareService.js"></script>
+
+<!-- ۹. ThemeManager -->
 <script src="js/utils/ThemeManager.js"></script>
 
-<!-- ===== ۶. کنترلر ===== -->
+<!-- ۱۰. مدیرها (Managers) -->
+<script src="js/controllers/managers/UIManager.js"></script>
+<script src="js/controllers/managers/NavigationManager.js"></script>
+<script src="js/controllers/managers/ProductRenderer.js"></script>
+<script src="js/controllers/managers/SearchManager.js"></script>
+<script src="js/controllers/managers/FilterManager.js"></script>
+<script src="js/controllers/managers/ComparisonManager.js"></script>
+<script src="js/controllers/managers/HistoryManager.js"></script>
+
+<!-- ۱۱. کنترلر اصلی -->
 <script src="js/controllers/AppController.js"></script>
 
-<!-- ===== ۷. نقطه ورود ===== -->
+<!-- ۱۲. نقطه ورود -->
 <script src="js/main.js"></script>
 
 </body>

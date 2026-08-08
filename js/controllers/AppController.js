@@ -1,498 +1,295 @@
 /**
- * AppController - کنترلر اصلی برنامه
+ * AppController.js - هماهنگ‌کننده اصلی (Facade Pattern)
+ *
+ * این کلاس فقط مدیرها را ایجاد و هماهنگ می‌کند.
+ * هیچ منطق پیچیده‌ای ندارد.
  */
 class AppController {
-    constructor(dataService, themeManager, searchService) {
+    constructor(
+        dataService,
+        themeManager,
+        searchService,
+        filterService,
+        comparisonService,
+        historyService,
+        autocompleteService,
+        exportService,
+        shareService
+    ) {
+        // ذخیره سرویس‌ها
         this.dataService = dataService;
         this.themeManager = themeManager;
-        this.searchService = searchService;  // ← جدید
-        
-        this.historyStack = [];
-        this.currentCategory = null;
-        this.currentSubcategory = null;
-        
+        this.searchService = searchService;
+        this.filterService = filterService;
+        this.comparisonService = comparisonService;
+        this.historyService = historyService;
+        this.autocompleteService = autocompleteService;
+        this.exportService = exportService;
+        this.shareService = shareService;
+
+        // State
+        this.allProducts = dataService.getAllProducts();
+        this.visibleProducts = [];
+
+        // ایجاد مدیرها (Managers)
+        this.ui = new UIManager();
+        this.navigation = new NavigationManager(this.ui);
+        this.renderer = new ProductRenderer(this.ui, comparisonService, shareService);
+        this.searchManager = new SearchManager(searchService, autocompleteService, this.ui);
+        this.filterManager = new FilterManager(filterService, this.ui);
+        this.comparisonManager = new ComparisonManager(comparisonService, this.ui);
+        this.historyManager = new HistoryManager(historyService, this.ui);
+
         console.log('🔧 AppController ساخته شد');
-        this._initUI();
-        this._initSearch();  // ← جدید: مقداردهی جستجو
-    }    
-    _initUI() {
-        // تست دیتا
-        const products = this.dataService.getAllProducts();
-        console.log('📦 تعداد محصولات:', products ? products.length : 0);
-        
-        const categories = this.dataService.getCategories();
-        console.log('📂 تعداد دسته‌بندی‌ها:', categories ? categories.length : 0);
-        
-        this.renderMainPage();
-        this.showPage('page-main');
-        
+        this._init();
+    }
+
+    _init() {
+        try {
+            // init مدیرها
+            this.ui.init();
+            this.searchManager.init();
+            this.filterManager.init();
+            this.comparisonManager.init();
+            this.historyManager.init();
+
+            // اتصال callbacks
+            this._setupCallbacks();
+            this._setupNavigation();
+            this._setupExport();
+            this._subscribeEvents();
+
+            // نمایش صفحه اصلی
+            this._renderMainPage();
+            this.navigation.showPage('page-main');
+            this._openFromUrl();
+        } catch (error) {
+            console.error('❌ [AppController._init] خطا:', error);
+        }
+    }
+
+    _setupCallbacks() {
+        // رندر
+        this.renderer.onCategoryClick = (cat) => this._selectCategory(cat);
+        this.renderer.onSubcategoryClick = (items) => this._selectSubcategory(items);
+        this.renderer.onProductClick = (product) => this._showProductDetail(product);
+        this.renderer.onToggleCompare = (product) => this._toggleCompare(product);
+        this.renderer.onShare = (product) => this._shareProduct(product);
+
+        // جستجو
+        this.searchManager.onProductFound = (code) => {
+            const product = this._findProduct(code);
+            if (product) {
+                this.searchManager.clear();
+                this._showProductDetail(product);
+            }
+        };
+        this.searchManager.onSearchPerformed = (results, query) => {
+            this._renderSearchResults(results, query);
+        };
+        this.searchManager.onClear = () => {
+            this.navigation.showPage('page-main');
+        };
+
+        // فیلتر
+        this.filterManager.onFiltersApplied = () => {
+            this._applyFilters();
+        };
+
+        // تاریخچه
+        this.historyManager.onItemClick = (code) => {
+            const product = this._findProduct(code);
+            if (product) this._showProductDetail(product);
+        };
+    }
+
+    _setupNavigation() {
         const backBtn = document.getElementById('backBtn');
         if (backBtn) {
-            backBtn.addEventListener('click', () => this.goBack());
+            backBtn.addEventListener('click', () => this._goBack());
         }
-    }
-    
-    showPage(pageId) {
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        const page = document.getElementById(pageId);
-        if (page) {
-            page.classList.add('active');
-        }
-        
-        const backBtn = document.getElementById('backBtn');
-        if (backBtn) {
-            if (pageId === 'page-main') {
-                backBtn.classList.add('hidden');
-            } else {
-                backBtn.classList.remove('hidden');
-            }
-        }
-    }
-    
-    goBack() {
-        if (this.historyStack.length === 0) return;
-        const lastPage = this.historyStack.pop();
-        
-        if (lastPage === 'page-main') {
-            this.showPage('page-main');
-        } else if (lastPage === 'page-sub') {
-            this.showPage('page-sub');
-            if (this.currentCategory) {
-                this.renderSubcategories(this.currentCategory);
-            }
-        } else if (lastPage === 'page-products') {
-            this.showPage('page-products');
-            if (this.currentSubcategory) {
-                this.renderProducts(this.currentSubcategory);
-            }
-        } else if (lastPage === 'page-detail') {
-            this.showPage('page-products');
-            if (this.currentSubcategory) {
-                this.renderProducts(this.currentSubcategory);
-            }
-        }
-    }
-    
-    renderMainPage() {
-        const container = document.getElementById('categoriesContainer');
-        if (!container) {
-            console.error('❌ categoriesContainer پیدا نشد!');
-            return;
-        }
-        
-        container.innerHTML = '';
-        
-        // گرفتن دسته‌بندی‌ها با چک ایمنی
-        const categories = this.dataService.getCategories() || [];
-        console.log('📋 رندر دسته‌بندی‌ها:', categories.length);
-        
-        if (categories.length === 0) {
-            container.innerHTML = `
-                <div style="text-align:center; padding:40px; color:var(--text-muted);">
-                    <p>⚠️ هیچ دسته‌بندی‌ای وجود ندارد</p>
-                    <p style="font-size:14px;">لطفاً به DataService محصول اضافه کنید</p>
-                </div>
-            `;
-            return;
-        }
-        
-        categories.forEach(cat => {
-            const card = document.createElement('div');
-            card.className = 'category-card';
-            card.innerHTML = `
-                <span class="emoji">${cat.emoji || '📂'}</span>
-                <div class="name">${cat.name || 'بدون نام'}</div>
-                <div class="count">${cat.products ? cat.products.length : 0} محصول</div>
-            `;
-            card.addEventListener('click', () => this.selectCategory(cat));
-            container.appendChild(card);
-        });
-    }
-    
-    selectCategory(category) {
-        this.currentCategory = category;
-        if (!category || !category.products || category.products.length === 0) {
-            console.warn('⚠️ این دسته‌بندی محصولی ندارد');
-            return;
-        }
-        
-        this.historyStack.push('page-main');
-        this.showPage('page-sub');
-        this.renderSubcategories(category);
-    }
-    
-    renderSubcategories(category) {
-        const title = document.getElementById('subCategoryTitle');
-        if (title) {
-            title.innerHTML = `
-                <span class="emoji">${category.emoji || '📂'}</span>
-                ${category.name || 'دسته‌بندی'} - زیردسته‌ها
-            `;
-        }
-        
-        const container = document.getElementById('subcategoriesContainer');
-        if (!container) return;
-        
-        container.innerHTML = '';
-        
-        // برای سادگی، محصولات رو به عنوان زیردسته نشون می‌دیم
-        const products = category.products || [];
-        
-        if (products.length === 0) {
-            container.innerHTML = `
-                <div style="text-align:center; padding:30px; color:var(--text-muted);">
-                    ⚠️ این دسته‌بندی محصولی ندارد
-                </div>
-            `;
-            return;
-        }
-        
-        // گروه‌بندی محصولات بر اساس نوع (مثلاً برای توپ‌ها)
-        const groups = {};
-        products.forEach(product => {
-            const key = product.constructor.name || 'سایر';
-            if (!groups[key]) {
-                groups[key] = [];
-            }
-            groups[key].push(product);
-        });
-        
-        Object.keys(groups).forEach(groupName => {
-            const card = document.createElement('div');
-            card.className = 'subcategory-card';
-            const items = groups[groupName];
-            card.innerHTML = `
-                <span class="emoji">📦</span>
-                <div class="name">${groupName}</div>
-                <div class="count">${items.length} محصول</div>
-            `;
-            card.addEventListener('click', () => this.selectSubcategory(items));
-            container.appendChild(card);
-        });
-    }
-    
-    selectSubcategory(products) {
-        this.currentSubcategory = products;
-        this.historyStack.push('page-sub');
-        this.showPage('page-products');
-        this.renderProducts(products);
-    }
-    
-    renderProducts(products) {
-        const title = document.getElementById('productsTitle');
-        if (title) {
-            title.innerHTML = `
-                <span class="emoji">📦</span>
-                لیست محصولات
-            `;
-        }
-        
-        const container = document.getElementById('productsContainer');
-        if (!container) return;
-        
-        container.innerHTML = '';
-        
-        if (!products || products.length === 0) {
-            container.innerHTML = `
-                <div style="text-align:center; padding:30px; color:var(--text-muted);">
-                    ⚠️ هیچ محصولی وجود ندارد
-                </div>
-            `;
-            return;
-        }
-        
-        products.forEach(product => {
-            const card = document.createElement('div');
-            card.className = 'product-card';
-            
-            let imageHtml = product.hasImage && product.hasImage() 
-                ? `<img class="product-image" src="${product.image}" alt="${product.name}" loading="lazy" onerror="this.style.display='none'">`
-                : `<div class="product-image-placeholder">📷</div>`;
-            
-            const price = product.getFormattedPrice ? product.getFormattedPrice() : 
-                         new Intl.NumberFormat('fa-IR').format(product.price || 0);
-            
-            const stockStatus = product.getStockStatus ? product.getStockStatus() : 
-                               (product.stockStatus ? product.stockStatus.label || 'نامشخص' : 'نامشخص');
-            
-            const stockClass = product.getStockClass ? product.getStockClass() : 'available';
-            const stockEmoji = product.getStockEmoji ? product.getStockEmoji() : '✅';
-            
-            card.innerHTML = `
-                ${imageHtml}
-                <div class="product-name">${product.name || 'بدون نام'}</div>
-                <div class="product-price">${price} تومان</div>
-                <span class="product-stock ${stockClass}">${stockEmoji} ${stockStatus}</span>
-            `;
-            card.addEventListener('click', () => this.showProductDetail(product));
-            container.appendChild(card);
-        });
-    }
-    
-    showProductDetail(product) {
-        this.historyStack.push('page-products');
-        this.showPage('page-detail');
-        
-        const container = document.getElementById('productDetailContainer');
-        if (!container) return;
-        
-        const price = product.getFormattedPrice ? product.getFormattedPrice() : 
-                     new Intl.NumberFormat('fa-IR').format(product.price || 0);
-        
-        container.innerHTML = `
-            <div class="detail-header">
-                <div class="detail-info-right">
-                    <div class="detail-name">${product.name || 'بدون نام'}</div>
-                    <div class="detail-price">${price} تومان</div>
-                    <div class="detail-meta">
-                        <span class="meta-item"><strong>برند:</strong> ${product.brand ? product.brand.label || product.brand : 'نامشخص'}</span>
-                        <span class="meta-item"><strong>کد:</strong> ${product.code || 'نامشخص'}</span>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="detail-description">
-                <strong>📝 توضیحات:</strong><br>
-                ${product.description || 'توضیحی برای این محصول ثبت نشده است.'}
-            </div>
-            
-            <div style="text-align: center; margin-top: 20px;">
-                <a href="https://eitaa.com/sport_90_isfahan" target="_blank" class="order-btn">
-                    🛒 ثبت سفارش
-                </a>
-            </div>
-        `;
-    }
-    /**
- * AppController - کنترلر اصلی برنامه
- * (بخش‌های قبلی را نگه دارید و این بخش‌ها را اضافه کنید)
- */
 
-// ================================================================
-//  بخش جدید: جستجو
-// ================================================================
+        const goBackTop = document.getElementById('goBackTop');
+        if (goBackTop) {
+            goBackTop.addEventListener('click', () => this._goBack());
+        }
 
-/**
- * مقداردهی اولیه جستجو
- */
-_initSearch() {
-    const searchInput = document.getElementById('searchInput');
-    const searchButton = document.getElementById('searchButton');
-    const searchClear = document.getElementById('searchClear');
-    const searchResults = document.getElementById('searchResults');
-    const searchSuggestions = document.getElementById('searchSuggestions');
+        const goBackBottom = document.getElementById('goBackBottom');
+        if (goBackBottom) {
+            goBackBottom.addEventListener('click', () => this._goBack());
+        }
+    }
 
-    if (searchInput) {
-        // جستجو با تایپ کردن (با تاخیر)
-        let searchTimeout;
-        searchInput.addEventListener('input', (e) => {
-            clearTimeout(searchTimeout);
-            searchTimeout = setTimeout(() => {
-                this._performSearch(e.target.value);
-            }, 300);
-        });
+    _setupExport() {
+        const exportCSV = document.getElementById('exportCSV');
+        const exportJSON = document.getElementById('exportJSON');
 
-        // جستجو با دکمه Enter
-        searchInput.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                this._performSearch(searchInput.value);
-            }
-        });
+        if (exportCSV) {
+            exportCSV.addEventListener('click', () => {
+                const source = this.visibleProducts.length > 0 ? this.visibleProducts : this.allProducts;
+                const result = this.exportService.exportToCSV(source, 'sport90-products.csv');
+                this.ui.showToast(result.message, result.success ? 'success' : 'error');
+            });
+        }
 
-        // دکمه پاک کردن جستجو
-        if (searchClear) {
-            searchClear.addEventListener('click', () => {
-                searchInput.value = '';
-                this._clearSearch();
+        if (exportJSON) {
+            exportJSON.addEventListener('click', () => {
+                const source = this.visibleProducts.length > 0 ? this.visibleProducts : this.allProducts;
+                const result = this.exportService.exportToJSON(source, 'sport90-products.json');
+                this.ui.showToast(result.message, result.success ? 'success' : 'error');
             });
         }
     }
 
-    if (searchButton) {
-        searchButton.addEventListener('click', () => {
-            this._performSearch(searchInput.value);
+    _subscribeEvents() {
+        eventBus.on(AppEvents.COMPARISON_CHANGED, () => {
+            this.comparisonManager.updateTray();
+        });
+
+        eventBus.on(AppEvents.HISTORY_CHANGED, () => {
+            this.historyManager.render();
         });
     }
-}
 
-/**
- * اجرای جستجو
- */
-_performSearch(query) {
-    const searchResults = document.getElementById('searchResults');
-    const searchContainer = document.getElementById('searchContainer');
-    
-    if (!query || query.trim() === '') {
-        this._clearSearch();
-        return;
+    // ===== Navigation Methods =====
+
+    _renderMainPage() {
+        const container = document.getElementById('categoriesContainer');
+        const categories = this.dataService.getCategories() || [];
+        this.renderer.renderCategories(categories, container);
     }
 
-    // جستجو در سرویس
-    const results = this.searchService.search(query);
-    
-    // نمایش نتایج
-    this._renderSearchResults(results, query);
-    
-    // نمایش بخش نتایج
-    if (searchContainer) {
-        searchContainer.style.display = 'block';
+    _selectCategory(category) {
+        this.navigation.currentCategory = category;
+        if (!category?.products?.length) return;
+
+        this.navigation.pushState('page-main');
+        this.navigation.showPage('page-sub');
+        this._renderSubcategories(category);
     }
-    
-    // مخفی کردن صفحات دیگر
-    document.querySelectorAll('.page').forEach(p => {
-        if (p.id !== 'page-search') {
-            p.classList.remove('active');
+
+    _renderSubcategories(category) {
+        const container = document.getElementById('subcategoriesContainer');
+        const title = document.getElementById('subCategoryTitle');
+        this.renderer.renderSubcategories(category, container, title);
+    }
+
+    _selectSubcategory(products) {
+        this.navigation.currentSubcategory = products;
+        this.navigation.pushState('page-sub');
+        this.navigation.showPage('page-products');
+
+        this.visibleProducts = products;
+        this.renderer.renderProducts(products, document.getElementById('productsContainer'));
+    }
+
+    _showProductDetail(product) {
+        this.historyService.add(product);
+        this.navigation.pushState('page-products');
+        this.navigation.showPage('page-detail');
+
+        const container = document.getElementById('productDetailContainer');
+        this.renderer.renderProductDetail(product, container);
+    }
+
+    _toggleCompare(product) {
+        const result = this.comparisonService.toggleProduct(product);
+        this.ui.showToast(result.message, result.success ? 'success' : 'error');
+    }
+
+    async _shareProduct(product) {
+        const result = await this.shareService.copyLink(product);
+        this.ui.showToast(result.message, result.success ? 'success' : 'error');
+    }
+
+    _goBack() {
+        const lastPage = this.navigation.goBack();
+        if (!lastPage) return;
+
+        if (lastPage === 'page-main') {
+            this.navigation.showPage('page-main');
+        } else if (lastPage === 'page-sub') {
+            this.navigation.showPage('page-sub');
+            if (this.navigation.currentCategory) {
+                this._renderSubcategories(this.navigation.currentCategory);
+            }
+        } else if (lastPage === 'page-products') {
+            this.navigation.showPage('page-products');
+            if (this.navigation.currentSubcategory) {
+                this.renderer.renderProducts(this.navigation.currentSubcategory, document.getElementById('productsContainer'));
+            }
         }
-    });
-    const searchPage = document.getElementById('page-search');
-    if (searchPage) {
-        searchPage.classList.add('active');
     }
-    
-    // نمایش دکمه بازگشت
-    const backBtn = document.getElementById('backBtn');
-    if (backBtn) {
-        backBtn.classList.remove('hidden');
+
+    // ===== Filter Methods =====
+
+    _applyFilters() {
+        const source = this.navigation.currentSubcategory || this.allProducts;
+        this.visibleProducts = this.filterService.combine(source);
+        this.renderer.renderProducts(this.visibleProducts, document.getElementById('productsContainer'));
+        this.filterManager.updateResultCount(this.visibleProducts.length);
     }
-}
 
-/**
- * رندر نتایج جستجو
- */
-_renderSearchResults(results, query) {
-    const container = document.getElementById('searchResults');
-    if (!container) return;
+    // ===== Search Methods =====
 
-    container.innerHTML = '';
+    _renderSearchResults(results, query) {
+        document.querySelectorAll('.page').forEach((p) => {
+            if (p.id !== 'page-search') p.classList.remove('active');
+        });
+        const searchPage = document.getElementById('page-search');
+        if (searchPage) searchPage.classList.add('active');
 
-    // عنوان نتایج
-    const title = document.createElement('div');
-    title.style.cssText = `
-        padding: 15px 0;
-        border-bottom: 2px solid var(--border-color);
-        margin-bottom: 20px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 10px;
+        const backBtn = document.getElementById('backBtn');
+        if (backBtn) backBtn.classList.remove('hidden');
+
+        this.navigation.pushState('page-main');
+
+        const container = document.getElementById('searchResults');
+        if (!container) return;
+        container.innerHTML = '';
+
+        const title = document.createElement('div');
+        title.style.cssText = 'padding: 15px 0; border-bottom: 2px solid var(--border-color); margin-bottom: 20px;';
+        title.innerHTML = `
+      <span style="font-size: 18px; font-weight: bold;">
+        🔍 نتایج برای "${this.ui.escapeHtml(query)}" (${results.length} محصول)
+      </span>
     `;
-    title.innerHTML = `
-        <span style="font-size: 18px; font-weight: bold; color: var(--text-secondary);">
-            🔍 نتایج جستجو برای "<span style="color: var(--primary-color);">${query}</span>"
-        </span>
-        <span style="font-size: 14px; color: var(--text-muted);">
-            ${results.length} محصول پیدا شد
-        </span>
-    `;
-    container.appendChild(title);
+        container.appendChild(title);
 
-    if (results.length === 0) {
-        container.innerHTML += `
-            <div style="text-align: center; padding: 60px 20px; color: var(--text-muted);">
-                <div style="font-size: 64px; margin-bottom: 20px;">🔍</div>
-                <h3 style="font-size: 20px; color: var(--text-secondary);">محصولی پیدا نشد!</h3>
-                <p style="margin-top: 10px;">عبارت "<strong>${query}</strong>" در هیچ محصولی یافت نشد.</p>
-                <p style="font-size: 14px; margin-top: 5px;">پیشنهاد: از کلمات کلیدی کوتاه‌تر استفاده کنید.</p>
-            </div>
-        `;
-        return;
+        if (results.length === 0) {
+            container.innerHTML += `
+        <div style="text-align: center; padding: 60px 20px; color: var(--text-muted);">
+          <div style="font-size: 64px;">🔍</div>
+          <h3>محصولی پیدا نشد!</h3>
+        </div>
+      `;
+            return;
+        }
+
+        const grid = document.createElement('div');
+        grid.className = 'products-grid';
+        container.appendChild(grid);
+        this.renderer.renderProducts(results, grid);
     }
 
-    // نمایش نتایج به صورت گرید
-    const grid = document.createElement('div');
-    grid.className = 'products-grid';
-    grid.style.cssText = `
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-        gap: 20px;
-        margin-top: 10px;
-    `;
+    // ===== Helpers =====
 
-    results.forEach(product => {
-        const card = document.createElement('div');
-        card.className = 'product-card';
-        
-        // هایلایت کردن کلمه جستجو شده در اسم
-        const highlightedName = this._highlightText(product.name, query);
-        
-        let imageHtml = product.hasImage && product.hasImage() 
-            ? `<img class="product-image" src="${product.image}" alt="${product.name}" loading="lazy" onerror="this.style.display='none'">`
-            : `<div class="product-image-placeholder">📷</div>`;
-
-        const price = product.getFormattedPrice ? product.getFormattedPrice() : 
-                     new Intl.NumberFormat('fa-IR').format(product.price || 0);
-        
-        const stockStatus = product.getStockStatus ? product.getStockStatus() : 
-                           (product.stockStatus ? product.stockStatus.label || 'نامشخص' : 'نامشخص');
-        const stockClass = product.getStockClass ? product.getStockClass() : 'available';
-        const stockEmoji = product.getStockEmoji ? product.getStockEmoji() : '✅';
-
-        card.innerHTML = `
-            ${imageHtml}
-            <div class="product-name">${highlightedName}</div>
-            <div class="product-price">${price} تومان</div>
-            <span class="product-stock ${stockClass}">${stockEmoji} ${stockStatus}</span>
-            <div class="product-code" style="font-size: 12px; color: var(--text-muted); margin-top: 5px;">
-                کد: ${product.code || 'نامشخص'}
-            </div>
-        `;
-        card.addEventListener('click', () => this.showProductDetail(product));
-        grid.appendChild(card);
-    });
-
-    container.appendChild(grid);
-}
-
-/**
- * هایلایت کردن متن جستجو شده
- */
-_highlightText(text, query) {
-    if (!query || query.trim() === '') return text;
-    
-    const normalizedQuery = query.trim().toLowerCase();
-    const index = text.toLowerCase().indexOf(normalizedQuery);
-    
-    if (index === -1) return text;
-    
-    const before = text.substring(0, index);
-    const matched = text.substring(index, index + normalizedQuery.length);
-    const after = text.substring(index + normalizedQuery.length);
-    
-    return `${before}<span style="background-color: #ffeb3b; padding: 0 2px; border-radius: 2px; font-weight: bold;">${matched}</span>${after}`;
-}
-
-/**
- * پاک کردن نتایج جستجو
- */
-_clearSearch() {
-    const searchContainer = document.getElementById('searchContainer');
-    const searchInput = document.getElementById('searchInput');
-    
-    if (searchContainer) {
-        searchContainer.style.display = 'none';
+    _findProduct(code) {
+        return this.allProducts.find((p) => p.code === code) || null;
     }
-    
-    if (searchInput) {
-        searchInput.value = '';
-    }
-    
-    // برگشت به صفحه اصلی
-    this.showPage('page-main');
-    
-    const backBtn = document.getElementById('backBtn');
-    if (backBtn) {
-        backBtn.classList.add('hidden');
-    }
-}
 
-/**
- * جستجوی پیشرفته (با فیلتر)
- */
-_searchAdvanced(query, filters) {
-    const results = this.searchService.searchAdvanced(query, filters);
-    this._renderSearchResults(results, query);
-    return results;
-}
+    _openFromUrl() {
+        try {
+            const params = new URLSearchParams(window.location.search);
+            const code = params.get('product');
+            if (!code) return;
+            const product = this._findProduct(code);
+            if (product) {
+                setTimeout(() => this._showProductDetail(product), 100);
+            }
+        } catch (error) {
+            console.error('❌ [AppController._openFromUrl] خطا:', error);
+        }
+    }
 }

@@ -167,3 +167,39 @@ const Category = Object.freeze({
     OTHER: { value: 'other', label: 'سایر محصولات', emoji: '📦' },
     DECORATIVE: { value: 'decorative', label: 'تزیینی', emoji: '✨' }
 });
+
+// ===== گزینه‌های مرتب‌سازی =====
+const SortOption = Object.freeze({
+    NEWEST: 'newest',
+    PRICE_ASC: 'price_asc',
+    PRICE_DESC: 'price_desc',
+    NAME_ASC: 'name_asc',
+    NAME_DESC: 'name_desc',
+});
+
+// ===== نام رویدادها =====
+const AppEvents = Object.freeze({
+    FILTER_CHANGED: 'filter:changed',
+    SORT_CHANGED: 'sort:changed',
+    COMPARISON_CHANGED: 'comparison:changed',
+    HISTORY_CHANGED: 'history:changed',
+    PRODUCTS_UPDATED: 'products:updated',
+    PAGE_CHANGED: 'page:changed',
+});
+
+// ===== کلیدهای localStorage =====
+const StorageKeys = Object.freeze({
+    THEME: 'sport90_theme',
+    HISTORY: 'sport90_history',
+    COMPARISON: 'sport90_comparison',
+    SEARCH_HISTORY: 'sport90_search_history',
+    FILTERS: 'sport90_filters',
+});
+
+// ===== محدودیت‌ها =====
+const AppLimits = Object.freeze({
+    MAX_COMPARISON: 3,
+    MAX_HISTORY: 10,
+    MAX_SEARCH_HISTORY: 5,
+    MAX_SUGGESTIONS: 8,
+});
