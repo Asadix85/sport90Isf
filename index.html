@@ -36,13 +36,13 @@
     <!-- PWA -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#ff6b35">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="اسپرت ۹۰">
     
     <!-- Security Headers (via meta) -->
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
-    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
     <meta http-equiv="X-XSS-Protection" content="1; mode=block">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; font-src 'self' https://cdn.jsdelivr.net data:; img-src 'self' data: blob:;">
     
@@ -470,83 +470,83 @@
 <script src="js/core/EventBus.js"></script>
 
 <!-- ۴. کلاس پایه -->
-<script src="js/models/abstract/Product.js"></script>
+<script type="module" src="js/models/abstract/Product.js"></script>
 
 <!-- ۵. کلاس‌های پایه محصولات -->
-<script src="js/models/products/balls/Ball.js"></script>
-<script src="js/models/products/shoes/shoe.js"></script>
-<script src="js/models/products/clothings/Clothing.js"></script>
-<script src="js/models/products/accessories/Accessory.js"></script>
-<script src="js/models/products/fitnessEquipment/FitnessEquipment.js"></script>
-<script src="js/models/products/dumbbells/Dumbbell.js"></script>
-<script src="js/models/products/nets/Net.js"></script>
+<script type="module" src="js/models/products/balls/Ball.js"></script>
+<script type="module" src="js/models/products/shoes/shoe.js"></script>
+<script type="module" src="js/models/products/clothings/Clothing.js"></script>
+<script type="module" src="js/models/products/accessories/Accessory.js"></script>
+<script type="module" src="js/models/products/fitnessEquipment/FitnessEquipment.js"></script>
+<script type="module" src="js/models/products/dumbbells/Dumbbell.js"></script>
+<script type="module" src="js/models/products/nets/Net.js"></script>
 
 <!-- ۶. کلاس‌های فرزند -->
-<script src="js/models/products/balls/FootballBall.js"></script>
-<script src="js/models/products/balls/BasketballBall.js"></script>
-<script src="js/models/products/balls/VolleyballBall.js"></script>
-<script src="js/models/products/balls/ExerciseBall.js"></script>
-<script src="js/models/products/balls/MedicineBall.js"></script>
+<script type="module" src="js/models/products/balls/FootballBall.js"></script>
+<script type="module" src="js/models/products/balls/BasketballBall.js"></script>
+<script type="module" src="js/models/products/balls/VolleyballBall.js"></script>
+<script type="module" src="js/models/products/balls/ExerciseBall.js"></script>
+<script type="module" src="js/models/products/balls/MedicineBall.js"></script>
 
-<script src="js/models/products/shoes/FootballShoe.js"></script>
-<script src="js/models/products/shoes/VolleyballShoe.js"></script>
-<script src="js/models/products/shoes/WrestlingShoe.js"></script>
-<script src="js/models/products/shoes/SportsShoe.js"></script>
+<script type="module" src="js/models/products/shoes/FootballShoe.js"></script>
+<script type="module" src="js/models/products/shoes/VolleyballShoe.js"></script>
+<script type="module" src="js/models/products/shoes/WrestlingShoe.js"></script>
+<script type="module" src="js/models/products/shoes/SportsShoe.js"></script>
 
-<script src="js/models/products/clothings/Shirt.js"></script>
-<script src="js/models/products/clothings/Short.js"></script>
-<script src="js/models/products/clothings/Socks.js"></script>
-<script src="js/models/products/clothings/Swimsuit.js"></script>
-<script src="js/models/products/clothings/MartialArtsUniform.js"></script>
+<script type="module" src="js/models/products/clothings/Shirt.js"></script>
+<script type="module" src="js/models/products/clothings/Short.js"></script>
+<script type="module" src="js/models/products/clothings/Socks.js"></script>
+<script type="module" src="js/models/products/clothings/Swimsuit.js"></script>
+<script type="module" src="js/models/products/clothings/MartialArtsUniform.js"></script>
 
-<script src="js/models/products/fitnessEquipment/Barbell.js"></script>
-<script src="js/models/products/fitnessEquipment/PullUpBar.js"></script>
-<script src="js/models/products/fitnessEquipment/ResistanceBand.js"></script>
-<script src="js/models/products/fitnessEquipment/YogaMat.js"></script>
+<script type="module" src="js/models/products/fitnessEquipment/Barbell.js"></script>
+<script type="module" src="js/models/products/fitnessEquipment/PullUpBar.js"></script>
+<script type="module" src="js/models/products/fitnessEquipment/ResistanceBand.js"></script>
+<script type="module" src="js/models/products/fitnessEquipment/YogaMat.js"></script>
 
-<script src="js/models/products/accessories/Glove.js"></script>
-<script src="js/models/products/accessories/Band.js"></script>
-<script src="js/models/products/accessories/Racket.js"></script>
+<script type="module" src="js/models/products/accessories/Glove.js"></script>
+<script type="module" src="js/models/products/accessories/Band.js"></script>
+<script type="module" src="js/models/products/accessories/Racket.js"></script>
 
-<script src="js/models/products/nets/FootballNet.js"></script>
+<script type="module" src="js/models/products/nets/FootballNet.js"></script>
 
-<script src="js/models/products/dumbbells/FixedDumbbell.js"></script>
+<script type="module" src="js/models/products/dumbbells/FixedDumbbell.js"></script>
 
 <!-- ۷. سرویس‌های اصلی -->
-<script src="js/services/DataService.js"></script>
-<script src="js/services/SearchService.js"></script>
+<script type="module" src="js/services/DataService.js"></script>
+<script type="module" src="js/services/SearchService.js"></script>
 
 <!-- ۸. سرویس‌های جدید -->
-<script src="js/services/FilterService.js"></script>
-<script src="js/services/ComparisonService.js"></script>
-<script src="js/services/HistoryService.js"></script>
-<script src="js/services/AutocompleteService.js"></script>
-<script src="js/services/ExportService.js"></script>
-<script src="js/services/ShareService.js"></script>
+<script type="module" src="js/services/FilterService.js"></script>
+<script type="module" src="js/services/ComparisonService.js"></script>
+<script type="module" src="js/services/HistoryService.js"></script>
+<script type="module" src="js/services/AutocompleteService.js"></script>
+<script type="module" src="js/services/ExportService.js"></script>
+<script type="module" src="js/services/ShareService.js"></script>
 
 <!-- ۹. ThemeManager -->
-<script src="js/utils/ThemeManager.js"></script>
+<script type="module" src="js/utils/ThemeManager.js"></script>
 
 <!-- ۱۰. مدیرها (Managers) -->
-<script src="js/controllers/managers/UIManager.js"></script>
-<script src="js/controllers/managers/NavigationManager.js"></script>
-<script src="js/controllers/managers/ProductRenderer.js"></script>
-<script src="js/controllers/managers/SearchManager.js"></script>
-<script src="js/controllers/managers/FilterManager.js"></script>
-<script src="js/controllers/managers/ComparisonManager.js"></script>
-<script src="js/controllers/managers/HistoryManager.js"></script>
-<script src="js/controllers/managers/LoadingManager.js"></script>
-<script src="js/controllers/managers/BreadcrumbManager.js"></script>
-<script src="js/controllers/managers/ScrollManager.js"></script>
-<script src="js/controllers/managers/ViewManager.js"></script>
-<script src="js/controllers/managers/QuickViewManager.js"></script>
-<script src="js/controllers/managers/BottomNavManager.js"></script>
+<script type="module" src="js/controllers/managers/UIManager.js"></script>
+<script type="module" src="js/controllers/managers/NavigationManager.js"></script>
+<script type="module" src="js/controllers/managers/ProductRenderer.js"></script>
+<script type="module" src="js/controllers/managers/SearchManager.js"></script>
+<script type="module" src="js/controllers/managers/FilterManager.js"></script>
+<script type="module" src="js/controllers/managers/ComparisonManager.js"></script>
+<script type="module" src="js/controllers/managers/HistoryManager.js"></script>
+<script type="module" src="js/controllers/managers/LoadingManager.js"></script>
+<script type="module" src="js/controllers/managers/BreadcrumbManager.js"></script>
+<script type="module" src="js/controllers/managers/ScrollManager.js"></script>
+<script type="module" src="js/controllers/managers/ViewManager.js"></script>
+<script type="module" src="js/controllers/managers/QuickViewManager.js"></script>
+<script type="module" src="js/controllers/managers/BottomNavManager.js"></script>
 
 <!-- ۱۱. کنترلر اصلی -->
-<script src="js/controllers/AppController.js"></script>
+<script type="module" src="js/controllers/AppController.js"></script>
 
 <!-- ۱۲. نقطه ورود -->
-<script src="js/main.js"></script>
+<script type="module" src="js/main.js"></script>
 
 </body>
 </html>

@@ -177,4 +177,4 @@ class HistoryService {
     getCount() {
         return this.history.length;
     }
-}
+}export { HistoryService };

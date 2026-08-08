@@ -259,4 +259,4 @@ class ComparisonService {
         }
         return String(value ?? '');
     }
-}
+}export { ComparisonService };

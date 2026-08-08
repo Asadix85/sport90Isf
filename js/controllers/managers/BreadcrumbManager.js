@@ -124,4 +124,4 @@ class BreadcrumbManager {
 
         this.setPath(path);
     }
-}
+}export { BreadcrumbManager };
