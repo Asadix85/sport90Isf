@@ -5,7 +5,7 @@
  */
 
 // ----- وضعیت موجودی -----
-const StockStatus = Object.freeze({
+export const StockStatus = Object.freeze({
     AVAILABLE: { value: 'available', label: 'موجود', emoji: '✅' },
     OUT_OF_STOCK: { value: 'out_of_stock', label: 'ناموجود', emoji: '❌' },
     PRE_ORDER: { value: 'pre_order', label: 'پیش‌سفارش', emoji: '⏳' },
@@ -13,7 +13,7 @@ const StockStatus = Object.freeze({
 });
 
 // ----- جنسیت -----
-const Gender = Object.freeze({
+export const Gender = Object.freeze({
     MEN: { value: 'men', label: 'مردانه', emoji: '👨' },
     WOMEN: { value: 'women', label: 'زنانه', emoji: '👩' },
     UNISEX: { value: 'unisex', label: 'یونیسکس', emoji: '👤' },
@@ -21,7 +21,7 @@ const Gender = Object.freeze({
 });
 
 // ===== سایز لباس (جدید) =====
-const ClothingSize = Object.freeze({
+export const ClothingSize = Object.freeze({
     XS: { value: 'XS', label: 'خیلی کوچک' },
     S: { value: 'S', label: 'کوچک' },
     M: { value: 'M', label: 'متوسط' },
@@ -35,7 +35,7 @@ const ClothingSize = Object.freeze({
 });
 
 // ----- سایز کفش -----
-const ShoeSize = Object.freeze({
+export const ShoeSize = Object.freeze({
     SIZE_36: 36,
     SIZE_37: 37,
     SIZE_38: 38,
@@ -52,7 +52,7 @@ const ShoeSize = Object.freeze({
 });
 
 // ----- نوع توپ فوتبال -----
-const FootballType = Object.freeze({
+export const FootballType = Object.freeze({
     TRAINING: { value: 'training', label: 'تمرینی' },
     MATCH: { value: 'match', label: 'مسابقه' },
     BEACH: { value: 'beach', label: 'ساحلی' },
@@ -60,7 +60,7 @@ const FootballType = Object.freeze({
 });
 
 // ----- جنس توپ -----
-const BallMaterial = Object.freeze({
+export const BallMaterial = Object.freeze({
     LEATHER: { value: 'leather', label: 'چرم طبیعی' },
     PU: { value: 'pu', label: 'چرم مصنوعی (PU)' },
     PVC: { value: 'pvc', label: 'PVC' },
@@ -69,7 +69,7 @@ const BallMaterial = Object.freeze({
 });
 
 // ----- نوع زمین -----
-const Terrain = Object.freeze({
+export const Terrain = Object.freeze({
     NATURAL: { value: 'natural', label: 'چمن طبیعی' },
     ARTIFICIAL: { value: 'artificial', label: 'چمن مصنوعی' },
     INDOOR: { value: 'indoor', label: 'سالنی' },
@@ -77,7 +77,7 @@ const Terrain = Object.freeze({
 });
 
 // ===== برندها =====
-const Brand = Object.freeze({
+export const Brand = Object.freeze({
     // ===== برندهای بین‌المللی =====
     ADIDAS: { value: 'adidas', label: 'آدیداس', type: 'international' },
     NIKE: { value: 'nike', label: 'نایکی', type: 'international' },
@@ -111,7 +111,7 @@ const Brand = Object.freeze({
 });
 
 // ===== رنگ‌ها =====
-const Color = Object.freeze({
+export const Color = Object.freeze({
     WHITE: { value: 'white', label: 'سفید', hex: '#FFFFFF' },
     BLACK: { value: 'black', label: 'مشکی', hex: '#000000' },
     RED: { value: 'red', label: 'قرمز', hex: '#FF0000' },
@@ -125,7 +125,7 @@ const Color = Object.freeze({
 });
 
 // ===== دسته‌بندی محصولات =====
-const Category = Object.freeze({
+export const Category = Object.freeze({
     // دمبل و وزنه
     DUMBBELL: { value: 'dumbbell', label: 'دمبل و وزنه', emoji: '🏋️' },
 
@@ -169,7 +169,7 @@ const Category = Object.freeze({
 });
 
 // ===== گزینه‌های مرتب‌سازی =====
-const SortOption = Object.freeze({
+export const SortOption = Object.freeze({
     NEWEST: 'newest',
     PRICE_ASC: 'price_asc',
     PRICE_DESC: 'price_desc',
@@ -178,7 +178,7 @@ const SortOption = Object.freeze({
 });
 
 // ===== نام رویدادها =====
-const AppEvents = Object.freeze({
+export const AppEvents = Object.freeze({
     FILTER_CHANGED: 'filter:changed',
     SORT_CHANGED: 'sort:changed',
     COMPARISON_CHANGED: 'comparison:changed',
@@ -188,7 +188,7 @@ const AppEvents = Object.freeze({
 });
 
 // ===== کلیدهای localStorage =====
-const StorageKeys = Object.freeze({
+export const StorageKeys = Object.freeze({
     THEME: 'sport90_theme',
     HISTORY: 'sport90_history',
     COMPARISON: 'sport90_comparison',
@@ -197,7 +197,7 @@ const StorageKeys = Object.freeze({
 });
 
 // ===== محدودیت‌ها =====
-const AppLimits = Object.freeze({
+export const AppLimits = Object.freeze({
     MAX_COMPARISON: 3,
     MAX_HISTORY: 10,
     MAX_SEARCH_HISTORY: 5,

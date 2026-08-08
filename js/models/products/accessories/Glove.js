@@ -1,21 +1,17 @@
-/**
- * کلاس Glove - دستکش‌ها
- */
-class Glove extends Accessory {
+import { Accessory } from './Accessory.js';
+import { Category, Brand } from '../../../enums/Enums.js';
+
+export class Glove extends Accessory {
     constructor({
                     name,
                     price,
-                    stockStatus = StockStatus.AVAILABLE,
+                    stockStatus = undefined,
                     image = null,
                     description = '',
-                    brand = Brand.IRANIAN,
+                    brand = Brand.ADIDAS,
                     colors = [],
-                    material = 'چرم',
-                    isWearable = true,
-                    size = 'متوسط',
-                    type = 'ورزشی',       // ورزشی، گلری، بوکس، رزمی
-                    hasPadding = true,
-                    fingerType = 'کامل'   // کامل، نیمه انگشتی
+                    material = 'چرم مصنوعی',
+                    gloveType = 'دروازه‌بانی'
                 }) {
         super({
             name,
@@ -26,13 +22,9 @@ class Glove extends Accessory {
             category: Category.GLOVES,
             brand,
             colors,
-            material,
-            isWearable,
-            size
+            material
         });
 
-        this.type = type;
-        this.hasPadding = hasPadding;
-        this.fingerType = fingerType;
+        this.gloveType = gloveType;
     }
 }

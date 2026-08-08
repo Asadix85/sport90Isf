@@ -1,20 +1,18 @@
-/**
- * کلاس Dumbbell - پایه همه دمبل‌ها
- */
-class Dumbbell extends Product {
+import { Product } from '../../abstract/Product.js';
+import { Category } from '../../../enums/Enums.js';
+
+export class Dumbbell extends Product {
     constructor({
                     name,
                     price,
-                    stockStatus = StockStatus.AVAILABLE,
+                    stockStatus = undefined,
                     image = null,
                     description = '',
                     category = Category.DUMBBELL,
-                    brand = Brand.BODY_CRAFT,
+                    brand = undefined,
                     colors = [],
-                    weight,          // وزن به کیلوگرم
-                    unit = 'جفت',    // واحد: جفت، عدد
-                    material = 'چدن',
-                    handleType = 'معمولی'
+                    weight = 5,
+                    material = 'آهن'
                 }) {
         super({
             name,
@@ -28,16 +26,10 @@ class Dumbbell extends Product {
         });
 
         this.weight = weight;
-        this.unit = unit;
         this.material = material;
-        this.handleType = handleType;
     }
 
     getWeightLabel() {
         return `${this.weight} کیلوگرم`;
-    }
-
-    getUnitLabel() {
-        return this.unit === 'جفت' ? 'جفتی' : 'عددی';
     }
 }

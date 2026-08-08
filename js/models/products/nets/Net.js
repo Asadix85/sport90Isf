@@ -1,19 +1,18 @@
-/**
- * کلاس Net - پایه تور و تجهیزات زمین
- */
-class Net extends Product {
+import { Product } from '../../abstract/Product.js';
+import { Category } from '../../../enums/Enums.js';
+
+export class Net extends Product {
     constructor({
                     name,
                     price,
-                    stockStatus = StockStatus.AVAILABLE,
+                    stockStatus = undefined,
                     image = null,
                     description = '',
                     category = Category.NETS,
-                    brand = Brand.IRANIAN,
+                    brand = undefined,
                     colors = [],
-                    material = 'نخ',
-                    size = 'استاندارد',
-                    isPortable = false
+                    material = 'نخ پلی‌استر',
+                    dimensions = undefined
                 }) {
         super({
             name,
@@ -27,7 +26,10 @@ class Net extends Product {
         });
 
         this.material = material;
-        this.size = size;
-        this.isPortable = isPortable;
+        this.dimensions = dimensions;
+    }
+
+    getDimensionsLabel() {
+        return this.dimensions || '';
     }
 }

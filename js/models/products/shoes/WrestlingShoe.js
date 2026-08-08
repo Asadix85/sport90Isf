@@ -1,22 +1,18 @@
-/**
- * WrestlingShoe - کفش کشتی
- */
-class WrestlingShoe extends Shoe {
+import { Shoe } from './shoe.js';
+import { Category, Brand } from '../../../enums/Enums.js';
+
+export class WrestlingShoe extends Shoe {
     constructor({
                     name,
                     price,
-                    stockStatus = StockStatus.AVAILABLE,
+                    stockStatus = undefined,
                     image = null,
                     description = '',
                     brand = Brand.ASICS,
                     colors = [],
-                    size = ShoeSize.SIZE_42,
-                    gender = Gender.MEN,
-                    color = 'قرمز-آبی',
-                    material = 'چرم',
-                    sole = 'غیرلغزش',
-                    ankleSupport = 'متوسط', // کم، متوسط، زیاد
-                    weight = 300           // وزن به گرم
+                    shoeSize = 42,
+                    terrain = undefined,
+                    gender = undefined
                 }) {
         super({
             name,
@@ -27,23 +23,9 @@ class WrestlingShoe extends Shoe {
             category: Category.WRESTLING_SHOE,
             brand,
             colors,
-            size,
-            gender,
-            color,
-            material
+            shoeSize,
+            terrain,
+            gender
         });
-
-        this.sole = sole;
-        this.ankleSupport = ankleSupport;
-        this.weight = weight;
-    }
-
-    getAnkleSupportLabel() {
-        const labels = {
-            'low': 'کم',
-            'medium': 'متوسط',
-            'high': 'زیاد'
-        };
-        return labels[this.ankleSupport] || this.ankleSupport;
     }
 }

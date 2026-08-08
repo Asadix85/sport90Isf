@@ -2,7 +2,7 @@
  * LoadingManager.js - مدیریت صفحه لودینگ و Skeleton
  * مسئولیت: نمایش loading state
  */
-class LoadingManager {
+export class LoadingManager {
     constructor() {
         this.loadingScreen = null;
         this.isLoading = false;
@@ -76,3 +76,5 @@ class LoadingManager {
         if (container) container.innerHTML = '';
     }
 }export { LoadingManager };
+
+export { LoadingManager };

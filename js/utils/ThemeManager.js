@@ -2,7 +2,7 @@
  * ThemeManager.js - مدیریت تم‌های رنگی (نسخه پیشرفته)
  * مسئولیت: Dark/Light mode + تم‌های رنگی
  */
-class ThemeManager {
+export class ThemeManager {
     constructor() {
         this.themes = {
             fire: {
@@ -209,3 +209,4 @@ class ThemeManager {
         }
     }
 }export { ThemeManager };
+export { ThemeManager };

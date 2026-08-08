@@ -1,19 +1,17 @@
-/**
- * کلاس Accessory - پایه لوازم جانبی
- */
-class Accessory extends Product {
+import { Product } from '../../abstract/Product.js';
+import { Category } from '../../../enums/Enums.js';
+
+export class Accessory extends Product {
     constructor({
                     name,
                     price,
-                    stockStatus = StockStatus.AVAILABLE,
+                    stockStatus = undefined,
                     image = null,
                     description = '',
                     category = Category.ACCESSORIES,
-                    brand = Brand.IRANIAN,
+                    brand = undefined,
                     colors = [],
-                    material = 'پلاستیک',
-                    isWearable = false,
-                    size = 'یک سایز'
+                    material = undefined
                 }) {
         super({
             name,
@@ -27,7 +25,9 @@ class Accessory extends Product {
         });
 
         this.material = material;
-        this.isWearable = isWearable;
-        this.size = size;
+    }
+
+    getMaterialName() {
+        return this.material || '';
     }
 }

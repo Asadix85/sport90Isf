@@ -1,23 +1,18 @@
-/**
- * Short - شلوارک ورزشی
- */
-class Short extends Clothing {
+import { Clothing } from './Clothing.js';
+import { Category, Brand, ClothingSize, Gender } from '../../../enums/Enums.js';
+
+export class Short extends Clothing {
     constructor({
                     name,
                     price,
-                    stockStatus = StockStatus.AVAILABLE,
+                    stockStatus = undefined,
                     image = null,
                     description = '',
-                    brand = Brand.IRANIAN,
+                    brand = Brand.NIKE,
                     colors = [],
                     size = ClothingSize.M,
-                    gender = Gender.UNISEX,
-                    material = 'پلی استر',
-                    season = 'تابستانه',
-                    length = 'متوسط',      // کوتاه، متوسط، بلند
-                    hasPocket = true,
-                    hasElastic = true,
-                    color = 'مشکی'
+                    gender = Gender.MEN,
+                    material = 'پلی‌استر'
                 }) {
         super({
             name,
@@ -30,22 +25,7 @@ class Short extends Clothing {
             colors,
             size,
             gender,
-            material,
-            season
+            material
         });
-
-        this.length = length;
-        this.hasPocket = hasPocket;
-        this.hasElastic = hasElastic;
-        this.color = color;
-    }
-
-    getLengthLabel() {
-        const labels = {
-            'short': 'کوتاه',
-            'medium': 'متوسط',
-            'long': 'بلند'
-        };
-        return labels[this.length] || this.length;
     }
 }

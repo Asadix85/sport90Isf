@@ -2,7 +2,7 @@
  * QuickViewManager.js - نمایش سریع محصول
  * مسئولیت: Quick View modal با hover/click
  */
-class QuickViewManager {
+export class QuickViewManager {
     constructor(uiManager, comparisonService, shareService) {
         this.ui = uiManager;
         this.comparisonService = comparisonService;
@@ -130,3 +130,5 @@ class QuickViewManager {
 }
 // قبلی: class="quickview-btn"
 // جدید: class="qv-btn"export { QuickViewManager };
+
+export { QuickViewManager };

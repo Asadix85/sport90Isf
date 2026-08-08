@@ -6,7 +6,7 @@
  *   - ساخت لینک‌های شبکه اجتماعی
  *   - deep link برای محصول (?product=CODE)
  */
-class ShareService {
+export class ShareService {
     /**
      * ساخت URL محصول
      * @param {Object} product

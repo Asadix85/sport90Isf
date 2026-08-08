@@ -1,21 +1,17 @@
-/**
- * کلاس FixedDumbbell - دمبل فشرده (ثابت)
- */
-class FixedDumbbell extends Dumbbell {
+import { Dumbbell } from './Dumbbell.js';
+import { Category, Brand } from '../../../enums/Enums.js';
+
+export class FixedDumbbell extends Dumbbell {
     constructor({
                     name,
                     price,
-                    stockStatus = StockStatus.AVAILABLE,
+                    stockStatus = undefined,
                     image = null,
                     description = '',
                     brand = Brand.BODY_CRAFT,
                     colors = [],
-                    weight,
-                    unit = 'جفت',
-                    material = 'چدن',
-                    handleType = 'ضدلغزش',
-                    hasRubberCoating = true,
-                    color = 'مشکی'
+                    weight = 10,
+                    material = 'آهن روکش‌دار'
                 }) {
         super({
             name,
@@ -23,19 +19,11 @@ class FixedDumbbell extends Dumbbell {
             stockStatus,
             image,
             description,
+            category: Category.DUMBBELL,
             brand,
             colors,
             weight,
-            unit,
-            material,
-            handleType
+            material
         });
-
-        this.hasRubberCoating = hasRubberCoating;
-        this.color = color;
-    }
-
-    isRubberCoated() {
-        return this.hasRubberCoating ? 'روکش لاستیکی دارد' : 'بدون روکش';
     }
 }

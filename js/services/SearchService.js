@@ -2,7 +2,7 @@
  * SearchService - سرویس جستجوی پیشرفته
  * مسئولیت: جستجو در محصولات بر اساس اسم و کد کالا
  */
-class SearchService {
+export class SearchService {
     constructor(dataService) {
         this.dataService = dataService;
     }

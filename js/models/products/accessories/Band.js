@@ -1,21 +1,17 @@
-/**
- * کلاس Band - بند و زانوبندها
- */
-class Band extends Accessory {
+import { Accessory } from './Accessory.js';
+import { Category, Brand } from '../../../enums/Enums.js';
+
+export class Band extends Accessory {
     constructor({
                     name,
                     price,
-                    stockStatus = StockStatus.AVAILABLE,
+                    stockStatus = undefined,
                     image = null,
                     description = '',
-                    brand = Brand.LP,
+                    brand = Brand.BODY_CRAFT,
                     colors = [],
-                    material = 'نئوپرن',
-                    isWearable = true,
-                    size = 'متوسط',
-                    bodyPart = 'زانو',    // زانو، مچ، آرنج، ساق
-                    hasAdjustment = true,
-                    compression = 'متوسط'
+                    material = 'پارچه‌ای',
+                    bandType = 'زانوبند'
                 }) {
         super({
             name,
@@ -26,13 +22,9 @@ class Band extends Accessory {
             category: Category.BANDS,
             brand,
             colors,
-            material,
-            isWearable,
-            size
+            material
         });
 
-        this.bodyPart = bodyPart;
-        this.hasAdjustment = hasAdjustment;
-        this.compression = compression;
+        this.bandType = bandType;
     }
 }

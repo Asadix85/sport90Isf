@@ -1,20 +1,19 @@
-/**
- * کلاس Clothing - پایه همه پوشاک
- */
-class Clothing extends Product {
+import { Product } from '../../abstract/Product.js';
+import { Category, ClothingSize, Gender } from '../../../enums/Enums.js';
+
+export class Clothing extends Product {
     constructor({
                     name,
                     price,
-                    stockStatus = StockStatus.AVAILABLE,
+                    stockStatus = undefined,
                     image = null,
                     description = '',
-                    category,
-                    brand = Brand.IRANIAN,
+                    category = Category.CLOTHING,
+                    brand = undefined,
                     colors = [],
                     size = ClothingSize.M,
                     gender = Gender.UNISEX,
-                    material = 'پلی استر',
-                    season = 'تابستانه'
+                    material = 'پلی‌استر'
                 }) {
         super({
             name,
@@ -30,7 +29,6 @@ class Clothing extends Product {
         this.size = size;
         this.gender = gender;
         this.material = material;
-        this.season = season;
     }
 
     getSizeLabel() {

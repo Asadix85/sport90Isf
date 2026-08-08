@@ -1,20 +1,19 @@
-/**
- * کلاس Shoe - پایه همه کفش‌ها
- */
-class Shoe extends Product {
+import { Product } from '../../abstract/Product.js';
+import { Category, ShoeSize } from '../../../enums/Enums.js';
+
+export class Shoe extends Product {
     constructor({
                     name,
                     price,
-                    stockStatus = StockStatus.AVAILABLE,
+                    stockStatus = undefined,
                     image = null,
                     description = '',
-                    category,
-                    brand = Brand.NIKE,
+                    category = Category.FOOTBALL_SHOE,
+                    brand = undefined,
                     colors = [],
-                    size = ShoeSize.SIZE_42,
-                    gender = Gender.MEN,
-                    color = 'سفید',
-                    material = 'چرم'
+                    shoeSize = ShoeSize.SIZE_42,
+                    terrain = undefined,
+                    gender = undefined
                 }) {
         super({
             name,
@@ -27,21 +26,12 @@ class Shoe extends Product {
             colors
         });
 
-        this.size = size;
+        this.shoeSize = shoeSize;
+        this.terrain = terrain;
         this.gender = gender;
-        this.color = color;
-        this.material = material;
     }
 
-    getSizeLabel() {
-        return `${this.size}`;
-    }
-
-    getGenderLabel() {
-        return this.gender.label || this.gender;
-    }
-
-    getGenderEmoji() {
-        return this.gender.emoji || '👤';
+    getShoeSizeLabel() {
+        return `${this.shoeSize}`;
     }
 }

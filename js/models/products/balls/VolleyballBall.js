@@ -1,23 +1,19 @@
-/**
- * VolleyballBall - توپ والیبال
- * ارث‌بری از کلاس Ball
- */
-class VolleyballBall extends Ball {
+import { Ball } from './Ball.js';
+import { Category, Brand } from '../../../enums/Enums.js';
+
+export class VolleyballBall extends Ball {
     constructor({
                     name,
                     price,
-                    stockStatus = StockStatus.AVAILABLE,
+                    stockStatus = undefined,
                     image = null,
                     description = '',
                     brand = Brand.MIKASA,
                     colors = [],
-                    size = 5,              // سایز استاندارد ۵
-                    material = BallMaterial.PU,
-                    weight = 260,          // وزن به گرم
-                    circumference = 65,    // محیط به سانتی‌متر
-                    type = 'استاندارد',   // استاندارد، ساحلی
-                    panelCount = 18,       // تعداد تکه‌ها
-                    category = Category.VOLLEYBALL_BALL
+                    size = 5,
+                    material = undefined,
+                    weight = 270,
+                    circumference = 65
                 }) {
         super({
             name,
@@ -25,42 +21,14 @@ class VolleyballBall extends Ball {
             stockStatus,
             image,
             description,
-            category,
+            category: Category.VOLLEYBALL_BALL,
             brand,
             colors,
             size,
             material,
             sport: 'والیبال',
-            weight
+            weight,
+            circumference
         });
-
-        this.circumference = circumference;
-        this.type = type;
-        this.panelCount = panelCount;
-    }
-
-    /**
-     * دریافت برچسب نوع توپ والیبال
-     */
-    getTypeLabel() {
-        const labels = {
-            'standard': 'استاندارد',
-            'beach': 'ساحلی'
-        };
-        return labels[this.type] || this.type;
-    }
-
-    /**
-     * دریافت تعداد تکه‌های توپ
-     */
-    getPanelLabel() {
-        return `${this.panelCount} تکه`;
-    }
-
-    /**
-     * بازنویسی متد toString
-     */
-    toString() {
-        return `${this.getCategoryEmoji()} ${this.name} (${this.getTypeLabel()}) - ${this.getFormattedPrice()} تومان`;
     }
 }

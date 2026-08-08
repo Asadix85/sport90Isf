@@ -6,7 +6,7 @@
  *   - خروجی گرفتن محصولات به صورت JSON
  *   - دانلود فایل در مرورگر
  */
-class ExportService {
+export class ExportService {
     /**
      * ستون‌های پیش‌فرض CSV
      */
@@ -139,3 +139,4 @@ class ExportService {
         }
     }
 }
+export { ExportService };

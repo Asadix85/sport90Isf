@@ -1,7 +1,7 @@
 /**
  * AppController.js - هماهنگ‌کننده اصلی (نسخه کامل با همه Manager ها)
  */
-class AppController {
+export class AppController {
     constructor(
         dataService,
         themeManager,
@@ -463,3 +463,5 @@ class AppController {
         }
     }
 }export { AppController };
+
+export { AppController };

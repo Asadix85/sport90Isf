@@ -1,23 +1,19 @@
-/**
- * Shirt - تی شرت ورزشی
- */
-class Shirt extends Clothing {
+import { Clothing } from './Clothing.js';
+import { Category, Brand, ClothingSize, Gender } from '../../../enums/Enums.js';
+
+export class Shirt extends Clothing {
     constructor({
                     name,
                     price,
-                    stockStatus = StockStatus.AVAILABLE,
+                    stockStatus = undefined,
                     image = null,
                     description = '',
-                    brand = Brand.IRANIAN,
+                    brand = Brand.ADIDAS,
                     colors = [],
-                    size = ClothingSize.M,
-                    gender = Gender.UNISEX,
-                    material = 'پلی استر',
-                    season = 'تابستانه',
-                    sleeveLength = 'کوتاه',  // کوتاه، بلند، بدون آستین
-                    neckType = 'گرد',        // گرد، هفت، زیپ‌دار
-                    isCompression = false,
-                    color = 'سفید'
+                    size = ClothingSize.L,
+                    gender = Gender.MEN,
+                    material = 'پلی‌استر',
+                    sleeveLength = 'کوتاه'
                 }) {
         super({
             name,
@@ -30,22 +26,13 @@ class Shirt extends Clothing {
             colors,
             size,
             gender,
-            material,
-            season
+            material
         });
 
         this.sleeveLength = sleeveLength;
-        this.neckType = neckType;
-        this.isCompression = isCompression;
-        this.color = color;
     }
 
-    getSleeveLabel() {
-        const labels = {
-            'short': 'آستین کوتاه',
-            'long': 'آستین بلند',
-            'sleeveless': 'بدون آستین'
-        };
-        return labels[this.sleeveLength] || this.sleeveLength;
+    getSleeveLengthLabel() {
+        return this.sleeveLength;
     }
 }

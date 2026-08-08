@@ -1,23 +1,17 @@
-/**
- * Barbell - هالتر
- */
-class Barbell extends FitnessEquipment {
+import { FitnessEquipment } from './FitnessEquipment.js';
+import { Category, Brand } from '../../../enums/Enums.js';
+
+export class Barbell extends FitnessEquipment {
     constructor({
                     name,
                     price,
-                    stockStatus = StockStatus.AVAILABLE,
+                    stockStatus = undefined,
                     image = null,
                     description = '',
-                    brand = Brand.IRANIAN,
+                    brand = Brand.BODY_CRAFT,
                     colors = [],
-                    material = 'فولاد',
-                    weight = 10,          // وزن به کیلوگرم
-                    isPortable = false,
-                    length = 120,         // طول به سانتی‌متر
-                    diameter = 28,        // قطر به میلی‌متر
-                    maxWeight = 150,      // حداکثر وزن تحمل
-                    hasKnurling = true,   // دارای شیار
-                    type = 'استاندارد'   // استاندارد، المپیک
+                    weight = 20,
+                    material = 'فولاد'
                 }) {
         super({
             name,
@@ -25,29 +19,11 @@ class Barbell extends FitnessEquipment {
             stockStatus,
             image,
             description,
+            category: Category.FITNESS,
             brand,
             colors,
-            material,
             weight,
-            isPortable
+            material
         });
-
-        this.length = length;
-        this.diameter = diameter;
-        this.maxWeight = maxWeight;
-        this.hasKnurling = hasKnurling;
-        this.type = type;
-    }
-
-    getLengthLabel() {
-        return `${this.length} سانتی‌متر`;
-    }
-
-    getTypeLabel() {
-        const labels = {
-            'standard': 'استاندارد',
-            'olympic': 'المپیک'
-        };
-        return labels[this.type] || this.type;
     }
 }

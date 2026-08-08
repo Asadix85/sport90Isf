@@ -2,7 +2,7 @@
  * Interface IProduct
  * تمام محصولات باید این متدها رو پیاده‌سازی کنند
  */
-class IProduct {
+export class IProduct {
     // این کلاس به عنوان "اینترفیس" عمل میکنه
     // در جاوااسکریپت، اینترفیس وجود نداره، پس از این روش استفاده میکنیم
     
@@ -18,3 +18,4 @@ class IProduct {
         throw new Error('❌ متد getCategory باید پیاده‌سازی بشه!');
     }
 }
+export { IProduct };

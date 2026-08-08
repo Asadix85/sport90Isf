@@ -7,7 +7,7 @@
  *
  * الگو: Strategy Pattern برای ranking
  */
-class AutocompleteService {
+export class AutocompleteService {
     /**
      * @constructor
      */

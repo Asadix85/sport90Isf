@@ -1,19 +1,19 @@
-/**
- * ExerciseBall - توپ بدنسازی
- */
-class ExerciseBall extends Product {
+import { Ball } from './Ball.js';
+import { Category, Brand } from '../../../enums/Enums.js';
+
+export class ExerciseBall extends Ball {
     constructor({
                     name,
                     price,
-                    stockStatus = StockStatus.AVAILABLE,
+                    stockStatus = undefined,
                     image = null,
                     description = '',
-                    brand = Brand.IRANIAN,
+                    brand = Brand.LEDRA,
                     colors = [],
-                    diameter,          // قطر به سانتی‌متر (۶۵، ۷۵، ۸۵)
-                    hasSpikes = false, // خاردار یا ساده
-                    maxWeight = 150,   // حداکثر وزن تحمل (کیلوگرم)
-                    color = 'آبی'
+                    size = 65,
+                    material = undefined,
+                    weight = 1000,
+                    circumference = 200
                 }) {
         super({
             name,
@@ -23,25 +23,12 @@ class ExerciseBall extends Product {
             description,
             category: Category.EXERCISE_BALL,
             brand,
-            colors
+            colors,
+            size,
+            material,
+            sport: 'بدنسازی',
+            weight,
+            circumference
         });
-
-        this.diameter = diameter;
-        this.hasSpikes = hasSpikes;
-        this.maxWeight = maxWeight;
-        this.color = color;
-        this.material = 'PVC';
-    }
-
-    getDiameterLabel() {
-        return `${this.diameter} سانتی‌متر`;
-    }
-
-    getTypeLabel() {
-        return this.hasSpikes ? 'خاردار' : 'ساده';
-    }
-
-    toString() {
-        return `${this.getCategoryEmoji()} ${this.name} (${this.getDiameterLabel()}) - ${this.getFormattedPrice()} تومان`;
     }
 }

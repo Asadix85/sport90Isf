@@ -1,21 +1,18 @@
-/**
- * PullUpBar - بارفیکس
- */
-class PullUpBar extends FitnessEquipment {
+import { FitnessEquipment } from './FitnessEquipment.js';
+import { Category, Brand } from '../../../enums/Enums.js';
+
+export class PullUpBar extends FitnessEquipment {
     constructor({
                     name,
                     price,
-                    stockStatus = StockStatus.AVAILABLE,
+                    stockStatus = undefined,
                     image = null,
                     description = '',
-                    brand = Brand.IRANIAN,
+                    brand = Brand.BODY_CRAFT,
                     colors = [],
+                    weight = undefined,
                     material = 'فولاد',
-                    weight = 8,           // وزن به کیلوگرم
-                    isPortable = false,
-                    type = 'تک لول',     // تک لول، دو لول، سه لول، تن زیپ
-                    maxWeight = 120,     // حداکثر وزن تحمل
-                    installType = 'دیواری' // دیواری، درگاهی، ایستاده
+                    maxWeight = 150
                 }) {
         super({
             name,
@@ -23,19 +20,13 @@ class PullUpBar extends FitnessEquipment {
             stockStatus,
             image,
             description,
+            category: Category.FITNESS,
             brand,
             colors,
-            material,
             weight,
-            isPortable
+            material
         });
 
-        this.type = type;
         this.maxWeight = maxWeight;
-        this.installType = installType;
-    }
-
-    getTypeLabel() {
-        return this.type;
     }
 }
