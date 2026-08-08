@@ -133,6 +133,16 @@ class AppController {
         this.bottomNav.onNavigate = (action) => {
             this._handleBottomNav(action);
         };
+
+        // Quick View
+        this.renderer.onQuickView = (product) => {
+            this.quickView.open(product);
+        };
+
+        // Lazy Loading تصاویر
+        this.renderer.onImageLoad = (img) => {
+            this.scrollManager.observeImage(img);
+        };
     }
 
     _setupNavigation() {

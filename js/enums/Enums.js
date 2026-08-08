@@ -78,36 +78,36 @@ const Terrain = Object.freeze({
 
 // ===== برندها =====
 const Brand = Object.freeze({
-    ADIDAS: { value: 'adidas', label: 'آدیداس' },
-    NIKE: { value: 'nike', label: 'نایکی' },
-    PUMA: { value: 'puma', label: 'پوما' },
-    BODY_CRAFT: { value: 'body_craft', label: 'بادی‌کرفت' },
-    BETA: { value: 'beta', label: 'بتا' },
-    MOLTEN: { value: 'molten', label: 'مولتن' },
-    MIKASA: { value: 'mikasa', label: 'میکاسا' },
-    GOLD_CUP: { value: 'gold_cup', label: 'گلدکاپ' },
-    FOX: { value: 'fox', label: 'فوکس' },
-    YAS: { value: 'yas', label: 'یاس' },
-    GAMPO: { value: 'gampo', label: 'گامپو' },
-    PRIMA: { value: 'prima', label: 'پریما' },
-    VISA: { value: 'visa', label: 'ویسا' },
-    MAGISTA: { value: 'magista', label: 'مجیستا' },
-    ASICS: { value: 'asics', label: 'اسیکس' },
-    GLADIATOR: { value: 'gladiator', label: 'گلادیاتور' },
-    YUZ: { value: 'yuz', label: 'یوز' },
-    SANTANA: { value: 'santana', label: 'سانتانا' },
-    DERAFSH: { value: 'derafsh', label: 'درفش' },
-    FILA: { value: 'fila', label: 'فیلا' },
-    SNOWA: { value: 'snowa', label: 'اسنوا' },
-    ALEX: { value: 'alex', label: 'الکس' },
-    LP: { value: 'lp', label: 'ال پی' },
-    NAIK: { value: 'naik', label: 'نایک' },
-    YONEX: { value: 'yonex', label: 'یونیکس' },
-    SPEEDO: { value: 'speedo', label: 'اسپیدو' },
-    YAKAWAMA: { value: 'yakawama', label: 'یاکاواما' },
-    IRANIAN: { value: 'iranian', label: 'ایرانی' },
-    IMPORTED: { value: 'imported', label: 'خارجی' },
-    SPALDING: { value: 'spalding', label: 'اسپالدینگ' }
+    // ===== برندهای بین‌المللی =====
+    ADIDAS: { value: 'adidas', label: 'آدیداس', type: 'international' },
+    NIKE: { value: 'nike', label: 'نایکی', type: 'international' },
+    PUMA: { value: 'puma', label: 'پوما', type: 'international' },
+    ASICS: { value: 'asics', label: 'اسیکس', type: 'international' },
+    FILA: { value: 'fila', label: 'فیلا', type: 'international' },
+    SPEEDO: { value: 'speedo', label: 'اسپیدو', type: 'international' },
+    YONEX: { value: 'yonex', label: 'یونکس', type: 'international' },
+    SPALDING: { value: 'spalding', label: 'اسپالدینگ', type: 'international' },
+
+    // ===== برندهای تخصصی ورزشی =====
+    MOLTEN: { value: 'molten', label: 'مولتن', type: 'sports' },
+    MIKASA: { value: 'mikasa', label: 'میکاسا', type: 'sports' },
+    GOLD_CUP: { value: 'gold_cup', label: 'گلدکاپ', type: 'sports' },
+    FOX: { value: 'fox', label: 'فوکس', type: 'sports' },
+    GAMPO: { value: 'gampo', label: 'گامپو', type: 'sports' },
+    PRIMA: { value: 'prima', label: 'پریما', type: 'sports' },
+    MAGISTA: { value: 'magista', label: 'مجیستا', type: 'sports' },
+    YAKAWAMA: { value: 'yakawama', label: 'یاکاواما', type: 'sports' },
+
+    // ===== برندهای ایرانی =====
+    BODY_CRAFT: { value: 'body_craft', label: 'بادی‌کرفت', type: 'iranian' },
+    BETA: { value: 'beta', label: 'بتا', type: 'iranian' },
+    YAS: { value: 'yas', label: 'یاس', type: 'iranian' },
+    SANTANA: { value: 'santana', label: 'سانتانا', type: 'iranian' },
+    ALEX: { value: 'alex', label: 'الکس', type: 'iranian' },
+    LP: { value: 'lp', label: 'ال‌پی', type: 'iranian' },
+
+    // ===== سایر =====
+    OTHER: { value: 'other', label: 'متفرقه', type: 'other' },
 });
 
 // ===== رنگ‌ها =====

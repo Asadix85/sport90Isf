@@ -77,13 +77,13 @@ class QuickViewManager {
           </div>
           <p class="quickview-desc">${this.ui.escapeHtml(product.description || 'توضیحی ثبت نشده.')}</p>
           <div class="quickview-actions">
-            <button class="quickview-btn primary" id="quickViewOpenFull">
+            <button class="qv-btn primary" id="quickViewOpenFull">
               📄 مشاهده کامل
             </button>
-            <button class="quickview-btn ${inCompare ? 'active' : ''}" id="quickViewCompare">
+            <button class="qv-btn ${inCompare ? 'active' : ''}" id="quickViewCompare">
               ⚖️ ${inCompare ? 'در مقایسه' : 'افزودن به مقایسه'}
             </button>
-            <button class="quickview-btn" id="quickViewShare">
+            <button class="qv-btn id="quickViewShare">
               🔗 اشتراک
             </button>
           </div>
@@ -128,3 +128,5 @@ class QuickViewManager {
         }
     }
 }
+// قبلی: class="quickview-btn"
+// جدید: class="qv-btn"

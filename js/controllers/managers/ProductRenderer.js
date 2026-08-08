@@ -130,61 +130,239 @@ class ProductRenderer {
      * ساخت کارت محصول
      * @private
      */
+    /**
+     * ساخت کارت محصول (نسخه کامل و نهایی)
+     * @private
+     * @param {Object} product - محصول
+     * @returns {HTMLElement} - کارت محصول
+     */
+    /**
+     * ساخت کارت محصول (نسخه نهایی - اصلاح‌شده)
+     * @private
+     * @param {Object} product
+     * @returns {HTMLElement}
+     */
     _createProductCard(product) {
-        const card = document.createElement('div');
-        card.className = 'product-card';
-        card.dataset.productCode = product.code;
+        try {
+            const card = document.createElement('div');
+            card.className = 'product-card';
+            card.dataset.productCode = product.code;
 
-        const imageHtml = product.hasImage?.()
-            ? `<img class="product-image" src="${this.ui.escapeHtml(product.image)}" alt="${this.ui.escapeHtml(product.name)}" loading="lazy" onerror="this.style.display='none'">`
-            : `<div class="product-image-placeholder">📷</div>`;
+            // ===== ۱. تصویر =====
+            let imageHtml;
+            if (product.hasImage?.()) {
+                imageHtml = `
+        <div class="product-image-wrapper">
+          <img 
+            class="product-image" 
+            data-src="${this.ui.escapeHtml(product.image)}"
+            src="images/placeholders/loading.svg"
+            alt="${this.ui.escapeHtml(product.name)}" 
+            loading="lazy"
+            onerror="this.onerror=null; this.src='images/placeholders/no-image.png'; this.classList.add('loaded');"
+          >
+        </div>
+      `;
+            } else {
+                const placeholder = this._getPlaceholderEmoji(product.category);
+                imageHtml = `
+        <div class="product-image-wrapper">
+          <div class="product-image-placeholder">
+            <span class="placeholder-emoji">${placeholder}</span>
+          </div>
+        </div>
+      `;
+            }
 
-        const price = product.getFormattedPrice?.() || this.ui.formatPrice(product.price);
-        const stockStatus = product.getStockStatus?.() || product.stockStatus?.label || 'نامشخص';
-        const stockClass = product.getStockClass?.() || 'available';
-        const stockEmoji = product.getStockEmoji?.() || '✅';
-        const inCompare = this.comparisonService.hasProduct(product.code);
+            // ===== ۲. اطلاعات =====
+            const name = this.ui.escapeHtml(product.name || 'بدون نام');
+            const price = product.getFormattedPrice?.() || this.ui.formatPrice(product.price);
+            const stockStatus = product.getStockStatus?.() || product.stockStatus?.label || 'نامشخص';
+            const stockClass = product.getStockClass?.() || 'available';
+            const stockEmoji = product.getStockEmoji?.() || '✅';
+            const inCompare = this.comparisonService.hasProduct(product.code);
+            const brandHtml = this._createBrandBadge(product.brand);
 
-        card.innerHTML = `
+            // ===== ۳. HTML نهایی =====
+            card.innerHTML = `
       ${imageHtml}
-      <div class="product-name">${this.ui.escapeHtml(product.name || 'بدون نام')}</div>
-      <div class="product-price">${price} تومان</div>
-      <span class="product-stock ${stockClass}">${stockEmoji} ${this.ui.escapeHtml(stockStatus)}</span>
+
+      <div class="product-content">
+        <div class="product-name" title="${name}">${name}</div>
+        ${brandHtml}
+        <span class="product-stock ${stockClass}">${stockEmoji} ${this.ui.escapeHtml(stockStatus)}</span>
+        <div class="product-price">${price} <span class="price-unit">تومان</span></div>
+      </div>
+
       <div class="product-actions">
-        <label class="compare-toggle" title="افزودن به مقایسه">
-          <input type="checkbox" ${inCompare ? 'checked' : ''} data-action="toggle-compare">
-          <span>⚖️</span>
-        </label>
-        <button type="button" class="share-btn" data-action="share" title="اشتراک‌گذاری">🔗</button>
+        <button type="button" 
+                class="action-icon-btn ${inCompare ? 'active' : ''}" 
+                data-action="toggle-compare" 
+                aria-pressed="${inCompare}"
+                title="${inCompare ? 'حذف از مقایسه' : 'افزودن به مقایسه'}">⚖️</button>
+
+        <button type="button" class="action-icon-btn" data-action="quickview" title="مشاهده سریع">👁️</button>
+
+        <button type="button" class="action-icon-btn" data-action="share" title="اشتراک‌گذاری">🔗</button>
       </div>
     `;
 
-        // کلیک روی کارت
-        card.addEventListener('click', (e) => {
-            if (e.target.closest('[data-action]')) return;
-            if (this.onProductClick) this.onProductClick(product);
-        });
+            // ===== ۴. Event Listeners =====
 
-        // چک باکس مقایسه
-        const checkbox = card.querySelector('[data-action="toggle-compare"]');
-        if (checkbox) {
-            checkbox.addEventListener('change', () => {
-                if (this.onToggleCompare) this.onToggleCompare(product);
+            // کلیک روی کارت = جزئیات
+            card.addEventListener('click', (e) => {
+                if (e.target.closest('[data-action]')) return;
+                if (this.onProductClick) this.onProductClick(product);
             });
-        }
 
-        // دکمه اشتراک‌گذاری
-        const shareBtn = card.querySelector('[data-action="share"]');
-        if (shareBtn) {
-            shareBtn.addEventListener('click', async (e) => {
-                e.stopPropagation();
-                if (this.onShare) this.onShare(product);
-            });
-        }
+            // دکمه مقایسه (بدون checkbox - دکمه ساده)
+            const compareBtn = card.querySelector('[data-action="toggle-compare"]');
+            if (compareBtn) {
+                compareBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    if (this.onToggleCompare) this.onToggleCompare(product);
 
-        return card;
+                    // به‌روزرسانی ظاهر دکمه
+                    const nowIn = this.comparisonService.hasProduct(product.code);
+                    compareBtn.classList.toggle('active', nowIn);
+                    compareBtn.setAttribute('aria-pressed', String(nowIn));
+                    compareBtn.title = nowIn ? 'حذف از مقایسه' : 'افزودن به مقایسه';
+                });
+            }
+
+            // دکمه Quick View
+            const quickviewBtn = card.querySelector('[data-action="quickview"]');
+            if (quickviewBtn) {
+                quickviewBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    if (this.onQuickView) this.onQuickView(product);
+                });
+            }
+
+            // دکمه اشتراک
+            const shareBtn = card.querySelector('[data-action="share"]');
+            if (shareBtn) {
+                shareBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    if (this.onShare) this.onShare(product);
+                });
+            }
+
+            // Lazy Loading تصویر
+            const img = card.querySelector('.product-image[data-src]');
+            if (img && this.onImageLoad) {
+                this.onImageLoad(img);
+            }
+
+            return card;
+        } catch (error) {
+            console.error('❌ [ProductRenderer._createProductCard] خطا:', error);
+            const errorCard = document.createElement('div');
+            errorCard.className = 'product-card';
+            errorCard.innerHTML = `
+      <div class="product-image-wrapper">
+        <div class="product-image-placeholder"><span class="placeholder-emoji">⚠️</span></div>
+      </div>
+      <div class="product-content">
+        <div class="product-name">خطا در نمایش محصول</div>
+      </div>
+    `;
+            return errorCard;
+        }
     }
 
+    /**
+     * ساخت Badge برند با دسته‌بندی
+     * @private
+     * @param {Object} brand - برند محصول
+     * @returns {string} - HTML badge
+     */
+    _createBrandBadge(brand) {
+        if (!brand) {
+            return `<span class="brand-badge">🏷️ متفرقه</span>`;
+        }
+
+        const label = this.ui.escapeHtml(brand.label || brand.value || 'نامشخص');
+        const type = brand.type || 'other';
+
+        const badges = {
+            international: {
+                icon: '🌍',
+                class: 'international',
+                title: 'برند بین‌المللی'
+            },
+            sports: {
+                icon: '⚽',
+                class: 'sports',
+                title: 'برند تخصصی ورزشی'
+            },
+            iranian: {
+                icon: '🇮🇷',
+                class: 'iranian',
+                title: 'برند ایرانی'
+            },
+            other: {
+                icon: '🏷️',
+                class: 'other',
+                title: 'سایر برندها'
+            }
+        };
+
+        const badge = badges[type] || badges.other;
+
+        return `
+    <span class="brand-badge ${badge.class}" title="${badge.title}">
+      ${badge.icon} ${label}
+    </span>
+  `;
+    }
+
+    /**
+     * دریافت ایموجی placeholder بر اساس دسته‌بندی
+     * @private
+     * @param {Object|string} category - دسته‌بندی
+     * @returns {string} - ایموجی
+     */
+    _getPlaceholderEmoji(category) {
+        const catValue = category?.value || category || 'other';
+
+        const placeholders = {
+            // توپ‌ها
+            'football_ball': '⚽',
+            'basketball_ball': '🏀',
+            'volleyball_ball': '🏐',
+            'handball_ball': '🤾',
+            'exercise_ball': '🏋️',
+            'ping_pong': '🏓',
+            'tennis_ball': '🎾',
+
+            // کفش‌ها
+            'football_shoe': '👟',
+            'volleyball_shoe': '👟',
+            'wrestling_shoe': '👟',
+            'sports_shoe': '👟',
+
+            // پوشاک
+            'clothing': '👕',
+            'martial_arts': '🥋',
+            'swimming': '🏊',
+
+            // تجهیزات
+            'fitness': '💪',
+            'dumbbell': '🏋️',
+            'gloves': '🧤',
+            'bands': '🔄',
+            'accessories': '🔧',
+            'nets': '🥅',
+            'racket': '🏸',
+
+            // پیش‌فرض
+            'other': '📦',
+            'decorative': '✨',
+        };
+
+        return placeholders[catValue] || '📦';
+    }
     /**
      * رندر جزئیات محصول
      */

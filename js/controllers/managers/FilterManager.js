@@ -36,19 +36,44 @@ class FilterManager {
         try {
             const { brandFilters, categoryFilters, stockFilters } = this.elements;
 
-            // برندها
+            // برندها - فقط برندهای معتبر
             if (brandFilters) {
-                brandFilters.innerHTML = Object.values(Brand)
-                    .map((b) => `
-            <label class="filter-check">
-              <input type="checkbox" value="${this.ui.escapeHtml(b.value)}" data-filter="brand">
-              <span>${this.ui.escapeHtml(b.label)}</span>
-            </label>
-          `)
-                    .join('');
-            }
+                const validBrands = Object.values(Brand).filter(b =>
+                    b.value !== 'other' && b.value !== 'iranian' && b.value !== 'imported'
+                );
 
-            // دسته‌بندی‌ها
+                // دسته‌بندی برندها
+                const international = validBrands.filter(b => b.type === 'international');
+                const sports = validBrands.filter(b => b.type === 'sports');
+                const iranian = validBrands.filter(b => b.type === 'iranian');
+
+                brandFilters.innerHTML = `
+        <div class="filter-group-label">🌍 بین‌المللی</div>
+        ${international.map((b) => `
+          <label class="filter-check">
+            <input type="checkbox" value="${this.ui.escapeHtml(b.value)}" data-filter="brand">
+            <span>${this.ui.escapeHtml(b.label)}</span>
+          </label>
+        `).join('')}
+        
+        <div class="filter-group-label">⚽ تخصصی ورزشی</div>
+        ${sports.map((b) => `
+          <label class="filter-check">
+            <input type="checkbox" value="${this.ui.escapeHtml(b.value)}" data-filter="brand">
+            <span>${this.ui.escapeHtml(b.label)}</span>
+          </label>
+        `).join('')}
+        
+        <div class="filter-group-label">🇮🇷 ایرانی</div>
+        ${iranian.map((b) => `
+          <label class="filter-check">
+            <input type="checkbox" value="${this.ui.escapeHtml(b.value)}" data-filter="brand">
+            <span>${this.ui.escapeHtml(b.label)}</span>
+          </label>
+        `).join('')}
+      `;
+            }
+// دسته‌بندی‌ها
             if (categoryFilters) {
                 categoryFilters.innerHTML = Object.values(Category)
                     .map((c) => `
