@@ -10,6 +10,7 @@ const DYNAMIC_CACHE = 'sport90-dynamic-v1';
 const STATIC_ASSETS = [
     '/',
     '/index.html',
+    '/manifest.json',
     '/css/style.css',
     '/js/main.js',
     '/js/enums/Enums.js',
@@ -78,7 +79,7 @@ self.addEventListener('fetch', (event) => {
         caches.match(request).then((cachedResponse) => {
             if (cachedResponse) {
                 // اگر در cache بود، برگردان و در پس‌زمینه به‌روز کن
-                this._updateCache(request);
+                updateCache(request);
                 return cachedResponse;
             }
 
@@ -94,7 +95,7 @@ self.addEventListener('fetch', (event) => {
                 return networkResponse;
             }).catch(() => {
                 // اگر آفلاین بود و cache هم نبود
-                return new Response('آفلاین هستید', {
+                return new Response('<html dir="rtl"><body style="font-family:Tahoma,sans-serif;text-align:center;padding:50px;"><h1>❌ آفلاین هستید</h1><p>برای مشاهده سایت به اینترنت متصل شوید.</p></body></html>', {
                     status: 503,
                     statusText: 'Offline',
                     headers: new Headers({ 'Content-Type': 'text/html; charset=utf-8' })
@@ -105,7 +106,7 @@ self.addEventListener('fetch', (event) => {
 });
 
 // به‌روزرسانی cache در پس‌زمینه
-async function _updateCache(request) {
+async function updateCache(request) {
     try {
         const networkResponse = await fetch(request);
         if (networkResponse && networkResponse.status === 200) {
