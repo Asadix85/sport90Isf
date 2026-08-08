@@ -2,7 +2,7 @@
  * ScrollManager.js - مدیریت اسکرول
  * مسئولیت: Scroll to Top button و Lazy Loading
  */
-class ScrollManager {
+export class ScrollManager {
     constructor() {
         this.scrollTopBtn = null;
         this.lazyImages = new Set();
@@ -86,3 +86,5 @@ class ScrollManager {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 }export { ScrollManager };
+
+export { ScrollManager };

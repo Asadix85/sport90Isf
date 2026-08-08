@@ -1,21 +1,18 @@
-/**
- * SportsShoe - کفش ورزشی عمومی
- */
-class SportsShoe extends Shoe {
+import { Shoe } from './shoe.js';
+import { Category, Brand } from '../../../enums/Enums.js';
+
+export class SportsShoe extends Shoe {
     constructor({
                     name,
                     price,
-                    stockStatus = StockStatus.AVAILABLE,
+                    stockStatus = undefined,
                     image = null,
                     description = '',
-                    brand = Brand.IRANIAN,
+                    brand = Brand.NIKE,
                     colors = [],
-                    size = ShoeSize.SIZE_42,
-                    gender = Gender.UNISEX,
-                    color = 'سفید',
-                    material = 'مش',
-                    sole = 'راست',
-                    activity = 'عمومی'  // پیاده‌روی، دویدن، سالنی
+                    shoeSize = 42,
+                    terrain = undefined,
+                    gender = undefined
                 }) {
         super({
             name,
@@ -26,23 +23,9 @@ class SportsShoe extends Shoe {
             category: Category.SPORTS_SHOE,
             brand,
             colors,
-            size,
-            gender,
-            color,
-            material
+            shoeSize,
+            terrain,
+            gender
         });
-
-        this.sole = sole;
-        this.activity = activity;
-    }
-
-    getActivityLabel() {
-        const labels = {
-            'walking': 'پیاده‌روی',
-            'running': 'دویدن',
-            'indoor': 'سالنی',
-            'general': 'عمومی'
-        };
-        return labels[this.activity] || this.activity;
     }
 }

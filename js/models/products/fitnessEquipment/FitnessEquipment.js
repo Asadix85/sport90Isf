@@ -1,19 +1,18 @@
-/**
- * کلاس FitnessEquipment - پایه تجهیزات بدنسازی
- */
-class FitnessEquipment extends Product {
+import { Product } from '../../abstract/Product.js';
+import { Category } from '../../../enums/Enums.js';
+
+export class FitnessEquipment extends Product {
     constructor({
                     name,
                     price,
-                    stockStatus = StockStatus.AVAILABLE,
+                    stockStatus = undefined,
                     image = null,
                     description = '',
                     category = Category.FITNESS,
-                    brand = Brand.IRANIAN,
+                    brand = undefined,
                     colors = [],
-                    material = 'فولاد',
-                    weight = 0,
-                    isPortable = true
+                    weight = undefined,
+                    material = undefined
                 }) {
         super({
             name,
@@ -26,8 +25,11 @@ class FitnessEquipment extends Product {
             colors
         });
 
-        this.material = material;
         this.weight = weight;
-        this.isPortable = isPortable;
+        this.material = material;
+    }
+
+    getWeightLabel() {
+        return this.weight ? `${this.weight} کیلوگرم` : '';
     }
 }

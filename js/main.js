@@ -5,7 +5,19 @@
  * چون onload بعد از بارگذاری همه script ها اجرا می‌شود
  */
 
-window.addEventListener('load', function () {
+import { DataService } from './services/DataService.js';
+import { ThemeManager } from './utils/ThemeManager.js';
+import { SearchService } from './services/SearchService.js';
+import { FilterService } from './services/FilterService.js';
+import { ComparisonService } from './services/ComparisonService.js';
+import { HistoryService } from './services/HistoryService.js';
+import { AutocompleteService } from './services/AutocompleteService.js';
+import { ExportService } from './services/ExportService.js';
+import { ShareService } from './services/ShareService.js';
+import { AppController } from './controllers/AppController.js';
+import { eventBus } from './core/EventBus.js';
+
+window.addEventListener('load', async function () {
     console.log('🚀 شروع برنامه Sport 90...');
 
     try {
@@ -88,6 +100,13 @@ window.addEventListener('load', function () {
         console.log('   comparisonService.getComparison()');
         console.log('   historyService.getLastViewed(5)');
         console.log('   exportService.exportToCSV(dataService.getAllProducts())');
+        
+        window.loadingManager = app.loading;
+        window.breadcrumb = app.breadcrumb;
+        window.scrollManager = app.scrollManager;
+        window.viewManager = app.viewManager;
+        window.quickView = app.quickView;
+        window.bottomNav = app.bottomNav;
     } catch (error) {
         console.error('❌ خطای بحرانی:', error.message);
 
@@ -104,10 +123,3 @@ window.addEventListener('load', function () {
         }
     }
 });
-
-window.loadingManager = app.loading;
-window.breadcrumb = app.breadcrumb;
-window.scrollManager = app.scrollManager;
-window.viewManager = app.viewManager;
-window.quickView = app.quickView;
-window.bottomNav = app.bottomNav;

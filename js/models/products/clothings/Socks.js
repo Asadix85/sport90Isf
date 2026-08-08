@@ -1,23 +1,19 @@
-/**
- * Socks - جوراب ورزشی
- */
-class Socks extends Clothing {
+import { Clothing } from './Clothing.js';
+import { Category, Brand, Gender } from '../../../enums/Enums.js';
+
+export class Socks extends Clothing {
     constructor({
                     name,
                     price,
-                    stockStatus = StockStatus.AVAILABLE,
+                    stockStatus = undefined,
                     image = null,
                     description = '',
-                    brand = Brand.IRANIAN,
+                    brand = Brand.ADIDAS,
                     colors = [],
-                    size = ClothingSize.M,
+                    size = undefined,
                     gender = Gender.UNISEX,
-                    material = 'نخ',
-                    season = 'چهارفصل',
-                    type = 'ورزشی',        // ورزشی، یوگا، پیلاتس، ساق بلند
-                    height = 'متوسط',     // کوتاه، متوسط، بلند
-                    hasPadding = true,
-                    color = 'سفید'
+                    material = 'نخ پنبه‌ای',
+                    length = 'کوتاه'
                 }) {
         super({
             name,
@@ -30,23 +26,9 @@ class Socks extends Clothing {
             colors,
             size,
             gender,
-            material,
-            season
+            material
         });
 
-        this.type = type;
-        this.height = height;
-        this.hasPadding = hasPadding;
-        this.color = color;
-    }
-
-    getTypeLabel() {
-        const labels = {
-            'sport': 'ورزشی',
-            'yoga': 'یوگا',
-            'pilates': 'پیلاتس',
-            'long': 'ساق بلند'
-        };
-        return labels[this.type] || this.type;
+        this.length = length;
     }
 }

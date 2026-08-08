@@ -2,7 +2,7 @@
  * ProductRenderer.js - رندر محصولات، دسته‌ها و جزئیات
  * مسئولیت: تولید HTML برای محصولات
  */
-class ProductRenderer {
+export class ProductRenderer {
     constructor(uiManager, comparisonService, shareService) {
         this.ui = uiManager;
         this.comparisonService = comparisonService;
@@ -433,3 +433,5 @@ class ProductRenderer {
         }
     }
 }export { ProductRenderer };
+
+export { ProductRenderer };

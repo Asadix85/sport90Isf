@@ -1,19 +1,19 @@
-/**
- * MedicineBall - مدیسین بال (توپ طبی)
- */
-class MedicineBall extends Product {
+import { Ball } from './Ball.js';
+import { Category, Brand } from '../../../enums/Enums.js';
+
+export class MedicineBall extends Ball {
     constructor({
                     name,
                     price,
-                    stockStatus = StockStatus.AVAILABLE,
+                    stockStatus = undefined,
                     image = null,
                     description = '',
-                    brand = Brand.IRANIAN,
+                    brand = Brand.BODY_CRAFT,
                     colors = [],
-                    weight,            // وزن به کیلوگرم
-                    diameter = 35,     // قطر به سانتی‌متر
-                    hasHandle = false, // دسته دار
-                    color = 'مشکی'
+                    size = 30,
+                    material = undefined,
+                    weight = 3000,
+                    circumference = 90
                 }) {
         super({
             name,
@@ -23,21 +23,12 @@ class MedicineBall extends Product {
             description,
             category: Category.EXERCISE_BALL,
             brand,
-            colors
+            colors,
+            size,
+            material,
+            sport: 'بدنسازی',
+            weight,
+            circumference
         });
-
-        this.weight = weight;
-        this.diameter = diameter;
-        this.hasHandle = hasHandle;
-        this.color = color;
-        this.material = 'لاستیک';
-    }
-
-    getWeightLabel() {
-        return `${this.weight} کیلوگرم`;
-    }
-
-    toString() {
-        return `${this.getCategoryEmoji()} ${this.name} (${this.getWeightLabel()}) - ${this.getFormattedPrice()} تومان`;
     }
 }

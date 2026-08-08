@@ -2,7 +2,7 @@
  * BreadcrumbManager.js - مدیریت مسیر ناوبری
  * مسئولیت: نمایش breadcrumb و مدیریت مسیر
  */
-class BreadcrumbManager {
+export class BreadcrumbManager {
     constructor() {
         this.container = null;
         this.path = [];
@@ -125,3 +125,5 @@ class BreadcrumbManager {
         this.setPath(path);
     }
 }export { BreadcrumbManager };
+
+export { BreadcrumbManager };

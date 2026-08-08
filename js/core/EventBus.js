@@ -9,7 +9,7 @@
  *
  * الگو: Observer + Singleton
  */
-class EventBus {
+export class EventBus {
     /**
      * @constructor
      */

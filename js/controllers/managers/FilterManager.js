@@ -2,7 +2,7 @@
  * FilterManager.js - مدیریت فیلترها و drawer
  * مسئولیت: filter drawer, checkboxes, price range, sort
  */
-class FilterManager {
+export class FilterManager {
     constructor(filterService, uiManager) {
         this.filterService = filterService;
         this.ui = uiManager;
@@ -251,3 +251,5 @@ class FilterManager {
         }
     }
 }export { FilterManager };
+
+export { FilterManager };

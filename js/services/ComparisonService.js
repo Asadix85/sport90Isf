@@ -10,7 +10,7 @@
  * الگوها: Singleton + Observer
  * SOLID: Single Responsibility
  */
-class ComparisonService {
+export class ComparisonService {
     /**
      * @constructor
      */

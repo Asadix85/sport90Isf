@@ -2,7 +2,7 @@
  * ComparisonManager.js - مدیریت مقایسه محصولات
  * مسئولیت: comparison tray, modal
  */
-class ComparisonManager {
+export class ComparisonManager {
     constructor(comparisonService, uiManager) {
         this.comparisonService = comparisonService;
         this.ui = uiManager;
@@ -143,3 +143,5 @@ class ComparisonManager {
         }
     }
 }export { ComparisonManager };
+
+export { ComparisonManager };

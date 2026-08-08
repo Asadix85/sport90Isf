@@ -8,7 +8,7 @@
  *
  * الگو: Singleton + Observer
  */
-class HistoryService {
+export class HistoryService {
     /**
      * @constructor
      */

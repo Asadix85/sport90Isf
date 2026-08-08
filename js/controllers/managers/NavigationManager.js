@@ -2,7 +2,7 @@
  * NavigationManager.js - مدیریت navigation بین صفحات
  * مسئولیت: showPage, goBack, historyStack
  */
-class NavigationManager {
+export class NavigationManager {
     constructor(uiManager) {
         this.ui = uiManager;
         this.historyStack = [];
@@ -72,3 +72,5 @@ class NavigationManager {
         return this.historyStack.length > 0;
     }
 }export { NavigationManager };
+
+export { NavigationManager };

@@ -1,21 +1,17 @@
-/**
- * کلاس FootballNet - تور فوتبال
- */
-class FootballNet extends Net {
+import { Net } from './Net.js';
+import { Category, Brand } from '../../../enums/Enums.js';
+
+export class FootballNet extends Net {
     constructor({
                     name,
                     price,
-                    stockStatus = StockStatus.AVAILABLE,
+                    stockStatus = undefined,
                     image = null,
                     description = '',
-                    brand = Brand.IRANIAN,
+                    brand = Brand.MOLTEN,
                     colors = [],
-                    material = 'نخ',
-                    size = 'استاندارد',
-                    isPortable = false,
-                    goalSize = '۷×۲.۴',   // متر
-                    meshSize = '۱۰×۱۰',   // سانتی‌متر
-                    type = 'حرفه‌ای'
+                    material = 'نخ محکم',
+                    dimensions = '7.32 x 2.44 متر'
                 }) {
         super({
             name,
@@ -23,15 +19,11 @@ class FootballNet extends Net {
             stockStatus,
             image,
             description,
+            category: Category.NETS,
             brand,
             colors,
             material,
-            size,
-            isPortable
+            dimensions
         });
-
-        this.goalSize = goalSize;
-        this.meshSize = meshSize;
-        this.type = type;
     }
 }

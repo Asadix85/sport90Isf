@@ -1,21 +1,18 @@
-/**
- * کلاس Swimsuit - مایو و لباس شنا
- */
-class Swimsuit extends Clothing {
+import { Clothing } from './Clothing.js';
+import { Category, Brand, Gender } from '../../../enums/Enums.js';
+
+export class Swimsuit extends Clothing {
     constructor({
                     name,
                     price,
-                    stockStatus = StockStatus.AVAILABLE,
+                    stockStatus = undefined,
                     image = null,
                     description = '',
-                    brand = Brand.IRANIAN,
+                    brand = Brand.SPEEDO,
                     colors = [],
-                    size = ClothingSize.M,
-                    gender = Gender.WOMEN,
-                    material = 'لیکرا',
-                    season = 'تابستانه',
-                    type = 'یک تیکه',    // یک تیکه، دو تیکه، دامن دار
-                    hasUPF = false
+                    size = undefined,
+                    gender = Gender.MEN,
+                    material = 'لکرا'
                 }) {
         super({
             name,
@@ -28,11 +25,7 @@ class Swimsuit extends Clothing {
             colors,
             size,
             gender,
-            material,
-            season
+            material
         });
-
-        this.type = type;
-        this.hasUPF = hasUPF;
     }
 }

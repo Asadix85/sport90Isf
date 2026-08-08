@@ -2,7 +2,7 @@
  * UIManager.js - مدیریت UI عمومی (toast, loading, etc.)
  * مسئولیت: نمایش پیام‌ها و مدیریت وضعیت UI
  */
-class UIManager {
+export class UIManager {
     constructor() {
         this.toastRoot = null;
     }
@@ -74,3 +74,5 @@ class UIManager {
         }
     }
 }export { UIManager };
+
+export { UIManager };

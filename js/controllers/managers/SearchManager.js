@@ -2,7 +2,7 @@
  * SearchManager.js - مدیریت جستجو و autocomplete
  * مسئولیت: search input, suggestions, results
  */
-class SearchManager {
+export class SearchManager {
     constructor(searchService, autocompleteService, uiManager) {
         this.searchService = searchService;
         this.autocompleteService = autocompleteService;
@@ -203,3 +203,5 @@ class SearchManager {
         this.hideSuggestions();
     }
 }export { SearchManager };
+
+export { SearchManager };

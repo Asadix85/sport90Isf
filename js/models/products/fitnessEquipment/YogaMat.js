@@ -1,23 +1,18 @@
-/**
- * YogaMat - مت یوگا
- */
-class YogaMat extends FitnessEquipment {
+import { FitnessEquipment } from './FitnessEquipment.js';
+import { Category, Brand } from '../../../enums/Enums.js';
+
+export class YogaMat extends FitnessEquipment {
     constructor({
                     name,
                     price,
-                    stockStatus = StockStatus.AVAILABLE,
+                    stockStatus = undefined,
                     image = null,
                     description = '',
-                    brand = Brand.IRANIAN,
+                    brand = Brand.LEDRA,
                     colors = [],
-                    material = 'PVC',
-                    weight = 1.5,
-                    isPortable = true,
-                    thickness = 6,        // ضخامت به میلی‌متر
-                    length = 183,         // طول به سانتی‌متر
-                    width = 61,           // عرض به سانتی‌متر
-                    type = 'معمولی',     // معمولی، حوله‌ای، تاشو
-                    color = 'آبی'
+                    weight = 1,
+                    material = 'فوم',
+                    thickness = 6
                 }) {
         super({
             name,
@@ -28,32 +23,10 @@ class YogaMat extends FitnessEquipment {
             category: Category.FITNESS,
             brand,
             colors,
-            material,
             weight,
-            isPortable
+            material
         });
 
         this.thickness = thickness;
-        this.length = length;
-        this.width = width;
-        this.type = type;
-        this.color = color;
-    }
-
-    getThicknessLabel() {
-        return `${this.thickness} میلی‌متر`;
-    }
-
-    getSizeLabel() {
-        return `${this.length} × ${this.width} سانتی‌متر`;
-    }
-
-    getTypeLabel() {
-        const labels = {
-            'normal': 'معمولی',
-            'towel': 'حوله‌ای',
-            'foldable': 'تاشو'
-        };
-        return labels[this.type] || this.type;
     }
 }

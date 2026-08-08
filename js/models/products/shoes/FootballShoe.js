@@ -1,53 +1,38 @@
-/**
- * کلاس FootballShoe - کفش فوتبال
- */
-class FootballShoe extends Product {
-    constructor({ 
-        name, 
-        price, 
-        stockStatus = StockStatus.AVAILABLE, 
-        image = null, 
-        description = '',
-        brand = Brand.NIKE, 
-        colors = [],
-        size = ShoeSize.SIZE_42,
-        gender = Gender.MEN,
-        terrain = Terrain.ARTIFICIAL,
-        studs = 'قفلی',
-        sole = 'AG',
-        category = Category.FOOTBALL_SHOE
-    }) {
-        super({ 
-            name, 
-            price, 
-            stockStatus, 
-            image, 
+import { Shoe } from './shoe.js';
+import { Category, Brand, Terrain } from '../../../enums/Enums.js';
+
+export class FootballShoe extends Shoe {
+    constructor({
+                    name,
+                    price,
+                    stockStatus = undefined,
+                    image = null,
+                    description = '',
+                    brand = Brand.ADIDAS,
+                    colors = [],
+                    shoeSize = 42,
+                    terrain = Terrain.NATURAL,
+                    gender = undefined,
+                    studType = 'FG'
+                }) {
+        super({
+            name,
+            price,
+            stockStatus,
+            image,
             description,
-            category,
-            brand, 
-            colors
+            category: Category.FOOTBALL_SHOE,
+            brand,
+            colors,
+            shoeSize,
+            terrain,
+            gender
         });
-        
-        this.size = size;
-        this.gender = gender;
-        this.terrain = terrain;
-        this.studs = studs;
-        this.sole = sole;
+
+        this.studType = studType;
     }
-    
-    getSizeLabel() {
-        return `${this.size}`;
-    }
-    
-    getGenderLabel() {
-        return this.gender.label || this.gender;
-    }
-    
-    getGenderEmoji() {
-        return this.gender.emoji || '👤';
-    }
-    
-    getTerrainLabel() {
-        return this.terrain.label || this.terrain;
+
+    getStudTypeName() {
+        return this.studType;
     }
 }

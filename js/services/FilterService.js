@@ -15,7 +15,7 @@
  *   - Open/Closed: افزودن فیلتر/مرتب جدید بدون تغییر کد موجود
  *   - Single Responsibility: فقط فیلتر و مرتب‌سازی
  */
-class FilterService {
+export class FilterService {
     /**
      * @constructor
      * @param {Object} [options]

@@ -1,44 +1,41 @@
-/**
- * کلاس FootballBall - توپ فوتبال
- */
-class FootballBall extends Ball {
-    constructor({ 
-        name, 
-        price, 
-        stockStatus = StockStatus.AVAILABLE, 
-        image = null, 
-        description = '',
-        brand = Brand.ADIDAS, 
-        colors = [],
-        size = 5,
-        material = BallMaterial.PU,
-        type = FootballType.MATCH,
-        weight = 450,
-        category = Category.FOOTBALL_BALL
-    }) {
-        super({ 
-            name, 
-            price, 
-            stockStatus, 
-            image, 
+import { Ball } from './Ball.js';
+import { Category, Brand, FootballType } from '../../../enums/Enums.js';
+
+export class FootballBall extends Ball {
+    constructor({
+                    name,
+                    price,
+                    stockStatus = undefined,
+                    image = null,
+                    description = '',
+                    brand = Brand.MOLTEN,
+                    colors = [],
+                    size = 5,
+                    material = undefined,
+                    weight = 420,
+                    circumference = 69,
+                    footballType = FootballType.MATCH
+                }) {
+        super({
+            name,
+            price,
+            stockStatus,
+            image,
             description,
-            category,
-            brand, 
+            category: Category.FOOTBALL_BALL,
+            brand,
             colors,
-            size, 
+            size,
             material,
             sport: 'فوتبال',
-            weight
+            weight,
+            circumference
         });
-        
-        this.type = type;
+
+        this.footballType = footballType;
     }
-    
-    getTypeName() {
-        return this.type.label || this.type;
-    }
-    
-    toString() {
-        return `${this.getCategoryEmoji()} ${this.name} (${this.getTypeName()}) - ${this.getFormattedPrice()} تومان`;
+
+    getFootballTypeName() {
+        return this.footballType.label || this.footballType;
     }
 }

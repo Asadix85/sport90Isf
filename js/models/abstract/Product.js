@@ -1,7 +1,9 @@
 /**
  * کلاس Abstract Product - پایه همه محصولات
  */
-class Product {
+import { StockStatus, Brand, Category } from '../../enums/Enums.js';
+
+export class Product {
     constructor({
                     name,
                     price,

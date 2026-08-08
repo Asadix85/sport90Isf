@@ -1,21 +1,18 @@
-/**
- * کلاس ResistanceBand - کش بدنسازی
- */
-class ResistanceBand extends FitnessEquipment {
+import { FitnessEquipment } from './FitnessEquipment.js';
+import { Category, Brand } from '../../../enums/Enums.js';
+
+export class ResistanceBand extends FitnessEquipment {
     constructor({
                     name,
                     price,
-                    stockStatus = StockStatus.AVAILABLE,
+                    stockStatus = undefined,
                     image = null,
                     description = '',
-                    brand = Brand.IRANIAN,
+                    brand = Brand.BODY_CRAFT,
                     colors = [],
-                    material = 'لاستیک طبیعی',
-                    weight = 0.5,
-                    isPortable = true,
-                    resistance = 'متوسط',   // سبک، متوسط، سنگین
-                    length = 200,           // سانتی‌متر
-                    type = 'لوپ'            // لوپ، متری، ترمزی
+                    weight = undefined,
+                    material = 'لاستیک',
+                    resistanceLevel = 'متوسط'
                 }) {
         super({
             name,
@@ -23,24 +20,13 @@ class ResistanceBand extends FitnessEquipment {
             stockStatus,
             image,
             description,
+            category: Category.FITNESS,
             brand,
             colors,
-            material,
             weight,
-            isPortable
+            material
         });
 
-        this.resistance = resistance;
-        this.length = length;
-        this.type = type;
-    }
-
-    getResistanceLabel() {
-        const labels = {
-            'light': 'سبک',
-            'medium': 'متوسط',
-            'heavy': 'سنگین'
-        };
-        return labels[this.resistance] || this.resistance;
+        this.resistanceLevel = resistanceLevel;
     }
 }
