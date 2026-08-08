@@ -59,6 +59,7 @@ export class HistoryManager {
             console.error('❌ [HistoryManager.render] خطا:', error);
         }
     }
-}export { HistoryManager };
+}
+
 
 export { HistoryManager };

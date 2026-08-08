@@ -202,6 +202,7 @@ export class SearchManager {
         if (this.elements.clear) this.elements.clear.style.display = 'none';
         this.hideSuggestions();
     }
-}export { SearchManager };
+}
+
 
 export { SearchManager };

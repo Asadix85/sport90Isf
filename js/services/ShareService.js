@@ -83,4 +83,6 @@ export class ShareService {
             return false;
         }
     }
-}export { ShareService };
+}
+
+export { ShareService };

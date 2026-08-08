@@ -73,6 +73,7 @@ export class UIManager {
             return fallback;
         }
     }
-}export { UIManager };
+}
+
 
 export { UIManager };

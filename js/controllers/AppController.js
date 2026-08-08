@@ -462,6 +462,7 @@ export class AppController {
             console.error('❌ [AppController._openFromUrl] خطا:', error);
         }
     }
-}export { AppController };
+}
+
 
 export { AppController };

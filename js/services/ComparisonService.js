@@ -259,4 +259,6 @@ export class ComparisonService {
         }
         return String(value ?? '');
     }
-}export { ComparisonService };
+}
+
+export { ComparisonService };

@@ -322,4 +322,6 @@ export class FilterService {
     _getStockValue(product) {
         return product.stockStatus?.value || product.stockStatus;
     }
-}export { FilterService };
+}
+
+export { FilterService };
