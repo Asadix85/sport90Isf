@@ -28,3 +28,5 @@ class PullUpBar extends FitnessEquipment {
         this.maxWeight = maxWeight;
     }
 }
+
+window.PullUpBar = PullUpBar;

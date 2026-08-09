@@ -27,3 +27,5 @@ class Swimsuit extends Clothing {
         });
     }
 }
+
+window.Swimsuit = Swimsuit;

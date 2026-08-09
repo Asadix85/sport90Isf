@@ -33,3 +33,5 @@ class Shoe extends Product {
         return `${this.shoeSize}`;
     }
 }
+
+window.shoe = shoe;

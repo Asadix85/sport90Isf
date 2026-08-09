@@ -25,3 +25,5 @@ class FootballNet extends Net {
         });
     }
 }
+
+window.FootballNet = FootballNet;

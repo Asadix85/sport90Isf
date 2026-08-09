@@ -30,3 +30,5 @@ class BasketballBall extends Ball {
         });
     }
 }
+
+window.BasketballBall = BasketballBall;

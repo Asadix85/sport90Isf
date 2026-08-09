@@ -28,3 +28,5 @@ class ResistanceBand extends FitnessEquipment {
         this.resistanceLevel = resistanceLevel;
     }
 }
+
+window.ResistanceBand = ResistanceBand;

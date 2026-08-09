@@ -27,3 +27,5 @@ class Short extends Clothing {
         });
     }
 }
+
+window.Short = Short;

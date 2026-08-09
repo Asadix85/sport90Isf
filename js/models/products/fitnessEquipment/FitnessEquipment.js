@@ -31,3 +31,5 @@ class FitnessEquipment extends Product {
         return this.weight ? `${this.weight} کیلوگرم` : '';
     }
 }
+
+window.FitnessEquipment = FitnessEquipment;

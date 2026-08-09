@@ -30,3 +30,5 @@ class VolleyballBall extends Ball {
         });
     }
 }
+
+window.VolleyballBall = VolleyballBall;

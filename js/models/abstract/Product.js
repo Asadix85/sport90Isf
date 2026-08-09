@@ -82,3 +82,4 @@ class Product {
         return `${this.getCategoryEmoji()} ${this.name} - ${this.getFormattedPrice()} تومان`;
     }
 }
+window.Product = Product;

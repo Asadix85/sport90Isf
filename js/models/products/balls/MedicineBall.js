@@ -30,3 +30,5 @@ class MedicineBall extends Ball {
         });
     }
 }
+
+window.MedicineBall = MedicineBall;

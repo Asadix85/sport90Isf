@@ -49,3 +49,5 @@ class Ball extends Product {
         return `${this.circumference} سانتی‌متر`;
     }
 }
+
+window.Ball = Ball;
