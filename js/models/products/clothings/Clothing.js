@@ -1,18 +1,17 @@
-import { Product } from '../../abstract/Product.js';
-import { Category, ClothingSize, Gender } from '../../../enums/Enums.js';
 
-export class Clothing extends Product {
+
+class Clothing extends Product {
     constructor({
                     name,
                     price,
                     stockStatus = undefined,
                     image = null,
                     description = '',
-                    category = Category.CLOTHING,
+                    category = window.Category.CLOTHING,
                     brand = undefined,
                     colors = [],
-                    size = ClothingSize.M,
-                    gender = Gender.UNISEX,
+                    size = window.ClothingSize.M,
+                    gender = window.Gender.UNISEX,
                     material = 'پلی‌استر'
                 }) {
         super({

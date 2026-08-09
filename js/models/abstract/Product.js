@@ -1,16 +1,17 @@
 /**
- * کلاس Abstract Product - پایه همه محصولات
+ * ============================================================
+ *  کلاس Abstract Product - پایه همه محصولات
+ * ============================================================
  */
-import { StockStatus, Brand, Category } from '../../enums/Enums.js';
 
 class Product {
     constructor({
                     name,
                     price,
-                    stockStatus = StockStatus.AVAILABLE,
+                    stockStatus = window.StockStatus.AVAILABLE,
                     image = null,
                     description = '',
-                    category = Category.OTHER,
+                    category = window.Category.OTHER,
                     brand = Brand.IRANIAN,
                     colors = []
                 }) {
@@ -40,9 +41,9 @@ class Product {
     }
 
     getStockClass() {
-        if (this.stockStatus === StockStatus.AVAILABLE) return 'available';
-        if (this.stockStatus === StockStatus.OUT_OF_STOCK) return 'unavailable';
-        if (this.stockStatus === StockStatus.PRE_ORDER) return 'pre-order';
+        if (this.stockStatus === window.StockStatus.AVAILABLE) return 'available';
+        if (this.stockStatus === window.StockStatus.OUT_OF_STOCK) return 'unavailable';
+        if (this.stockStatus === window.StockStatus.PRE_ORDER) return 'pre-order';
         return 'limited';
     }
 
@@ -73,8 +74,8 @@ class Product {
     }
 
     isInStock() {
-        return this.stockStatus === StockStatus.AVAILABLE ||
-            this.stockStatus === StockStatus.LIMITED;
+        return this.stockStatus === window.StockStatus.AVAILABLE ||
+            this.stockStatus === window.StockStatus.LIMITED;
     }
 
     toString() {
