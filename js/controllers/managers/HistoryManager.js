@@ -2,7 +2,7 @@
  * HistoryManager.js - مدیریت تاریخچه مشاهده
  * مسئولیت: recently viewed products strip
  */
-export class HistoryManager {
+class HistoryManager {
     constructor(historyService, uiManager) {
         this.historyService = historyService;
         this.ui = uiManager;
@@ -62,4 +62,4 @@ export class HistoryManager {
 }
 
 
-// Removed duplicate export
+if (typeof window !== 'undefined') { window.HistoryManager = HistoryManager; }

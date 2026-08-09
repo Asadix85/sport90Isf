@@ -5,35 +5,23 @@
  * چون onload بعد از بارگذاری همه script ها اجرا می‌شود
  */
 
-import { DataService } from './services/DataService.js';
-import { ThemeManager } from './utils/ThemeManager.js';
-import { SearchService } from './services/SearchService.js';
-import { FilterService } from './services/FilterService.js';
-import { ComparisonService } from './services/ComparisonService.js';
-import { HistoryService } from './services/HistoryService.js';
-import { AutocompleteService } from './services/AutocompleteService.js';
-import { ExportService } from './services/ExportService.js';
-import { ShareService } from './services/ShareService.js';
-import { AppController } from './controllers/AppController.js';
-import { eventBus } from './core/EventBus.js';
-
 window.addEventListener('load', async function () {
     console.log('🚀 شروع برنامه Sport 90...');
 
     try {
         // ===== بررسی کلاس‌های مورد نیاز =====
         const required = {
-            DataService: typeof DataService,
-            ThemeManager: typeof ThemeManager,
-            SearchService: typeof SearchService,
-            FilterService: typeof FilterService,
-            ComparisonService: typeof ComparisonService,
-            HistoryService: typeof HistoryService,
-            AutocompleteService: typeof AutocompleteService,
-            ExportService: typeof ExportService,
-            ShareService: typeof ShareService,
-            AppController: typeof AppController,
-            eventBus: typeof eventBus,
+            DataService: typeof window.DataService,
+            ThemeManager: typeof window.ThemeManager,
+            SearchService: typeof window.SearchService,
+            FilterService: typeof window.FilterService,
+            ComparisonService: typeof window.ComparisonService,
+            HistoryService: typeof window.HistoryService,
+            AutocompleteService: typeof window.AutocompleteService,
+            ExportService: typeof window.ExportService,
+            ShareService: typeof window.ShareService,
+            AppController: typeof window.AppController,
+            eventBus: typeof window.eventBus,
         };
 
         // نمایش وضعیت هر کلاس
@@ -53,22 +41,22 @@ window.addEventListener('load', async function () {
 
         // ===== ایجاد سرویس‌ها =====
         console.log('⚙️ ساخت سرویس‌ها...');
-        const dataService = new DataService();
-        const themeManager = new ThemeManager();
-        const searchService = new SearchService(dataService);
+        const dataService = new window.DataService();
+        const themeManager = new window.ThemeManager();
+        const searchService = new window.SearchService(dataService);
 
         // سرویس‌های جدید (Singleton ها)
-        const filterService = new FilterService();
-        const comparisonService = ComparisonService.getInstance();
-        const historyService = HistoryService.getInstance();
-        const autocompleteService = new AutocompleteService();
-        const exportService = new ExportService();
-        const shareService = new ShareService();
+        const filterService = new window.FilterService();
+        const comparisonService = window.ComparisonService.getInstance();
+        const historyService = window.HistoryService.getInstance();
+        const autocompleteService = new window.AutocompleteService();
+        const exportService = new window.ExportService();
+        const shareService = new window.ShareService();
 
         console.log('✅ همه سرویس‌ها ساخته شدند');
 
         // ===== ایجاد کنترلر اصلی =====
-        const app = new AppController(
+        const app = new window.AppController(
             dataService,
             themeManager,
             searchService,
@@ -90,7 +78,7 @@ window.addEventListener('load', async function () {
         window.autocompleteService = autocompleteService;
         window.exportService = exportService;
         window.shareService = shareService;
-        window.eventBus = eventBus;
+        window.eventBus = window.eventBus;
 
         console.log('✅ برنامه با موفقیت اجرا شد!');
         console.log(`📦 تعداد محصولات: ${dataService.getAllProducts().length}`);
@@ -100,7 +88,7 @@ window.addEventListener('load', async function () {
         console.log('   comparisonService.getComparison()');
         console.log('   historyService.getLastViewed(5)');
         console.log('   exportService.exportToCSV(dataService.getAllProducts())');
-        
+
         window.loadingManager = app.loading;
         window.breadcrumb = app.breadcrumb;
         window.scrollManager = app.scrollManager;

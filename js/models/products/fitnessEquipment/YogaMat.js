@@ -1,7 +1,5 @@
-import { FitnessEquipment } from './FitnessEquipment.js';
-import { Category, Brand } from '../../../enums/Enums.js';
 
-export class YogaMat extends FitnessEquipment {
+class YogaMat extends FitnessEquipment {
     constructor({
                     name,
                     price,
@@ -30,3 +28,5 @@ export class YogaMat extends FitnessEquipment {
         this.thickness = thickness;
     }
 }
+
+window.YogaMat = YogaMat;

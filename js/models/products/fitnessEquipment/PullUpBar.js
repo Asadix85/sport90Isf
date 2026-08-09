@@ -1,7 +1,5 @@
-import { FitnessEquipment } from './FitnessEquipment.js';
-import { Category, Brand } from '../../../enums/Enums.js';
 
-export class PullUpBar extends FitnessEquipment {
+class PullUpBar extends FitnessEquipment {
     constructor({
                     name,
                     price,
@@ -30,3 +28,5 @@ export class PullUpBar extends FitnessEquipment {
         this.maxWeight = maxWeight;
     }
 }
+
+window.PullUpBar = PullUpBar;

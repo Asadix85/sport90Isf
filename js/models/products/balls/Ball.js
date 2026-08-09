@@ -2,10 +2,8 @@
  * Ball - کلاس پایه توپ‌ها
  * ارث‌بری از کلاس Product
  */
-import { Product } from '../../abstract/Product.js';
-import { BallMaterial, Category } from '../../../enums/Enums.js';
 
-export class Ball extends Product {
+class Ball extends Product {
     constructor({
                     name,
                     price,
@@ -51,3 +49,5 @@ export class Ball extends Product {
         return `${this.circumference} سانتی‌متر`;
     }
 }
+
+window.Ball = Ball;

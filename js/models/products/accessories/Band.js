@@ -1,7 +1,5 @@
-import { Accessory } from './Accessory.js';
-import { Category, Brand } from '../../../enums/Enums.js';
 
-export class Band extends Accessory {
+class Band extends Accessory {
     constructor({
                     name,
                     price,
@@ -28,3 +26,5 @@ export class Band extends Accessory {
         this.bandType = bandType;
     }
 }
+
+window.Band = Band;

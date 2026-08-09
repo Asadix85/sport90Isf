@@ -1,7 +1,5 @@
-import { Ball } from './Ball.js';
-import { Category, Brand } from '../../../enums/Enums.js';
 
-export class BasketballBall extends Ball {
+class BasketballBall extends Ball {
     constructor({
                     name,
                     price,
@@ -32,3 +30,5 @@ export class BasketballBall extends Ball {
         });
     }
 }
+
+window.BasketballBall = BasketballBall;

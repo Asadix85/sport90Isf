@@ -1,7 +1,5 @@
-import { FitnessEquipment } from './FitnessEquipment.js';
-import { Category, Brand } from '../../../enums/Enums.js';
 
-export class Barbell extends FitnessEquipment {
+class Barbell extends FitnessEquipment {
     constructor({
                     name,
                     price,
@@ -27,3 +25,5 @@ export class Barbell extends FitnessEquipment {
         });
     }
 }
+
+window.Barbell = Barbell;

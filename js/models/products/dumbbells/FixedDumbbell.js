@@ -1,7 +1,5 @@
-import { Dumbbell } from './Dumbbell.js';
-import { Category, Brand } from '../../../enums/Enums.js';
 
-export class FixedDumbbell extends Dumbbell {
+class FixedDumbbell extends Dumbbell {
     constructor({
                     name,
                     price,
@@ -27,3 +25,5 @@ export class FixedDumbbell extends Dumbbell {
         });
     }
 }
+
+window.FixedDumbbell = FixedDumbbell;

@@ -2,7 +2,7 @@
  * ViewManager.js - مدیریت حالت نمایش
  * مسئولیت: Grid/List view toggle
  */
-export class ViewManager {
+class ViewManager {
     constructor() {
         this.currentView = this._getSavedView() || 'grid';
         this.toggleBtn = null;
@@ -79,4 +79,4 @@ export class ViewManager {
 }
 
 
-// Removed duplicate export
+if (typeof window !== 'undefined') { window.ViewManager = ViewManager; }

@@ -1,7 +1,5 @@
-import { Net } from './Net.js';
-import { Category, Brand } from '../../../enums/Enums.js';
 
-export class FootballNet extends Net {
+class FootballNet extends Net {
     constructor({
                     name,
                     price,
@@ -27,3 +25,5 @@ export class FootballNet extends Net {
         });
     }
 }
+
+window.FootballNet = FootballNet;

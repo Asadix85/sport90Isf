@@ -7,7 +7,7 @@
  *
  * الگو: Strategy Pattern برای ranking
  */
-export class AutocompleteService {
+class AutocompleteService {
     /**
      * @constructor
      */
@@ -146,4 +146,4 @@ export class AutocompleteService {
     }
 }
 
-// Removed duplicate export
+if (typeof window !== 'undefined') { window.AutocompleteService = AutocompleteService; }

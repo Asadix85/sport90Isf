@@ -1,7 +1,5 @@
-import { Shoe } from './shoe.js';
-import { Category, Brand } from '../../../enums/Enums.js';
 
-export class VolleyballShoe extends Shoe {
+class VolleyballShoe extends Shoe {
     constructor({
                     name,
                     price,
@@ -29,3 +27,5 @@ export class VolleyballShoe extends Shoe {
         });
     }
 }
+
+window.VolleyballShoe = VolleyballShoe;
