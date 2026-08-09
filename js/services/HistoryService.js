@@ -8,7 +8,7 @@
  *
  * الگو: Singleton + Observer
  */
-export class HistoryService {
+class HistoryService {
     /**
      * @constructor
      */
@@ -179,4 +179,4 @@ export class HistoryService {
     }
 }
 
-// Removed duplicate export
+if (typeof window !== 'undefined') { window.HistoryService = HistoryService; }

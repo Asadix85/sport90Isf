@@ -10,70 +10,68 @@
  * @param {string|Array} content - محتوای متنی یا آرایه‌ای از فرزندان
  * @returns {HTMLElement}
  */
-export function createElement(tagName, attributes = {}, content = '') {
+function createElement(tagName, attributes = {}, content = '') {
     const element = document.createElement(tagName);
-    
+
     // تنظیم attributes
     for (const [key, value] of Object.entries(attributes)) {
         if (key === 'className') {
             element.className = value;
         } else if (key === 'dataset') {
-            for (const [dataKey, dataValue] of Object.entries(value)) {
-                element.dataset[dataKey] = dataValue;
-            }
-        } else if (key.startsWith('on') && typeof value === 'function') {
-            element.addEventListener(key.slice(2).toLowerCase(), value);
-        } else if (value !== null && value !== undefined) {
+            Object.assign(element.dataset, value);
+        } else if (key === 'style') {
+            Object.assign(element.style, value);
+        } else if (key.startsWith('data-')) {
+            element.setAttribute(key, value);
+        } else if (key === 'textContent') {
+            element.textContent = value;
+        } else if (key === 'html') {
+            // فقط در صورتی که مطمئن هستید محتوا امن است
+            element.innerHTML = value;
+        } else {
             element.setAttribute(key, value);
         }
     }
-    
-    // تنظیم محتوا
+
+    // افزودن محتوا
     if (typeof content === 'string') {
         element.textContent = content;
     } else if (Array.isArray(content)) {
         content.forEach(child => {
-            if (child instanceof Node) {
+            if (child instanceof HTMLElement) {
                 element.appendChild(child);
-            } else if (typeof child === 'string') {
-                element.appendChild(document.createTextNode(child));
             }
         });
     }
-    
+
     return element;
 }
 
 /**
- * پاک کردن محتوای یک عنصر و اضافه کردن متن امن
- * @param {HTMLElement} element - عنصر مقصد
- * @param {string} text - متن امن
+ * تنظیم متن به صورت امن
+ * @param {HTMLElement} element
+ * @param {string} text
  */
-export function setTextContent(element, text) {
+function setTextContent(element, text) {
     if (!element) return;
     element.textContent = text;
 }
 
 /**
- * اضافه کردن فرزند به عنصر
- * @param {HTMLElement} parent - عنصر والد
- * @param {HTMLElement|string} child - فرزند (عنصر یا متن)
+ * افزودن فرزند به عنصر والد
+ * @param {HTMLElement} parent
+ * @param {HTMLElement} child
  */
-export function appendChild(parent, child) {
-    if (!parent) return;
-    
-    if (child instanceof Node) {
-        parent.appendChild(child);
-    } else if (typeof child === 'string') {
-        parent.appendChild(document.createTextNode(child));
-    }
+function appendChild(parent, child) {
+    if (!parent || !child) return;
+    parent.appendChild(child);
 }
 
 /**
- * پاک کردن تمام فرزندان یک عنصر
+ * پاک کردن همه فرزندان یک عنصر
  * @param {HTMLElement} element
  */
-export function clearChildren(element) {
+function clearChildren(element) {
     if (!element) return;
     while (element.firstChild) {
         element.removeChild(element.firstChild);
@@ -81,18 +79,18 @@ export function clearChildren(element) {
 }
 
 /**
- * ایجاد عناصر از آرایه داده‌ها
- * @param {Array} items - آرایه داده‌ها
- * @param {Function} renderFn - تابع رندر هر آیتم
- * @param {HTMLElement} container - کانتینر مقصد
+ * رندر کردن لیست آیتم‌ها
+ * @param {Array} items
+ * @param {Function} renderFn - تابعی که هر آیتم را به HTMLElement تبدیل می‌کند
+ * @param {HTMLElement} container
  */
-export function renderList(items, renderFn, container) {
+function renderList(items, renderFn, container) {
     if (!container || !Array.isArray(items)) return;
-    
+
     clearChildren(container);
-    
-    items.forEach(item => {
-        const element = renderFn(item);
+
+    items.forEach((item, index) => {
+        const element = renderFn(item, index);
         if (element) {
             appendChild(container, element);
         }
@@ -105,11 +103,21 @@ export function renderList(items, renderFn, container) {
  * @param {string} htmlString - رشته HTML (فقط برای موارد ضروری)
  * @warning فقط در صورتی استفاده کنید که مطمئن هستید محتوا امن است
  */
-export function setInnerHTML(element, htmlString) {
+function setInnerHTML(element, htmlString) {
     if (!element) return;
-    
+
     // هشدار در کنسول برای بررسی‌های بیشتر
     console.warn('⚠️ استفاده از setInnerHTML - مطمئن شوید محتوا امن است:', htmlString.substring(0, 50));
-    
+
     element.innerHTML = htmlString;
+}
+
+// قرار دادن در window برای دسترسی سراسری
+if (typeof window !== 'undefined') {
+    window.createElement = createElement;
+    window.setTextContent = setTextContent;
+    window.appendChild = appendChild;
+    window.clearChildren = clearChildren;
+    window.renderList = renderList;
+    window.setInnerHTML = setInnerHTML;
 }

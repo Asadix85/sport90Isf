@@ -6,7 +6,7 @@
  *   - خروجی گرفتن محصولات به صورت JSON
  *   - دانلود فایل در مرورگر
  */
-export class ExportService {
+class ExportService {
     /**
      * ستون‌های پیش‌فرض CSV
      */
@@ -139,4 +139,4 @@ export class ExportService {
         }
     }
 }
-// Removed duplicate export
+if (typeof window !== 'undefined') { window.ExportService = ExportService; }

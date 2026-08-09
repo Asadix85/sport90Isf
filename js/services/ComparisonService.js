@@ -10,7 +10,7 @@
  * الگوها: Singleton + Observer
  * SOLID: Single Responsibility
  */
-export class ComparisonService {
+class ComparisonService {
     /**
      * @constructor
      */
@@ -261,4 +261,4 @@ export class ComparisonService {
     }
 }
 
-// Removed duplicate export
+if (typeof window !== 'undefined') { window.ComparisonService = ComparisonService; }
