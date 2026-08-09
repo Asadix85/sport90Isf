@@ -39,7 +39,7 @@ import { FixedDumbbell } from '../models/products/dumbbells/FixedDumbbell.js';
 /**
  * کارخانه ساخت محصولات
  */
-export class ProductFactory {
+class ProductFactory {
     /**
      * ساخت محصول بر اساس نوع
      * @param {ProductType} type - نوع محصول

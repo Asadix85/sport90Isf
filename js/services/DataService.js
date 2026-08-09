@@ -30,7 +30,7 @@ import { Band } from '../models/products/accessories/Band.js';
 import { Racket } from '../models/products/accessories/Racket.js';
 import { FootballNet } from '../models/products/nets/FootballNet.js';
 
-export class DataService {
+class DataService {
     constructor() {
         this.products = [];
         this.categories = {};
@@ -841,4 +841,4 @@ export class DataService {
     }
 }
 
-// Removed duplicate export
+if (typeof window !== 'undefined') { window.DataService = DataService; }

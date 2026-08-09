@@ -9,7 +9,8 @@
  *
  * الگو: Observer + Singleton
  */
-export class EventBus {
+
+class EventBus {
     /**
      * @constructor
      */
@@ -118,4 +119,8 @@ export class EventBus {
 // ساخت نمونه singleton
 const eventBus = new EventBus();
 
-export { EventBus, eventBus };
+// قرار دادن در window برای دسترسی سراسری
+if (typeof window !== 'undefined') {
+    window.EventBus = EventBus;
+    window.eventBus = eventBus;
+}

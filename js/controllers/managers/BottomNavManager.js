@@ -2,7 +2,7 @@
  * BottomNavManager.js - مدیریت ناوبری پایین (موبایل)
  * نسخه بدون دکمه تم
  */
-export class BottomNavManager {
+class BottomNavManager {
     constructor() {
         this.nav = null;
         this.onNavigate = null;
@@ -85,4 +85,4 @@ export class BottomNavManager {
 }
 
 
-// Removed duplicate export
+if (typeof window !== 'undefined') { window.BottomNavManager = BottomNavManager; }

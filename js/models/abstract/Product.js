@@ -3,7 +3,7 @@
  */
 import { StockStatus, Brand, Category } from '../../enums/Enums.js';
 
-export class Product {
+class Product {
     constructor({
                     name,
                     price,

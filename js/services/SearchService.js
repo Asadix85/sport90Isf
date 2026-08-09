@@ -2,7 +2,7 @@
  * SearchService - سرویس جستجوی پیشرفته
  * مسئولیت: جستجو در محصولات بر اساس اسم و کد کالا
  */
-export class SearchService {
+class SearchService {
     constructor(dataService) {
         this.dataService = dataService;
     }
@@ -110,4 +110,4 @@ export class SearchService {
     }
 }
 
-// Removed duplicate export
+if (typeof window !== 'undefined') { window.SearchService = SearchService; }

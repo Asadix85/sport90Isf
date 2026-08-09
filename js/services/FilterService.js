@@ -15,7 +15,7 @@
  *   - Open/Closed: افزودن فیلتر/مرتب جدید بدون تغییر کد موجود
  *   - Single Responsibility: فقط فیلتر و مرتب‌سازی
  */
-export class FilterService {
+class FilterService {
     /**
      * @constructor
      * @param {Object} [options]
@@ -324,4 +324,4 @@ export class FilterService {
     }
 }
 
-// Removed duplicate export
+if (typeof window !== 'undefined') { window.FilterService = FilterService; }

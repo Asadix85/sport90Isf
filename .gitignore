@@ -1,1 +1,31 @@
-(js/enums/Enums.js)
+```
+# Build artifacts
+dist/
+build/
+*.js.map
+*.min.js
+
+# Dependencies
+node_modules/
+
+# Logs and temp files
+*.log
+*.tmp
+
+# Environment
+.env
+.env.local
+*.env.*
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Coverage and testing
+coverage/
+htmlcov/
+.coverage
+.nyc_output/
+```

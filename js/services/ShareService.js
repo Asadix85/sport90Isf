@@ -6,7 +6,7 @@
  *   - ساخت لینک‌های شبکه اجتماعی
  *   - deep link برای محصول (?product=CODE)
  */
-export class ShareService {
+class ShareService {
     /**
      * ساخت URL محصول
      * @param {Object} product
@@ -85,4 +85,4 @@ export class ShareService {
     }
 }
 
-// Removed duplicate export
+if (typeof window !== 'undefined') { window.ShareService = ShareService; }

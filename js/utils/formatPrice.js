@@ -7,13 +7,13 @@
  * @param {number|string} price - قیمت
  * @returns {string} قیمت فرمت شده
  */
-export function formatPrice(price) {
+function formatPrice(price) {
     if (price === null || price === undefined || price === '') return 'نامشخص';
-    
+
     const num = typeof price === 'string' ? parseFloat(price.replace(/,/g, '')) : price;
-    
+
     if (isNaN(num)) return 'نامشخص';
-    
+
     return num.toLocaleString('fa-IR');
 }
 
@@ -22,7 +22,7 @@ export function formatPrice(price) {
  * @param {number|string} price - قیمت
  * @returns {string} قیمت با واحد
  */
-export function formatPriceWithUnit(price) {
+function formatPriceWithUnit(price) {
     const formatted = formatPrice(price);
     if (formatted === 'نامشخص') return 'نامشخص';
     return `${formatted} تومان`;
@@ -34,11 +34,11 @@ export function formatPriceWithUnit(price) {
  * @param {number} discountPercent - درصد تخفیف
  * @returns {Object} شامل قیمت اصلی، قیمت با تخفیف و مقدار صرفه‌جویی
  */
-export function calculateDiscount(originalPrice, discountPercent) {
-    const original = typeof originalPrice === 'string' 
-        ? parseFloat(originalPrice.replace(/,/g, '')) 
+function calculateDiscount(originalPrice, discountPercent) {
+    const original = typeof originalPrice === 'string'
+        ? parseFloat(originalPrice.replace(/,/g, ''))
         : originalPrice;
-    
+
     if (isNaN(original) || !discountPercent) {
         return {
             original: originalPrice,
@@ -47,14 +47,21 @@ export function calculateDiscount(originalPrice, discountPercent) {
             percent: 0
         };
     }
-    
+
     const saving = Math.round(original * (discountPercent / 100));
     const discounted = original - saving;
-    
+
     return {
         original: formatPriceWithUnit(original),
         discounted: formatPriceWithUnit(discounted),
         saving: formatPriceWithUnit(saving),
         percent: discountPercent
     };
+}
+
+// قرار دادن در window برای دسترسی سراسری
+if (typeof window !== 'undefined') {
+    window.formatPrice = formatPrice;
+    window.formatPriceWithUnit = formatPriceWithUnit;
+    window.calculateDiscount = calculateDiscount;
 }
