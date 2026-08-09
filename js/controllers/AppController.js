@@ -465,4 +465,4 @@ export class AppController {
 }
 
 
-export { AppController };
+// Removed duplicate export

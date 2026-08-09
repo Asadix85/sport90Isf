@@ -124,3 +124,5 @@ export class ProductFactory {
             .filter(product => product !== null);
     }
 }
+
+// No additional export needed - class is already exported

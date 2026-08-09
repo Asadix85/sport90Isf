@@ -16,4 +16,7 @@ function escapeHtml(value) {
     return str.replace(/[&<>"']/g, (m) => map[m]);
 }
 
-export { escapeHtml };
+// Export for module usage
+if (typeof window !== 'undefined') {
+    window.escapeHtml = escapeHtml;
+}

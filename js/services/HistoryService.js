@@ -179,4 +179,4 @@ export class HistoryService {
     }
 }
 
-export { HistoryService };
+// Removed duplicate export

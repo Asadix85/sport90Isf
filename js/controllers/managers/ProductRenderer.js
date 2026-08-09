@@ -435,4 +435,4 @@ export class ProductRenderer {
 }
 
 
-export { ProductRenderer };
+// Removed duplicate export

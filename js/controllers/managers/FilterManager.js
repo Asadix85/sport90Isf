@@ -253,4 +253,4 @@ export class FilterManager {
 }
 
 
-export { FilterManager };
+// Removed duplicate export

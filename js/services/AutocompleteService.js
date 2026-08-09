@@ -146,4 +146,4 @@ export class AutocompleteService {
     }
 }
 
-export { AutocompleteService };
+// Removed duplicate export

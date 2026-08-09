@@ -85,4 +85,4 @@ export class BottomNavManager {
 }
 
 
-export { BottomNavManager };
+// Removed duplicate export

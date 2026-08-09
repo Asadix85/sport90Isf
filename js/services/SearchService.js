@@ -110,4 +110,4 @@ export class SearchService {
     }
 }
 
-export { SearchService };
+// Removed duplicate export

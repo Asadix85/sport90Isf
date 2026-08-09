@@ -145,4 +145,4 @@ export class ComparisonManager {
 }
 
 
-export { ComparisonManager };
+// Removed duplicate export
