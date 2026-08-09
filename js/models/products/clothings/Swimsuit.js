@@ -1,7 +1,5 @@
-import { Clothing } from './Clothing.js';
-import { Category, Brand, Gender } from '../../../enums/Enums.js';
 
-export class Swimsuit extends Clothing {
+class Swimsuit extends Clothing {
     constructor({
                     name,
                     price,

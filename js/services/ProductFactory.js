@@ -3,38 +3,14 @@
  * ایجاد نمونه‌های مناسب از کلاس‌های محصول بر اساس نوع
  */
 
-import { ProductType, Category, SubCategory } from '../enums/Enums.js';
 
 // ایمپورت کلاس‌های محصول
-import { FootballBall } from '../models/products/balls/FootballBall.js';
-import { BasketballBall } from '../models/products/balls/BasketballBall.js';
-import { VolleyballBall } from '../models/products/balls/VolleyballBall.js';
-import { ExerciseBall } from '../models/products/balls/ExerciseBall.js';
-import { MedicineBall } from '../models/products/balls/MedicineBall.js';
 
-import { FootballShoe } from '../models/products/shoes/FootballShoe.js';
-import { VolleyballShoe } from '../models/products/shoes/VolleyballShoe.js';
-import { WrestlingShoe } from '../models/products/shoes/WrestlingShoe.js';
-import { SportsShoe } from '../models/products/shoes/SportsShoe.js';
 
-import { Shirt } from '../models/products/clothings/Shirt.js';
-import { Short } from '../models/products/clothings/Short.js';
-import { Socks } from '../models/products/clothings/Socks.js';
-import { Swimsuit } from '../models/products/clothings/Swimsuit.js';
-import { MartialArtsUniform } from '../models/products/clothings/MartialArtsUniform.js';
 
-import { Barbell } from '../models/products/fitnessEquipment/Barbell.js';
-import { PullUpBar } from '../models/products/fitnessEquipment/PullUpBar.js';
-import { ResistanceBand } from '../models/products/fitnessEquipment/ResistanceBand.js';
-import { YogaMat } from '../models/products/fitnessEquipment/YogaMat.js';
 
-import { Glove } from '../models/products/accessories/Glove.js';
-import { Band } from '../models/products/accessories/Band.js';
-import { Racket } from '../models/products/accessories/Racket.js';
 
-import { FootballNet } from '../models/products/nets/FootballNet.js';
 
-import { FixedDumbbell } from '../models/products/dumbbells/FixedDumbbell.js';
 
 /**
  * کارخانه ساخت محصولات

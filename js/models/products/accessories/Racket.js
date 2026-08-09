@@ -1,7 +1,5 @@
-import { Accessory } from './Accessory.js';
-import { Category, Brand } from '../../../enums/Enums.js';
 
-export class Racket extends Accessory {
+class Racket extends Accessory {
     constructor({
                     name,
                     price,

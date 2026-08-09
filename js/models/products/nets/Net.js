@@ -1,7 +1,5 @@
-import { Product } from '../../abstract/Product.js';
-import { Category } from '../../../enums/Enums.js';
 
-export class Net extends Product {
+class Net extends Product {
     constructor({
                     name,
                     price,
