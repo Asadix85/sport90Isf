@@ -27,3 +27,5 @@ class SportsShoe extends Shoe {
         });
     }
 }
+
+window.SportsShoe = SportsShoe;

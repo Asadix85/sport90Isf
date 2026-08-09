@@ -34,3 +34,5 @@ class Shirt extends Clothing {
         return this.sleeveLength;
     }
 }
+
+window.Shirt = Shirt;

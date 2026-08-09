@@ -37,3 +37,5 @@ class FootballBall extends Ball {
         return this.footballType.label || this.footballType;
     }
 }
+
+window.FootballBall = FootballBall;

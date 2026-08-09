@@ -26,3 +26,5 @@ class Racket extends Accessory {
         this.racketType = racketType;
     }
 }
+
+window.Racket = Racket;

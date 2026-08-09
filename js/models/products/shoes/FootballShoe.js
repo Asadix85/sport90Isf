@@ -34,3 +34,5 @@ class FootballShoe extends Shoe {
         return this.studType;
     }
 }
+
+window.FootballShoe = FootballShoe;

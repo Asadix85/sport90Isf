@@ -27,3 +27,5 @@ class VolleyballShoe extends Shoe {
         });
     }
 }
+
+window.VolleyballShoe = VolleyballShoe;

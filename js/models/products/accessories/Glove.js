@@ -26,3 +26,5 @@ class Glove extends Accessory {
         this.gloveType = gloveType;
     }
 }
+
+window.Glove = Glove;

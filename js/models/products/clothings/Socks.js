@@ -30,3 +30,5 @@ class Socks extends Clothing {
         this.length = length;
     }
 }
+
+window.Socks = Socks;

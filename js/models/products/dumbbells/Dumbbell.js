@@ -31,3 +31,5 @@ class Dumbbell extends Product {
         return `${this.weight} کیلوگرم`;
     }
 }
+
+window.Dumbbell = Dumbbell;

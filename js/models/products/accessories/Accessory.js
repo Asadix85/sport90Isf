@@ -29,3 +29,5 @@ class Accessory extends Product {
         return this.material || '';
     }
 }
+
+window.Accessory = Accessory;

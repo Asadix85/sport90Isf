@@ -26,3 +26,5 @@ class Band extends Accessory {
         this.bandType = bandType;
     }
 }
+
+window.Band = Band;

@@ -31,3 +31,5 @@ class Net extends Product {
         return this.dimensions || '';
     }
 }
+
+window.Net = Net;

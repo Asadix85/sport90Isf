@@ -1,9 +1,10 @@
-```gitignore
+```
 # Compiled and build artifacts
 *.pyc
 __pycache__/
 *.o
 *.obj
+*.class
 *.exe
 *.dll
 *.so
@@ -26,6 +27,7 @@ coverage/
 htmlcov/
 .mypy_cache/
 .pytest_cache/
+.gradle/
 
 # Editor/IDE files
 .vscode/
@@ -34,12 +36,11 @@ htmlcov/
 *.swo
 *.tmp
 
-# Logs
-*.log
-
 # System files
 .DS_Store
 Thumbs.db
+*.log
+.coverage
 
 # Compressed files
 *.zip

@@ -25,3 +25,5 @@ class Barbell extends FitnessEquipment {
         });
     }
 }
+
+window.Barbell = Barbell;

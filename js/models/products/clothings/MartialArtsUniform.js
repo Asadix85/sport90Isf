@@ -30,3 +30,5 @@ class MartialArtsUniform extends Clothing {
         this.martialArt = martialArt;
     }
 }
+
+window.MartialArtsUniform = MartialArtsUniform;

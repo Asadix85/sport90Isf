@@ -28,3 +28,5 @@ class YogaMat extends FitnessEquipment {
         this.thickness = thickness;
     }
 }
+
+window.YogaMat = YogaMat;

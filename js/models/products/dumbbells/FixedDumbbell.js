@@ -25,3 +25,5 @@ class FixedDumbbell extends Dumbbell {
         });
     }
 }
+
+window.FixedDumbbell = FixedDumbbell;

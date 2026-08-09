@@ -27,3 +27,5 @@ class WrestlingShoe extends Shoe {
         });
     }
 }
+
+window.WrestlingShoe = WrestlingShoe;

@@ -38,3 +38,5 @@ class Clothing extends Product {
         return this.gender.label || this.gender;
     }
 }
+
+window.Clothing = Clothing;

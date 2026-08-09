@@ -30,3 +30,5 @@ class ExerciseBall extends Ball {
         });
     }
 }
+
+window.ExerciseBall = ExerciseBall;
