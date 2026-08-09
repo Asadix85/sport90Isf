@@ -131,5 +131,5 @@ export class QuickViewManager {
 // قبلی: class="quickview-btn"
 // جدید: class="qv-btn"
 
-export { QuickViewManager };
+// Removed duplicate export
 

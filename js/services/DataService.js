@@ -841,4 +841,4 @@ export class DataService {
     }
 }
 
-export { DataService };
+// Removed duplicate export

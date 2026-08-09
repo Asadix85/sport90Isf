@@ -74,4 +74,4 @@ export class NavigationManager {
 }
 
 
-export { NavigationManager };
+// Removed duplicate export

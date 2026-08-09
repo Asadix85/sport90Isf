@@ -324,4 +324,4 @@ export class FilterService {
     }
 }
 
-export { FilterService };
+// Removed duplicate export

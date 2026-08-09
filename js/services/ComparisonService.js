@@ -261,4 +261,4 @@ export class ComparisonService {
     }
 }
 
-export { ComparisonService };
+// Removed duplicate export

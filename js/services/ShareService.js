@@ -85,4 +85,4 @@ export class ShareService {
     }
 }
 
-export { ShareService };
+// Removed duplicate export

@@ -36,4 +36,8 @@ function throttle(func, limit = 250) {
     };
 }
 
-export { debounce, throttle };
+// Export for module usage
+if (typeof window !== 'undefined') {
+    window.debounce = debounce;
+    window.throttle = throttle;
+}

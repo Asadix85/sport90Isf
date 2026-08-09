@@ -127,4 +127,4 @@ export class BreadcrumbManager {
 }
 
 
-export { BreadcrumbManager };
+// Removed duplicate export

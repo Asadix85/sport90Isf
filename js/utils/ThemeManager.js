@@ -210,4 +210,4 @@ export class ThemeManager {
     }
 }
 
-export { ThemeManager };
+// Removed duplicate export

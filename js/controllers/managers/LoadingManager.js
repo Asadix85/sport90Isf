@@ -78,4 +78,4 @@ export class LoadingManager {
 }
 
 
-export { LoadingManager };
+// Removed duplicate export

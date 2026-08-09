@@ -79,4 +79,4 @@ export class ViewManager {
 }
 
 
-export { ViewManager };
+// Removed duplicate export

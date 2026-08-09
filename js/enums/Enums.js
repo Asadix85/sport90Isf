@@ -203,5 +203,21 @@ export const AppLimits = Object.freeze({
     MAX_SEARCH_HISTORY: 5,
     MAX_SUGGESTIONS: 8,
 });
-// Export all enums
-export { StockStatus, Gender, ClothingSize, ShoeSize, FootballType, BallMaterial, Terrain, Brand, Color, Category, SortOption, AppEvents, StorageKeys, AppLimits };
+
+// Export all enums as a single default export for non-module scripts
+if (typeof window !== 'undefined') {
+    window.StockStatus = StockStatus;
+    window.Gender = Gender;
+    window.ClothingSize = ClothingSize;
+    window.ShoeSize = ShoeSize;
+    window.FootballType = FootballType;
+    window.BallMaterial = BallMaterial;
+    window.Terrain = Terrain;
+    window.Brand = Brand;
+    window.Color = Color;
+    window.Category = Category;
+    window.SortOption = SortOption;
+    window.AppEvents = AppEvents;
+    window.StorageKeys = StorageKeys;
+    window.AppLimits = AppLimits;
+}

@@ -62,4 +62,4 @@ export class HistoryManager {
 }
 
 
-export { HistoryManager };
+// Removed duplicate export

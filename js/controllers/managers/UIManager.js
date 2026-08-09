@@ -76,4 +76,4 @@ export class UIManager {
 }
 
 
-export { UIManager };
+// Removed duplicate export

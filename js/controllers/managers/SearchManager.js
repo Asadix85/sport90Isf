@@ -205,4 +205,4 @@ export class SearchManager {
 }
 
 
-export { SearchManager };
+// Removed duplicate export

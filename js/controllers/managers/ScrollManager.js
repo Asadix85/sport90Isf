@@ -88,4 +88,4 @@ export class ScrollManager {
 }
 
 
-export { ScrollManager };
+// Removed duplicate export
