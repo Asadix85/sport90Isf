@@ -42,6 +42,7 @@ window.addEventListener('load', async function () {
         // ===== ایجاد سرویس‌ها =====
         console.log('⚙️ ساخت سرویس‌ها...');
         const dataService = new window.DataService();
+        await dataService.init(); // بارگذاری محصولات از data/products.json
         const themeManager = new window.ThemeManager();
         const searchService = new window.SearchService(dataService);
 

@@ -6,7 +6,7 @@ class YogaMat extends FitnessEquipment {
                     stockStatus = undefined,
                     image = null,
                     description = '',
-                    brand = Brand.LEDRA,
+                    brand = window.Brand.OTHER,
                     colors = [],
                     weight = 1,
                     material = 'فوم',

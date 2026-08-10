@@ -6,7 +6,7 @@ class ExerciseBall extends Ball {
                     stockStatus = undefined,
                     image = null,
                     description = '',
-                    brand = Brand.LEDRA,
+                    brand = window.Brand.OTHER,
                     colors = [],
                     size = 65,
                     material = undefined,

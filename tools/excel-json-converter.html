@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>ابزار تبدیل Excel ⇄ JSON محصولات | Sport 90</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+    * { box-sizing: border-box; }
+    body {
+        font-family: Tahoma, 'Vazirmatn', sans-serif;
+        background: #0f172a;
+        color: #e2e8f0;
+        margin: 0;
+        padding: 24px;
+        direction: rtl;
+    }
+    .wrap { max-width: 900px; margin: 0 auto; }
+    h1 { font-size: 22px; margin-bottom: 4px; }
+    .sub { color: #94a3b8; margin-bottom: 28px; }
+    .card {
+        background: #1e293b;
+        border: 1px solid #334155;
+        border-radius: 12px;
+        padding: 22px;
+        margin-bottom: 20px;
+    }
+    .card h2 { margin-top: 0; font-size: 17px; color: #38bdf8; }
+    .card p { color: #cbd5e1; line-height: 1.9; font-size: 14px; }
+    .drop {
+        border: 2px dashed #475569;
+        border-radius: 10px;
+        padding: 30px;
+        text-align: center;
+        cursor: pointer;
+        transition: 0.2s;
+        margin-top: 12px;
+    }
+    .drop:hover, .drop.drag { border-color: #38bdf8; background: #1e293b80; }
+    .drop input { display: none; }
+    button, .btn {
+        background: #2563eb;
+        color: white;
+        border: none;
+        padding: 10px 18px;
+        border-radius: 8px;
+        font-size: 14px;
+        cursor: pointer;
+        font-family: inherit;
+        margin-top: 10px;
+    }
+    button:hover { background: #1d4ed8; }
+    .status { margin-top: 14px; font-size: 13px; }
+    .ok { color: #4ade80; }
+    .err { color: #f87171; }
+    table { border-collapse: collapse; width: 100%; margin-top: 14px; font-size: 12px; }
+    th, td { border: 1px solid #334155; padding: 6px 8px; text-align: right; }
+    th { background: #0f172a; }
+    .preview { max-height: 260px; overflow: auto; }
+    code { background: #0f172a; padding: 2px 6px; border-radius: 4px; font-size: 12px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+    <h1>🔄 ابزار تبدیل Excel ⇄ JSON محصولات</h1>
+    <div class="sub">این ابزار کاملاً آفلاینه و هیچ داده‌ای جایی ارسال نمیشه؛ همه‌چیز توی همون مرورگر خودتون انجام میشه.</div>
+
+    <div class="card">
+        <h2>۱) ویرایش با Excel</h2>
+        <p>
+            فایل <code>data/products.xlsx</code> رو با Excel (یا Google Sheets) باز کنید، تغییرات رو بدید
+            (قیمت، اسم، موجودی و...)، ذخیره کنید، و اینجا آپلودش کنید تا به <code>products.json</code> تبدیل بشه.
+        </p>
+        <div class="drop" id="dropXlsx">
+            📊 فایل <b>.xlsx</b> رو اینجا بکشید یا کلیک کنید
+            <input type="file" id="fileXlsx" accept=".xlsx,.xls">
+        </div>
+        <div class="status" id="statusXlsx"></div>
+        <div class="preview" id="previewXlsx"></div>
+        <button id="downloadJson" style="display:none;">⬇️ دانلود products.json</button>
+    </div>
+
+    <div class="card">
+        <h2>۲) یا برعکس: JSON رو به Excel تبدیل کن</h2>
+        <p>اگه مستقیم <code>products.json</code> رو ادیت کردید و می‌خواید یه نسخه Excel ازش داشته باشید:</p>
+        <div class="drop" id="dropJson">
+            📄 فایل <b>.json</b> رو اینجا بکشید یا کلیک کنید
+            <input type="file" id="fileJson" accept=".json">
+        </div>
+        <div class="status" id="statusJson"></div>
+        <button id="downloadXlsx" style="display:none;">⬇️ دانلود products.xlsx</button>
+    </div>
+
+    <div class="card">
+        <h2>ℹ️ نکات مهم</h2>
+        <p>
+            • ستون <code>colors</code> رو با ویرگول جدا کنید (مثال: <code>red,blue</code>)<br>
+            • فیلدهای خالی رو خالی بذارید، لازم نیست همه ستون‌ها پر بشه<br>
+            • ستون <code>type</code> نباید تغییر کنه مگر بخواید نوع محصول رو عوض کنید<br>
+            • بعد از دانلود، فایل خروجی رو جایگزین همون مسیر تو پوشه <code>data/</code> کنید و روی گیت‌هاب آپلود/کامیت کنید
+        </p>
+    </div>
+</div>
+
+<script>
+let convertedJson = null;
+let convertedXlsxBook = null;
+
+function setupDrop(dropId, inputId, onFile) {
+    const drop = document.getElementById(dropId);
+    const input = document.getElementById(inputId);
+    drop.addEventListener('click', () => input.click());
+    drop.addEventListener('dragover', e => { e.preventDefault(); drop.classList.add('drag'); });
+    drop.addEventListener('dragleave', () => drop.classList.remove('drag'));
+    drop.addEventListener('drop', e => {
+        e.preventDefault();
+        drop.classList.remove('drag');
+        if (e.dataTransfer.files[0]) onFile(e.dataTransfer.files[0]);
+    });
+    input.addEventListener('change', e => {
+        if (e.target.files[0]) onFile(e.target.files[0]);
+    });
+}
+
+const NUMERIC_FIELDS = new Set(['price', 'weight', 'circumference', 'shoeSize', 'maxWeight', 'thickness']);
+const ARRAY_FIELDS = new Set(['colors']);
+
+function rowToProduct(row) {
+    const obj = {};
+    for (const key of Object.keys(row)) {
+        let val = row[key];
+        if (val === undefined || val === null || val === '') continue;
+        if (ARRAY_FIELDS.has(key)) {
+            obj[key] = String(val).split(',').map(s => s.trim()).filter(Boolean);
+        } else if (NUMERIC_FIELDS.has(key)) {
+            const n = Number(val);
+            obj[key] = isNaN(n) ? val : n;
+        } else {
+            obj[key] = val;
+        }
+    }
+    return obj;
+}
+
+setupDrop('dropXlsx', 'fileXlsx', async (file) => {
+    const statusEl = document.getElementById('statusXlsx');
+    const previewEl = document.getElementById('previewXlsx');
+    try {
+        const buf = await file.arrayBuffer();
+        const wb = XLSX.read(buf, { type: 'array' });
+        const sheet = wb.Sheets[wb.SheetNames[0]];
+        const rows = XLSX.utils.sheet_to_json(sheet, { defval: '' });
+
+        const products = rows.map(rowToProduct);
+        convertedJson = products;
+
+        statusEl.innerHTML = `<span class="ok">✅ ${products.length} محصول با موفقیت خونده شد</span>`;
+
+        let html = '<table><tr><th>id</th><th>type</th><th>name</th><th>price</th></tr>';
+        products.slice(0, 8).forEach(p => {
+            html += `<tr><td>${p.id || ''}</td><td>${p.type || ''}</td><td>${p.name || ''}</td><td>${p.price || ''}</td></tr>`;
+        });
+        html += '</table>';
+        if (products.length > 8) html += `<p style="color:#94a3b8">... و ${products.length - 8} محصول دیگه</p>`;
+        previewEl.innerHTML = html;
+
+        document.getElementById('downloadJson').style.display = 'inline-block';
+    } catch (err) {
+        statusEl.innerHTML = `<span class="err">❌ خطا: ${err.message}</span>`;
+    }
+});
+
+document.getElementById('downloadJson').addEventListener('click', () => {
+    if (!convertedJson) return;
+    const blob = new Blob([JSON.stringify(convertedJson, null, 2)], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'products.json';
+    a.click();
+});
+
+setupDrop('dropJson', 'fileJson', async (file) => {
+    const statusEl = document.getElementById('statusJson');
+    try {
+        const text = await file.text();
+        const products = JSON.parse(text);
+
+        const allKeys = new Set();
+        products.forEach(p => Object.keys(p).forEach(k => allKeys.add(k)));
+        const priority = ['id', 'type', 'name', 'price', 'stockStatus', 'image', 'description', 'brand', 'colors'];
+        const rest = [...allKeys].filter(k => !priority.includes(k)).sort();
+        const columns = [...priority.filter(k => allKeys.has(k)), ...rest];
+
+        const rows = products.map(p => {
+            const row = {};
+            columns.forEach(col => {
+                let v = p[col];
+                if (Array.isArray(v)) v = v.join(',');
+                row[col] = v === undefined ? '' : v;
+            });
+            return row;
+        });
+
+        const ws = XLSX.utils.json_to_sheet(rows, { header: columns });
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'Products');
+        convertedXlsxBook = wb;
+
+        statusEl.innerHTML = `<span class="ok">✅ ${products.length} محصول آماده تبدیل به Excel شد</span>`;
+        document.getElementById('downloadXlsx').style.display = 'inline-block';
+    } catch (err) {
+        statusEl.innerHTML = `<span class="err">❌ خطا: ${err.message}</span>`;
+    }
+});
+
+document.getElementById('downloadXlsx').addEventListener('click', () => {
+    if (!convertedXlsxBook) return;
+    XLSX.writeFile(convertedXlsxBook, 'products.xlsx');
+});
+</script>
+</body>
+</html>

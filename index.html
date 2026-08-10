@@ -111,6 +111,7 @@
         <span class="nav-label">اطلاعات</span>
     </button>
 </nav>
+
 <!-- ============================================================ -->
 <!-- ===== صفحه درباره ما ===== -->
 <!-- ============================================================ -->
@@ -122,7 +123,7 @@
             <h3>📖 داستان ما</h3>
             <p>
                 فروشگاه ورزشی اسپرت ۹۰ از سال ۱۳۹۰ فعالیت خود را در شهر اصفهان آغاز کرد.
-                ما با بیش از یک دهه تجربه در زمینه فروش لوازم ورزشی و تعمیرات آن همواره تلاش کرده‌ایم
+                ما با بیش از یک دهه تجربه در زمینه فروش لوازم ورزشی، همواره تلاش کرده‌ایم
                 بهترین محصولات را با مناسب‌ترین قیمت به مشتریان عزیز ارائه دهیم.
             </p>
         </div>
@@ -155,6 +156,7 @@
 
         <div class="info-section">
             <h3>📞 تماس با ما</h3>
+            <p>📍 آدرس: اصفهان، خیابان ...</p>
             <p>📱 ایتا: @ziaei_1405</p>
             <p>🌐 eitaa.com/sport_90_isfahan</p>
         </div>
@@ -163,7 +165,7 @@
             <h3>✅ ضمانت‌نامه</h3>
             <p>
                 تمامی محصولات دارای ضمانت اصالت کالا هستند. در صورت هرگونه مشکل،
-                تا 24 ساعت امکان مرجوعی وجود دارد.
+                تا ۷ روز امکان مرجوعی وجود دارد.
             </p>
         </div>
     </div>
@@ -204,8 +206,18 @@
                 <span class="faq-arrow">▼</span>
             </div>
             <div class="faq-answer">
-                بله، تا 24 ساعت پس از دریافت محصول، در صورت عدم استفاده و سالم بودن بسته‌بندی،
+                بله، تا ۷ روز پس از دریافت محصول، در صورت عدم استفاده و سالم بودن بسته‌بندی،
                 امکان مرجوعی وجود دارد.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                <span>آیا محصولات اورجینال هستند؟</span>
+                <span class="faq-arrow">▼</span>
+            </div>
+            <div class="faq-answer">
+                بله، تمامی محصولات دارای ضمانت اصالت هستند و از منابع معتبر تهیه می‌شوند.
             </div>
         </div>
 
@@ -260,8 +272,8 @@
 
     <!-- ===== دکمه‌های اصلی (Export) ===== -->
     <div class="main-actions">
-<!--        <button id="exportCSV" class="action-pill" title="خروجی اکسل">📊 CSV</button>-->
-<!--        <button id="exportJSON" class="action-pill" title="خروجی JSON">📄 JSON</button>-->
+        <button id="exportCSV" class="action-pill" title="خروجی اکسل">📊 CSV</button>
+        <button id="exportJSON" class="action-pill" title="خروجی JSON">📄 JSON</button>
         <button id="aboutBtn" class="action-pill" title="درباره ما">🏪 درباره ما</button>
         <button id="faqBtn" class="action-pill" title="سوالات متداول">❓ سوالات</button>
     </div>

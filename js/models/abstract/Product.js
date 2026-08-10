@@ -12,7 +12,7 @@ class Product {
                     image = null,
                     description = '',
                     category = window.Category.OTHER,
-                    brand = Brand.IRANIAN,
+                    brand = window.Brand.OTHER,
                     colors = []
                 }) {
         this.name = name;
