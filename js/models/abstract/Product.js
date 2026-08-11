@@ -33,7 +33,7 @@ class Product {
     }
 
     getFormattedPrice() {
-        return new Intl.NumberFormat('fa-IR').format(this.price);
+        return new Intl.NumberFormat('en-US').format(this.price);
     }
 
     getStockStatus() {

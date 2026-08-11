@@ -14,7 +14,7 @@ function formatPrice(price) {
 
     if (isNaN(num)) return 'نامشخص';
 
-    return num.toLocaleString('fa-IR');
+    return num.toLocaleString('en-US');
 }
 
 /**

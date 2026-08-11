@@ -57,7 +57,7 @@ class UIManager {
      */
     formatPrice(price) {
         try {
-            return new Intl.NumberFormat('fa-IR').format(Number(price) || 0);
+            return new Intl.NumberFormat('en-US').format(Number(price) || 0);
         } catch {
             return String(price || 0);
         }

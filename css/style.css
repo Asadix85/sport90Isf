@@ -2,52 +2,56 @@
 /* ===== فونت‌ها ===== */
 /* ============================================================ */
 @import url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css');
+@import url('https://fonts.googleapis.com/css2?family=Teko:wght@500;600;700&family=Bebas+Neue&display=swap');
 
 /* ============================================================ */
 /* ===== متغیرهای رنگ - Light Mode ===== */
 /* ============================================================ */
 :root {
     /* رنگ‌های اصلی */
-    --primary: #ff6b35;
-    --primary-dark: #e55a2b;
-    --primary-light: #ff8c5a;
+    --primary: #ff4d1c;
+    --primary-dark: #d63a10;
+    --primary-light: #ff8a5c;
     --secondary: #1a1a2e;
-    --accent: #00d9ff;
-    --success: #00e676;
+    --accent: #c9971f;
+    --gold: #c9971f;
+    --gold-light: #f0d585;
+    --success: #00b872;
     --warning: #ffab00;
     --danger: #ff5252;
 
     /* گرادیانت‌ها */
-    --gradient-primary: linear-gradient(135deg, #ff6b35 0%, #ff8e53 100%);
+    --gradient-primary: linear-gradient(120deg, #ff4d1c 0%, #ff8a3d 55%, #ffb454 100%);
     --gradient-dark: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-    --gradient-accent: linear-gradient(135deg, #00d9ff 0%, #00ff88 100%);
-    --gradient-card: linear-gradient(145deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.7) 100%);
+    --gradient-accent: linear-gradient(120deg, #c9971f 0%, #f0d585 50%, #c9971f 100%);
+    --gradient-gold: linear-gradient(120deg, #b9861a 0%, #f0d585 50%, #b9861a 100%);
+    --gradient-card: linear-gradient(145deg, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.75) 100%);
 
     /* پس‌زمینه‌ها */
-    --bg-body: #f8fafc;
-    --bg-container: #ffffff;
-    --bg-card: rgba(255, 255, 255, 0.8);
+    --bg-body: #f6f1e7;
+    --bg-container: #fffdf9;
+    --bg-card: rgba(255, 255, 255, 0.86);
     --bg-card-solid: #ffffff;
-    --bg-hover: #fff5f2;
-    --bg-info: #f1f5f9;
-    --bg-glass: rgba(255, 255, 255, 0.7);
+    --bg-hover: #fff3ea;
+    --bg-info: #f2ece0;
+    --bg-glass: rgba(255, 255, 255, 0.72);
 
     /* متن‌ها */
-    --text-primary: #1e293b;
-    --text-secondary: #475569;
-    --text-muted: #94a3b8;
+    --text-primary: #201c16;
+    --text-secondary: #55504a;
+    --text-muted: #948d82;
     --text-inverse: #ffffff;
 
     /* حاشیه‌ها */
-    --border-color: #e2e8f0;
+    --border-color: #e6ddc9;
     --border-light: rgba(255, 255, 255, 0.5);
 
     /* سایه‌ها */
-    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
-    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.08);
-    --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.12);
-    --shadow-glow: 0 0 30px rgba(255, 107, 53, 0.3);
-    --shadow-accent: 0 0 20px rgba(0, 217, 255, 0.3);
+    --shadow-sm: 0 2px 8px rgba(30, 20, 10, 0.05);
+    --shadow-md: 0 8px 24px rgba(30, 20, 10, 0.09);
+    --shadow-lg: 0 20px 44px rgba(30, 20, 10, 0.14);
+    --shadow-glow: 0 0 30px rgba(255, 77, 28, 0.32);
+    --shadow-accent: 0 0 22px rgba(201, 151, 31, 0.35);
 
     /* وضعیت موجودی */
     --stock-available-bg: #d1fae5;
@@ -56,8 +60,8 @@
     --stock-unavailable-text: #991b1b;
 
     /* شیشه‌ای (Glass) */
-    --glass-bg: rgba(255, 255, 255, 0.7);
-    --glass-border: rgba(255, 255, 255, 0.3);
+    --glass-bg: rgba(255, 255, 255, 0.72);
+    --glass-border: rgba(255, 255, 255, 0.35);
     --glass-blur: 20px;
 
     /* شعاع‌ها */
@@ -65,52 +69,68 @@
     --radius-md: 16px;
     --radius-lg: 24px;
     --radius-full: 9999px;
+
+    /* برش قهرمانی (Signature): گوشه‌ی مورب مثل یقه‌ی پیراهن ورزشی */
+    --cut-lg: 26px;
+    --cut-md: 16px;
+    --cut-sm: 10px;
+
+    /* تایپوگرافی امضادار: اعداد و برچسب‌ها با فونت باشگاهی/اسکوربورد */
+    --font-display: 'Teko', 'Vazirmatn', sans-serif;
+    --font-body: 'Vazirmatn', 'Segoe UI', Tahoma, sans-serif;
+
+    /* مشکی مرکب برای لهجه‌ی لوکس روی زمینه روشن */
+    --ink: #14171c;
+    --ink-soft: #2a2f38;
 }
 
 /* ============================================================ */
 /* ===== متغیرهای رنگ - Dark Mode ===== */
 /* ============================================================ */
 [data-theme="dark"] {
-    --primary: #ff6b35;
-    --primary-dark: #ff8c5a;
+    --primary: #ff5a1f;
+    --primary-dark: #ff8a5c;
     --primary-light: #ffab91;
-    --secondary: #0f0f1a;
-    --accent: #00ff88;
+    --secondary: #0a0b0f;
+    --accent: #e8c25f;
+    --gold: #e8c25f;
+    --gold-light: #f7dfa0;
 
-    --gradient-primary: linear-gradient(135deg, #ff6b35 0%, #ff9e6d 100%);
-    --gradient-dark: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 100%);
-    --gradient-accent: linear-gradient(135deg, #00ff88 0%, #00d9ff 100%);
-    --gradient-card: linear-gradient(145deg, rgba(30,30,50,0.9) 0%, rgba(20,20,35,0.8) 100%);
+    --gradient-primary: linear-gradient(120deg, #ff5a1f 0%, #ff8f42 55%, #ffcf5c 100%);
+    --gradient-dark: linear-gradient(135deg, #0a0b0f 0%, #14161c 100%);
+    --gradient-accent: linear-gradient(120deg, #e8c25f 0%, #f7dfa0 50%, #e8c25f 100%);
+    --gradient-gold: linear-gradient(120deg, #c99a3d 0%, #f7dfa0 50%, #c99a3d 100%);
+    --gradient-card: linear-gradient(145deg, rgba(26,28,35,0.92) 0%, rgba(16,18,23,0.85) 100%);
 
-    --bg-body: #0a0a12;
-    --bg-container: #12121f;
-    --bg-card: rgba(25, 25, 45, 0.8);
-    --bg-card-solid: #1a1a2e;
-    --bg-hover: #252540;
-    --bg-info: #1e1e35;
-    --bg-glass: rgba(20, 20, 35, 0.7);
+    --bg-body: #08090c;
+    --bg-container: #0e0f14;
+    --bg-card: rgba(22, 24, 31, 0.86);
+    --bg-card-solid: #171923;
+    --bg-hover: #1c1e28;
+    --bg-info: #15161d;
+    --bg-glass: rgba(18, 19, 25, 0.72);
 
-    --text-primary: #f1f5f9;
-    --text-secondary: #cbd5e1;
-    --text-muted: #64748b;
-    --text-inverse: #0f0f1a;
+    --text-primary: #f6f3ec;
+    --text-secondary: #c6c2ba;
+    --text-muted: #746f68;
+    --text-inverse: #0a0a0d;
 
-    --border-color: #2d2d4a;
+    --border-color: #262832;
     --border-light: rgba(255, 255, 255, 0.1);
 
-    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
-    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
-    --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.5);
-    --shadow-glow: 0 0 30px rgba(255, 107, 53, 0.4);
-    --shadow-accent: 0 0 20px rgba(0, 255, 136, 0.3);
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.35);
+    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.45);
+    --shadow-lg: 0 20px 44px rgba(0, 0, 0, 0.55);
+    --shadow-glow: 0 0 34px rgba(255, 90, 31, 0.4);
+    --shadow-accent: 0 0 24px rgba(232, 194, 95, 0.35);
 
     --stock-available-bg: rgba(0, 230, 118, 0.15);
-    --stock-available-text: #00e676;
+    --stock-available-text: #3ee68f;
     --stock-unavailable-bg: rgba(255, 82, 82, 0.15);
-    --stock-unavailable-text: #ff5252;
+    --stock-unavailable-text: #ff6b6b;
 
-    --glass-bg: rgba(20, 20, 35, 0.7);
-    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-bg: rgba(18, 19, 25, 0.72);
+    --glass-border: rgba(255, 255, 255, 0.08);
 }
 
 /* ============================================================ */
@@ -127,16 +147,19 @@ html {
 }
 
 body {
-    font-family: 'Vazirmatn', 'Segoe UI', Tahoma, sans-serif;
+    font-family: var(--font-body);
     background: var(--bg-body);
     background-image:
-            radial-gradient(circle at 20% 50%, rgba(255, 107, 53, 0.05) 0%, transparent 50%),
-            radial-gradient(circle at 80% 80%, rgba(0, 217, 255, 0.05) 0%, transparent 50%);
+            repeating-linear-gradient(135deg, rgba(20, 23, 28, 0.035) 0px, rgba(20, 23, 28, 0.035) 1px, transparent 1px, transparent 34px),
+            repeating-linear-gradient(45deg, rgba(20, 23, 28, 0.03) 0px, rgba(20, 23, 28, 0.03) 1px, transparent 1px, transparent 34px),
+            radial-gradient(circle at 12% 8%, rgba(255, 90, 31, 0.09) 0%, transparent 40%),
+            radial-gradient(circle at 88% 92%, rgba(232, 194, 95, 0.08) 0%, transparent 40%);
     background-attachment: fixed;
     color: var(--text-primary);
     padding: 20px;
     line-height: 1.7;
     min-height: 100vh;
+    font-feature-settings: "tnum" 1;
     transition: background-color 0.4s ease, color 0.4s ease;
 }
 
@@ -163,9 +186,16 @@ body {
     top: 0;
     left: 0;
     right: 0;
-    height: 4px;
-    background: var(--gradient-primary);
+    height: 5px;
+    background: linear-gradient(90deg, var(--primary) 0%, var(--gold) 50%, var(--primary) 100%);
+    background-size: 200% 100%;
+    animation: sheenMove 6s linear infinite;
     z-index: 10;
+}
+
+@keyframes sheenMove {
+    0% { background-position: 0% 0; }
+    100% { background-position: 200% 0; }
 }
 
 /* ============================================================ */
@@ -176,16 +206,29 @@ body {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 30px;
-    padding-bottom: 20px;
-    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 22px;
+    border-bottom: none;
+    position: relative;
     flex-wrap: wrap;
     gap: 15px;
 }
 
+.header::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--border-color) 0%, var(--primary) 15%, var(--gold) 50%, var(--primary) 85%, var(--border-color) 100%);
+    opacity: 0.55;
+}
+
 .header h1 {
-    font-size: 32px;
-    font-weight: 800;
-    background: var(--gradient-primary);
+    font-size: 34px;
+    font-weight: 900;
+    letter-spacing: -0.5px;
+    background: linear-gradient(120deg, var(--primary) 0%, var(--gold) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -197,6 +240,60 @@ body {
 .header h1::before {
     content: '⚡';
     -webkit-text-fill-color: initial;
+    filter: drop-shadow(0 0 10px rgba(255, 90, 31, 0.5));
+}
+
+/* ===== نشان تیمی (Brand Mark): شماره پیراهن ===== */
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.brand-number {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 46px;
+    line-height: 0.85;
+    color: var(--bg-container);
+    background: linear-gradient(155deg, var(--primary) 0%, var(--primary-dark) 65%, var(--ink) 100%);
+    padding: 6px 14px 8px;
+    clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
+    box-shadow: var(--shadow-md), inset 0 0 0 2px rgba(255, 255, 255, 0.18);
+    letter-spacing: 1px;
+    text-shadow: 0 2px 0 rgba(0, 0, 0, 0.18);
+    position: relative;
+}
+
+.brand-number::after {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    border: 1.5px dashed rgba(255, 255, 255, 0.35);
+    clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);
+    pointer-events: none;
+}
+
+.brand-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.brand-name {
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--text-primary);
+    letter-spacing: -0.3px;
+}
+
+.brand-sub {
+    font-size: 11.5px;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 0.5px;
+    text-transform: none;
+    opacity: 0.9;
 }
 
 .header-actions {
@@ -208,11 +305,24 @@ body {
 .badge {
     background: var(--bg-info);
     color: var(--text-secondary);
-    padding: 8px 16px;
+    padding: 8px 16px 8px 18px;
     border-radius: var(--radius-full);
-    font-size: 13px;
-    font-weight: 600;
+    font-size: 12.5px;
+    font-weight: 700;
     border: 1px solid var(--border-color);
+    font-feature-settings: "tnum" 1;
+    position: relative;
+}
+
+.badge::before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--success);
+    margin-left: 7px;
+    box-shadow: 0 0 6px var(--success);
 }
 
 .theme-toggle {
@@ -226,15 +336,15 @@ body {
     align-items: center;
     gap: 8px;
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 700;
     font-family: inherit;
     transition: all 0.3s ease;
     backdrop-filter: blur(var(--glass-blur));
 }
 
 .theme-toggle:hover {
-    border-color: var(--primary);
-    box-shadow: var(--shadow-glow);
+    border-color: var(--gold);
+    box-shadow: var(--shadow-accent);
     transform: translateY(-2px);
 }
 
@@ -632,7 +742,8 @@ body {
     background: var(--gradient-card);
     backdrop-filter: blur(var(--glass-blur));
     border-radius: var(--radius-md);
-    padding: 35px 25px;
+    clip-path: polygon(var(--cut-lg) 0, 100% 0, 100% 100%, 0 100%, 0 var(--cut-lg));
+    padding: 38px 25px 30px;
     text-align: center;
     cursor: pointer;
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -649,17 +760,36 @@ body {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
     transition: left 0.6s;
+    z-index: 1;
 }
 
 .category-card:hover::before {
     left: 100%;
 }
 
+.category-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: var(--cut-lg);
+    height: var(--cut-lg);
+    background: linear-gradient(135deg, var(--primary) 0%, var(--gold) 100%);
+    clip-path: polygon(0 0, 100% 0, 0 100%);
+    opacity: 0.92;
+    transition: width 0.35s ease, height 0.35s ease;
+}
+
+.category-card:hover::after {
+    width: 40px;
+    height: 40px;
+}
+
 .category-card:hover {
     transform: translateY(-8px) scale(1.02);
-    box-shadow: var(--shadow-lg);
+    box-shadow: var(--shadow-lg), var(--shadow-glow);
     border-color: var(--primary);
 }
 
@@ -672,16 +802,19 @@ body {
 
 .category-card .name {
     font-size: 17px;
-    font-weight: 700;
+    font-weight: 800;
     margin-bottom: 8px;
     color: var(--text-secondary);
 }
 
 .category-card .count {
-    font-size: 13px;
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
     color: var(--text-muted);
     background: var(--bg-info);
-    padding: 4px 12px;
+    padding: 3px 14px;
     border-radius: var(--radius-full);
     display: inline-block;
 }
@@ -805,6 +938,7 @@ body {
     background: var(--gradient-card);
     backdrop-filter: blur(var(--glass-blur));
     border-radius: var(--radius-md);
+    clip-path: polygon(var(--cut-md) 0, 100% 0, 100% 100%, 0 100%, 0 var(--cut-md));
     padding: 20px;
     cursor: pointer;
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -815,6 +949,18 @@ body {
     overflow: hidden;
 }
 
+.product-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: var(--cut-md);
+    height: var(--cut-md);
+    background: linear-gradient(135deg, var(--primary) 0%, var(--gold) 100%);
+    clip-path: polygon(0 0, 100% 0, 0 100%);
+    opacity: 0.9;
+}
+
 .product-card::after {
     content: '';
     position: absolute;
@@ -822,7 +968,7 @@ body {
     left: 0;
     right: 0;
     height: 3px;
-    background: var(--gradient-primary);
+    background: linear-gradient(90deg, var(--primary) 0%, var(--gold) 100%);
     transform: scaleX(0);
     transition: transform 0.3s ease;
 }
@@ -833,7 +979,7 @@ body {
 
 .product-card:hover {
     transform: translateY(-8px);
-    box-shadow: var(--shadow-lg);
+    box-shadow: var(--shadow-lg), var(--shadow-glow);
     border-color: var(--primary);
 }
 
@@ -872,13 +1018,23 @@ body {
 }
 
 .product-card .product-price {
-    font-size: 20px;
-    font-weight: 800;
-    background: var(--gradient-primary);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin: 10px 0;
+    font-family: var(--font-display);
+    font-size: 30px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    color: var(--primary-dark);
+    margin: 8px 0 4px;
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 6px;
+}
+
+.product-card .product-price .price-unit {
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-muted);
 }
 
 .product-card .product-stock {
@@ -886,7 +1042,7 @@ body {
     padding: 6px 14px;
     border-radius: var(--radius-full);
     display: inline-block;
-    font-weight: 600;
+    font-weight: 700;
 }
 
 .product-card .product-stock.available {
@@ -962,12 +1118,11 @@ body {
 }
 
 .product-detail .detail-price {
-    font-size: 34px;
-    font-weight: 800;
-    background: var(--gradient-primary);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    font-family: var(--font-display);
+    font-size: 44px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    color: var(--primary-dark);
     margin: 15px 0;
 }
 
@@ -2158,10 +2313,22 @@ body {
     box-shadow: var(--shadow-glow);
 }
 
+.theme-swatch {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    margin: 0 auto 8px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--swatch-a, var(--primary)) 0%, var(--swatch-b, var(--gold)) 100%);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18), inset 0 0 0 2px rgba(255, 255, 255, 0.25);
+}
+
 .theme-emoji {
-    font-size: 28px;
+    font-size: 18px;
     display: block;
-    margin-bottom: 8px;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.35));
 }
 
 .theme-name {
@@ -2736,12 +2903,12 @@ body {
 }
 
 .product-price {
-    font-size: 20px;
-    font-weight: 800;
-    background: var(--gradient-primary);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    color: var(--primary-dark);
+    -webkit-text-fill-color: var(--primary-dark);
     margin-top: auto;
 }
 
@@ -2978,12 +3145,12 @@ body {
 
 /* قیمت به پایین محتوا می‌چسبد */
 .product-price {
-    font-size: 19px;
-    font-weight: 800;
-    background: var(--gradient-primary);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    color: var(--primary-dark);
+    -webkit-text-fill-color: var(--primary-dark);
     margin-top: auto;
     padding-top: 8px;
     width: 100%;
