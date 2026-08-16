@@ -25,57 +25,58 @@
 ---
 
 ## 🗂️ ساختار پروژه
+```text
 sport90/
 ├── index.html # فایل اصلی
 ├── README.md # این فایل
 ├── css/
-│ └── style.css # استایل‌ها
-└── js/
-├── enums/
-│ └── Enums.js # مقادیر ثابت
+│   └── style.css # استایل‌ها
+├── js/
+│   └── enums/
+│       └── Enums.js # مقادیر ثابت
 ├── models/
-│ ├── abstract/
-│ │ └── Product.js # کلاس پایه
-│ └── products/ # کلاس‌های محصولات
-│ ├── Ball.js
-│ ├── FootballBall.js
-│ ├── BasketballBall.js
-│ ├── VolleyballBall.js
-│ ├── ExerciseBall.js
-│ ├── MedicineBall.js
-│ ├── Shoe.js
-│ ├── FootballShoe.js
-│ ├── VolleyballShoe.js
-│ ├── WrestlingShoe.js
-│ ├── SportsShoe.js
-│ ├── Clothing.js
-│ ├── Shirt.js
-│ ├── Short.js
-│ ├── Socks.js
-│ ├── Swimsuit.js
-│ ├── MartialArtsUniform.js
-│ ├── FitnessEquipment.js
-│ ├── Barbell.js
-│ ├── PullUpBar.js
-│ ├── ResistanceBand.js
-│ ├── YogaMat.js
-│ ├── Accessory.js
-│ ├── Glove.js
-│ ├── Band.js
-│ ├── Racket.js
-│ ├── Net.js
-│ ├── FootballNet.js
-│ ├── Dumbbell.js
-│ └── FixedDumbbell.js
+│   ├── abstract/
+│   │   └── Product.js # کلاس پایه
+│   └── products/ # کلاس‌های محصولات
+│       ├── Ball.js
+│       ├── FootballBall.js
+│       ├── BasketballBall.js
+│       ├── VolleyballBall.js
+│       ├── ExerciseBall.js
+│       ├── MedicineBall.js
+│       ├── Shoe.js
+│       ├── FootballShoe.js
+│       ├── VolleyballShoe.js
+│       ├── WrestlingShoe.js
+│       ├── SportsShoe.js
+│       ├── Clothing.js
+│       ├── Shirt.js
+│       ├── Short.js
+│       ├── Socks.js
+│       ├── Swimsuit.js
+│       ├── MartialArtsUniform.js
+│       ├── FitnessEquipment.js
+│       ├── Barbell.js
+│       ├── PullUpBar.js
+│       ├── ResistanceBand.js
+│       ├── YogaMat.js
+│       ├── Accessory.js
+│       ├── Glove.js
+│       ├── Band.js
+│       ├── Racket.js
+│       ├── Net.js
+│       ├── FootballNet.js
+│       ├── Dumbbell.js
+│       └── FixedDumbbell.js
 ├── services/
-│ ├── DataService.js # مدیریت داده‌ها
-│ └── SearchService.js # سرویس جستجو
+│   ├── DataService.js # مدیریت داده‌ها
+│   └── SearchService.js # سرویس جستجو
 ├── utils/
-│ └── ThemeManager.js # مدیریت تم
+│   └── ThemeManager.js # مدیریت تم
 ├── controllers/
-│ └── AppController.js # کنترلر اصلی
+│   └── AppController.js # کنترلر اصلی
 └── main.js # نقطه ورود
-
+```
 ## تکنولوژی‌ها
 تکنولوژی	کاربرد
 
