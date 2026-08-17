@@ -205,7 +205,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 30px;
+    margin-bottom: 22px;
     padding-bottom: 22px;
     border-bottom: none;
     position: relative;
@@ -390,22 +390,25 @@ body {
 /* ===== بخش جستجو ===== */
 /* ============================================================ */
 .search-section {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
+/* باریک‌تر و وسط‌چین: تمرکز بیشتر روی خودِ جستجو، بدون اینکه کل عرض صفحه را بگیرد */
 .search-box {
     display: flex;
-    gap: 12px;
+    gap: 10px;
     align-items: center;
     flex-wrap: wrap;
     background: var(--glass-bg);
     backdrop-filter: blur(var(--glass-blur));
-    padding: 12px 20px;
+    padding: 10px 18px;
     border-radius: var(--radius-full);
     border: 2px solid var(--border-color);
     transition: all 0.3s ease;
     position: relative;
     box-shadow: var(--shadow-sm);
+    max-width: 620px;
+    margin: 0 auto;
 }
 
 .search-box:focus-within {
@@ -465,8 +468,9 @@ body {
 .search-hint {
     font-size: 12px;
     color: var(--text-muted);
-    margin-top: 8px;
-    padding-right: 20px;
+    margin: 8px auto 0;
+    max-width: 620px;
+    text-align: center;
 }
 
 /* لیست پیشنهادات */
@@ -557,8 +561,9 @@ body {
 .main-actions {
     display: flex;
     gap: 12px;
-    margin-bottom: 25px;
+    margin-bottom: 18px;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
 .action-pill {
@@ -1690,7 +1695,38 @@ body {
     font-size: 13px;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    align-items: center;
+    gap: 10px;
+}
+
+/* «درباره ما» و «سوالات» این‌جا هستند: کاربر تازه‌وارد اول محصول را می‌بیند،
+   این دو فقط وقتی لازم شد (پایین صفحه) در دسترس‌اند. */
+.footer-links {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 4px;
+}
+
+.footer-link-btn {
+    background: var(--bg-info);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    padding: 8px 18px;
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    font-size: 12.5px;
+    font-weight: 600;
+    font-family: inherit;
+    transition: all 0.2s ease;
+}
+
+.footer-link-btn:hover {
+    background: var(--gradient-primary);
+    color: #fff;
+    border-color: transparent;
+    transform: translateY(-2px);
 }
 
 /* ============================================================ */
@@ -1911,13 +1947,30 @@ body {
 /* ============================================================ */
 /* ===== Breadcrumb ===== */
 /* ============================================================ */
+/* شناور، جمع‌وجور، بالا سمت چپ (مثل نوار عنوان ویندوز) — دیگر جای هدر/محتوا
+   را نمی‌گیرد و توی مسیر رسیدن کاربر به محصولات قرار نمی‌گیرد. */
 .breadcrumb-container {
-    margin-bottom: 20px;
-    padding: 12px 20px;
+    position: fixed;
+    top: 120px;
+    left: 16px;
+    z-index: 40;
+    width: auto;
+    max-width: 230px;
+    margin: 0;
+    padding: 5px 8px;
     background: var(--glass-bg);
     backdrop-filter: blur(var(--glass-blur));
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-full);
     border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+    opacity: 0.85;
+    transition: opacity 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.breadcrumb-container:hover {
+    opacity: 1;
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
 }
 
 .breadcrumb-list {
@@ -1926,43 +1979,54 @@ body {
     list-style: none;
     margin: 0;
     padding: 0;
-    flex-wrap: wrap;
-    gap: 5px;
+    flex-wrap: nowrap;
+    gap: 3px;
+    overflow: hidden;
 }
 
 .breadcrumb-item {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 4px;
+    white-space: nowrap;
 }
 
 .breadcrumb-link {
     color: var(--primary);
     text-decoration: none;
-    font-size: 14px;
+    font-size: 11.5px;
     font-weight: 600;
-    padding: 6px 12px;
-    border-radius: var(--radius-sm);
+    padding: 4px 9px;
+    border-radius: var(--radius-full);
     transition: all 0.2s;
 }
 
 .breadcrumb-link:hover {
     background: var(--bg-hover);
-    transform: translateY(-1px);
 }
 
 .breadcrumb-separator {
     color: var(--text-muted);
-    font-size: 12px;
+    font-size: 10px;
 }
 
 .breadcrumb-current {
     color: var(--text-secondary);
-    font-size: 14px;
+    font-size: 11.5px;
     font-weight: 700;
-    padding: 6px 12px;
+    padding: 4px 9px;
     background: var(--bg-info);
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* توی موبایل، نوار پایین (bottom-nav) از قبل دکمه‌ی «خانه» را دارد؛
+   نمایش دوباره‌ی breadcrumb فقط شلوغی اضافه می‌کند. */
+@media (max-width: 768px) {
+    .breadcrumb-container {
+        display: none;
+    }
 }
 
 /* ============================================================ */
@@ -3261,3 +3325,262 @@ body {
 .qv-btn:hover { border-color: var(--primary); transform: translateY(-2px); }
 .qv-btn.primary { background: var(--gradient-primary); color: white; border-color: transparent; }
 .qv-btn.active { background: var(--success); color: white; border-color: transparent; }
+
+/* ============================================================ */
+/* ===== پیشنهادات شگفت‌انگیز (Amazing Deals) ===== */
+/* -----------------------------------------------------------
+   منطق رنگ: کارت‌ها همان --primary (نارنجی برند) را برای نوار
+   تخفیف نگه می‌دارند تا با بقیه‌ی سایت همسو بمانند. خودِ بخش اما
+   روی --gradient-dark (تیره‌ی موجود در همین پالت) می‌نشیند و
+   تایمرش با --gradient-gold روشن می‌شود؛ یعنی تیره‌ی مکمل + طلایی
+   پررنگ، هر دو از توکن‌های خودِ پروژه، نه رنگ بیرونی.
+   ----------------------------------------------------------- */
+/* ============================================================ */
+.deals-section {
+    position: relative;
+    background: var(--gradient-dark);
+    border-radius: var(--radius-lg);
+    clip-path: polygon(var(--cut-lg) 0, 100% 0, 100% 100%, 0 100%, 0 var(--cut-lg));
+    padding: 26px 26px 22px;
+    margin-bottom: 30px;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+}
+
+/* گوشه‌ی امضادار طلایی، هم‌خانواده با .category-card::after */
+.deals-section::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: var(--cut-lg);
+    height: var(--cut-lg);
+    background: var(--gradient-gold);
+    clip-path: polygon(0 0, 100% 0, 0 100%);
+    opacity: 0.95;
+}
+
+/* نوار نور ملایم و آرام روی زمینه‌ی تیره، هماهنگ با sheenMove سربرگ سایت */
+.deals-section::before {
+    content: '';
+    position: absolute;
+    inset: -30% -10%;
+    background: linear-gradient(100deg, transparent 42%, rgba(232, 194, 95, 0.14) 50%, transparent 58%);
+    animation: dealsSheen 7s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes dealsSheen {
+    0%, 100% { transform: translateX(-6%); }
+    50% { transform: translateX(6%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .deals-section::before { animation: none; }
+}
+
+.deals-header {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-bottom: 20px;
+}
+
+.deals-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.deals-bolt {
+    flex: none;
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    font-size: 19px;
+    border-radius: var(--radius-sm);
+    background: var(--gradient-gold);
+    box-shadow: var(--shadow-accent);
+}
+
+.deals-title-text h2 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: -0.3px;
+}
+
+.deals-sub {
+    display: block;
+    margin-top: 2px;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--gold-light);
+    opacity: 0.85;
+}
+
+/* ===== تایمر: چیپ‌های اسکوربوردی با فونت Teko، امضای طلایی بخش ===== */
+.deals-timer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(0, 0, 0, 0.22);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 8px 14px;
+    border-radius: var(--radius-md);
+}
+
+.timer-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.7);
+    white-space: nowrap;
+}
+
+.timer-flaps {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.timer-flap {
+    min-width: 30px;
+    text-align: center;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 1;
+    color: var(--ink);
+    background: var(--gradient-gold);
+    clip-path: polygon(var(--cut-sm) 0, 100% 0, 100% 100%, 0 100%, 0 var(--cut-sm));
+    padding: 5px 4px 6px;
+    box-shadow: var(--shadow-accent);
+}
+
+.timer-colon {
+    color: var(--gold-light);
+    font-weight: 800;
+    opacity: 0.7;
+}
+
+/* ===== ردیف اسکرول افقی ===== */
+.deals-rail-wrap {
+    position: relative;
+    z-index: 1;
+}
+
+.deals-rail {
+    display: flex;
+    gap: 14px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding: 4px 2px 8px;
+    scrollbar-width: none;
+}
+
+.deals-rail::-webkit-scrollbar {
+    display: none;
+}
+
+.deals-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: none;
+    background: #fff;
+    color: var(--ink);
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    box-shadow: var(--shadow-md);
+    z-index: 2;
+    transition: transform 0.15s ease, background 0.2s ease, opacity 0.2s ease;
+}
+
+.deals-nav svg { width: 18px; height: 18px; }
+.deals-nav:hover { background: var(--gold-light); }
+.deals-nav:active { transform: translateY(-50%) scale(0.92); }
+.deals-nav:disabled { opacity: 0.35; cursor: default; }
+.deals-nav.prev { right: -6px; }
+.deals-nav.next { left: -6px; }
+
+@media (max-width: 720px) {
+    .deals-nav { display: none; }
+}
+
+/* ===== کارت محصول داخل ردیف: از .product-card موجود ارث می‌برد،
+   فقط عرض ثابت و اسنپ‌اسکرول اضافه می‌شود ===== */
+.deals-card {
+    flex: 0 0 210px;
+    scroll-snap-align: start;
+    text-align: right;
+}
+
+@media (max-width: 480px) {
+    .deals-card { flex-basis: 155px; }
+    .deals-section { padding: 18px 16px 18px; }
+    .deals-title-text h2 { font-size: 18px; }
+    .deals-timer { padding: 6px 10px; }
+    .timer-flap { min-width: 24px; font-size: 16px; }
+}
+
+/* ===== نوار تخفیف: رنگ برند سایت (--primary)، همان لهجه‌ای که
+   بقیه‌ی سایت هم دارد؛ به این ترتیب کارت‌ها با کل سایت هم‌رنگ
+   می‌مانند حتی وقتی خودِ بخش تیره است ===== */
+.discount-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 2;
+    display: flex;
+    align-items: baseline;
+    gap: 2px;
+    background: var(--gradient-primary);
+    color: #fff;
+    font-weight: 800;
+    font-size: 13px;
+    padding: 6px 10px 7px 12px;
+    border-radius: 0 var(--radius-md) 0 var(--radius-md);
+    box-shadow: 0 3px 10px rgba(255, 77, 28, 0.4);
+}
+
+.discount-badge small {
+    font-size: 10px;
+    font-weight: 600;
+    opacity: 0.9;
+}
+
+.deals-price-row {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.price-old {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-decoration: line-through;
+    -webkit-text-fill-color: var(--text-muted);
+}
+
+/* داخل بخش شگفت‌انگیز، قیمت کمی جمع‌وجورتر می‌نشیند چون کنار قیمت قبلی است */
+.deals-card .product-price {
+    font-size: 20px;
+}
+
+@media (max-width: 768px) {
+    .deals-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

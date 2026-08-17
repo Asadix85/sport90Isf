@@ -235,7 +235,6 @@
 <div class="container">
 
     <!-- ===== هدر ===== -->
-    <!-- ===== هدر ===== -->
     <div class="header">
         <div class="brand">
             <span class="brand-number">90</span>
@@ -277,13 +276,11 @@
         </div>
     </div>
 
-    <!-- ===== دکمه‌های اصلی (Export) ===== -->
-    <div class="main-actions">
-        <button id="exportCSV" class="action-pill" title="خروجی اکسل">📊 CSV</button>
-        <button id="exportJSON" class="action-pill" title="خروجی JSON">📄 JSON</button>
-        <button id="aboutBtn" class="action-pill" title="درباره ما">🏪 درباره ما</button>
-        <button id="faqBtn" class="action-pill" title="سوالات متداول">❓ سوالات</button>
-    </div>
+<!--    &lt;!&ndash; ===== دکمه‌های اصلی (Export) ===== &ndash;&gt;-->
+<!--    <div class="main-actions">-->
+<!--        <button id="exportCSV" class="action-pill" title="خروجی اکسل">📊 CSV</button>-->
+<!--        <button id="exportJSON" class="action-pill" title="خروجی JSON">📄 JSON</button>-->
+<!--    </div>-->
 
     <!-- ===== بخش تاریخچه مشاهده ===== -->
     <div id="historySection" class="history-section" style="display:none;">
@@ -298,6 +295,136 @@
     <!-- ===== صفحه ۱: دسته‌بندی‌های اصلی ===== -->
     <!-- ============================================================ -->
     <div id="page-main" class="page active">
+
+        <!-- ============================================================ -->
+        <!-- ===== پیشنهادات شگفت‌انگیز ===== -->
+        <!-- ============================================================ -->
+        <section class="deals-section" id="dealsSection" aria-label="پیشنهادات شگفت‌انگیز">
+            <div class="deals-header">
+                <div class="deals-title">
+                    <span class="deals-bolt">⚡</span>
+                    <div class="deals-title-text">
+                        <h2>پیشنهادات شگفت‌انگیز</h2>
+                        <span class="deals-sub">فقط تا پایان شمارش معکوس</span>
+                    </div>
+                </div>
+                <div class="deals-timer" id="dealsTimer" role="timer" aria-live="polite">
+                    <span class="timer-label">پایان تا</span>
+                    <div class="timer-flaps">
+                        <span class="timer-flap" id="dealsHH">۰۲</span>
+                        <span class="timer-colon">:</span>
+                        <span class="timer-flap" id="dealsMM">۱۴</span>
+                        <span class="timer-colon">:</span>
+                        <span class="timer-flap" id="dealsSS">۳۶</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="deals-rail-wrap">
+                <button class="deals-nav prev" id="dealsPrev" aria-label="محصولات قبلی">
+                    <svg viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+
+                <div class="deals-rail" id="dealsRail">
+
+                    <article class="product-card deals-card">
+                        <div class="discount-badge">۳۵٪<small>تخفیف</small></div>
+                        <div class="product-image-wrapper">
+                            <div class="product-image-placeholder"><span class="placeholder-emoji">⚽</span></div>
+                        </div>
+                        <div class="product-content">
+                            <p class="product-name">توپ فوتبال حرفه‌ای مدل مسابقه‌ای سایز ۵</p>
+                            <div class="deals-price-row">
+                                <span class="price-old">۱٬۸۵۰٬۰۰۰</span>
+                                <span class="product-price">۱٬۲۰۰٬۰۰۰ <span class="price-unit">تومان</span></span>
+                            </div>
+                            <span class="product-stock limited">🔥 ۷۸٪ فروخته شده</span>
+                        </div>
+                    </article>
+
+                    <article class="product-card deals-card">
+                        <div class="discount-badge">۴۰٪<small>تخفیف</small></div>
+                        <div class="product-image-wrapper">
+                            <div class="product-image-placeholder"><span class="placeholder-emoji">👟</span></div>
+                        </div>
+                        <div class="product-content">
+                            <p class="product-name">کفش رانینگ سبک مخصوص پیاده‌روی و دویدن</p>
+                            <div class="deals-price-row">
+                                <span class="price-old">۲٬۴۵۰٬۰۰۰</span>
+                                <span class="product-price">۱٬۴۷۰٬۰۰۰ <span class="price-unit">تومان</span></span>
+                            </div>
+                            <span class="product-stock limited">🔥 ۹۲٪ فروخته شده</span>
+                        </div>
+                    </article>
+
+                    <article class="product-card deals-card">
+                        <div class="discount-badge">۲۸٪<small>تخفیف</small></div>
+                        <div class="product-image-wrapper">
+                            <div class="product-image-placeholder"><span class="placeholder-emoji">🥊</span></div>
+                        </div>
+                        <div class="product-content">
+                            <p class="product-name">دستکش بوکس چرمی دوخت دستی وزن ۱۲ اونس</p>
+                            <div class="deals-price-row">
+                                <span class="price-old">۱٬۳۹۰٬۰۰۰</span>
+                                <span class="product-price">۹۹۰٬۰۰۰ <span class="price-unit">تومان</span></span>
+                            </div>
+                            <span class="product-stock available">موجود</span>
+                        </div>
+                    </article>
+
+                    <article class="product-card deals-card">
+                        <div class="discount-badge">۴۵٪<small>تخفیف</small></div>
+                        <div class="product-image-wrapper">
+                            <div class="product-image-placeholder"><span class="placeholder-emoji">🧘</span></div>
+                        </div>
+                        <div class="product-content">
+                            <p class="product-name">مت یوگا ضدلغزش ضخامت ۸ میل به همراه کاور</p>
+                            <div class="deals-price-row">
+                                <span class="price-old">۸۹۰٬۰۰۰</span>
+                                <span class="product-price">۴۹۰٬۰۰۰ <span class="price-unit">تومان</span></span>
+                            </div>
+                            <span class="product-stock limited">🔥 ۶۴٪ فروخته شده</span>
+                        </div>
+                    </article>
+
+                    <article class="product-card deals-card">
+                        <div class="discount-badge">۳۲٪<small>تخفیف</small></div>
+                        <div class="product-image-wrapper">
+                            <div class="product-image-placeholder"><span class="placeholder-emoji">🏀</span></div>
+                        </div>
+                        <div class="product-content">
+                            <p class="product-name">توپ بسکتبال چرم مصنوعی سایز استاندارد ۷</p>
+                            <div class="deals-price-row">
+                                <span class="price-old">۲٬۱۰۰٬۰۰۰</span>
+                                <span class="product-price">۱٬۴۳۰٬۰۰۰ <span class="price-unit">تومان</span></span>
+                            </div>
+                            <span class="product-stock available">موجود</span>
+                        </div>
+                    </article>
+
+                    <article class="product-card deals-card">
+                        <div class="discount-badge">۲۲٪<small>تخفیف</small></div>
+                        <div class="product-image-wrapper">
+                            <div class="product-image-placeholder"><span class="placeholder-emoji">🎽</span></div>
+                        </div>
+                        <div class="product-content">
+                            <p class="product-name">پیراهن ورزشی تهویه‌دار مدل تمرینی یقه‌گرد</p>
+                            <div class="deals-price-row">
+                                <span class="price-old">۶۵۰٬۰۰۰</span>
+                                <span class="product-price">۵۰۵٬۰۰۰ <span class="price-unit">تومان</span></span>
+                            </div>
+                            <span class="product-stock limited">🔥 ۵۱٪ فروخته شده</span>
+                        </div>
+                    </article>
+
+                </div>
+
+                <button class="deals-nav next" id="dealsNext" aria-label="محصولات بعدی">
+                    <svg viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+            </div>
+        </section>
+
         <div class="info-box">
             <span>📋 لطفاً یک دسته‌بندی را انتخاب کنید</span>
         </div>
@@ -361,6 +488,10 @@
 
     <!-- ===== فوتر ===== -->
     <div class="footer">
+        <div class="footer-links">
+            <button id="aboutBtn" class="footer-link-btn">🏪 درباره ما</button>
+            <button id="faqBtn" class="footer-link-btn">❓ سوالات متداول</button>
+        </div>
       <span class="contact">
         (پیام ادمین: سایت در نسخه دمو هست و قیمت ها به مرور درست میشوند)
         @ziaei_1405 برای سفارش به این آیدی در ایتا پیام دهید
@@ -563,6 +694,11 @@
 
 <!-- ۱۲. نقطه ورود -->
 <script src="js/main.js"></script>
+
+<!-- ============================================================ -->
+<!-- ===== پیشنهادات شگفت‌انگیز: تایمر و اسکرول افقی ===== -->
+<!-- ============================================================ -->
+<script src="js/deals.js"></script>
 
 </body>
 </html>
