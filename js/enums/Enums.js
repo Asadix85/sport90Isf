@@ -168,6 +168,85 @@ const Category = Object.freeze({
     DECORATIVE: { value: 'decorative', label: 'تزیینی', emoji: '✨' }
 });
 
+// ===== دسته‌بندی کلی بر اساس رشته ورزشی =====
+const MainCategory = Object.freeze({
+    FOOTBALL: { value: 'football', label: 'لوازم فوتبال', emoji: '⚽' },
+    VOLLEYBALL: { value: 'volleyball', label: 'لوازم والیبال', emoji: '🏐' },
+    BASKETBALL: { value: 'basketball', label: 'لوازم بسکتبال', emoji: '🏀' },
+    HANDBALL: { value: 'handball', label: 'لوازم هندبال', emoji: '🤾' },
+    RACKET_SPORTS: { value: 'racket_sports', label: 'تنیس، پینگ‌پنگ و بدمینتون', emoji: '🏓' },
+    SWIMMING: { value: 'swimming', label: 'لوازم شنا', emoji: '🏊' },
+    MARTIAL_ARTS: { value: 'martial_arts', label: 'ورزش‌های رزمی و کشتی', emoji: '🥋' },
+    FITNESS: { value: 'fitness', label: 'بدنسازی و تناسب اندام', emoji: '🏋️' },
+    SPORTS_SHOE: { value: 'sports_shoe', label: 'کفش ورزشی عمومی', emoji: '👟' },
+    CLOTHING: { value: 'clothing', label: 'پوشاک ورزشی عمومی', emoji: '👕' },
+    NETS_FIELD: { value: 'nets_field', label: 'تور و تجهیزات زمین', emoji: '🥅' },
+    ACCESSORIES: { value: 'accessories', label: 'دستکش، بند و لوازم جانبی', emoji: '🔧' },
+    OTHER: { value: 'other', label: 'سایر محصولات', emoji: '📦' }
+});
+
+// نگاشت هر Category خام به یک MainCategory کلی
+const CategoryToMainCategory = Object.freeze({
+    // ===== فوتبال =====
+    [Category.FOOTBALL_BALL.value]: MainCategory.FOOTBALL,
+    [Category.FOOTBALL_SHOE.value]: MainCategory.FOOTBALL,
+
+    // ===== والیبال =====
+    [Category.VOLLEYBALL_BALL.value]: MainCategory.VOLLEYBALL,
+    [Category.VOLLEYBALL_SHOE.value]: MainCategory.VOLLEYBALL,
+
+    // ===== بسکتبال =====
+    [Category.BASKETBALL_BALL.value]: MainCategory.BASKETBALL,
+
+    // ===== هندبال =====
+    [Category.HANDBALL_BALL.value]: MainCategory.HANDBALL,
+
+    // ===== ورزش‌های راکتی =====
+    [Category.PING_PONG.value]: MainCategory.RACKET_SPORTS,
+    [Category.TENNIS_BALL.value]: MainCategory.RACKET_SPORTS,
+    [Category.RACKET.value]: MainCategory.RACKET_SPORTS,
+
+    // ===== شنا =====
+    [Category.SWIMMING.value]: MainCategory.SWIMMING,
+
+    // ===== ورزش‌های رزمی و کشتی =====
+    [Category.MARTIAL_ARTS.value]: MainCategory.MARTIAL_ARTS,
+    [Category.WRESTLING_SHOE.value]: MainCategory.MARTIAL_ARTS,
+
+    // ===== بدنسازی و تناسب اندام =====
+    [Category.DUMBBELL.value]: MainCategory.FITNESS,
+    [Category.FITNESS.value]: MainCategory.FITNESS,
+    [Category.EXERCISE_BALL.value]: MainCategory.FITNESS,
+
+    // ===== کفش ورزشی عمومی =====
+    [Category.SPORTS_SHOE.value]: MainCategory.SPORTS_SHOE,
+
+    // ===== پوشاک ورزشی عمومی =====
+    [Category.CLOTHING.value]: MainCategory.CLOTHING,
+
+    // ===== تور و تجهیزات زمین =====
+    [Category.NETS.value]: MainCategory.NETS_FIELD,
+
+    // ===== لوازم جانبی (دستکش، بند و ...) =====
+    [Category.GLOVES.value]: MainCategory.ACCESSORIES,
+    [Category.BANDS.value]: MainCategory.ACCESSORIES,
+    [Category.ACCESSORIES.value]: MainCategory.ACCESSORIES,
+
+    // ===== سایر موارد =====
+    [Category.OTHER.value]: MainCategory.OTHER,
+    [Category.DECORATIVE.value]: MainCategory.OTHER,
+});
+
+/**
+ * دریافت دسته‌بندی کلی (بر اساس رشته ورزشی) برای یک محصول
+ * @param {Object} product
+ * @returns {Object} یکی از مقادیر MainCategory
+ */
+function getMainCategoryForProduct(product) {
+    const catValue = product?.category?.value;
+    return (catValue && CategoryToMainCategory[catValue]) || MainCategory.OTHER;
+}
+
 // ===== گزینه‌های مرتب‌سازی =====
 const SortOption = Object.freeze({
     NEWEST: 'newest',
@@ -220,4 +299,7 @@ if (typeof window !== 'undefined') {
     window.AppEvents = AppEvents;
     window.StorageKeys = StorageKeys;
     window.AppLimits = AppLimits;
+    window.MainCategory = MainCategory;
+    window.CategoryToMainCategory = CategoryToMainCategory;
+    window.getMainCategoryForProduct = getMainCategoryForProduct;
 }

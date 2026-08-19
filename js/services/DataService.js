@@ -43,11 +43,14 @@ class DataService {
                 return;
             }
 
-            const key = product.category.value;
+            // دریافت دسته‌بندی اصلی بر اساس رشته ورزشی
+            const mainCat = window.getMainCategoryForProduct(product);
+            const key = mainCat.value;
+
             if (!this.categories[key]) {
                 this.categories[key] = {
-                    name: product.getCategoryName ? product.getCategoryName() : product.category.label,
-                    emoji: product.getCategoryEmoji ? product.getCategoryEmoji() : (product.category.emoji || '📦'),
+                    name: mainCat.label,
+                    emoji: mainCat.emoji,
                     products: []
                 };
             }

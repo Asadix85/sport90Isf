@@ -27,6 +27,10 @@ class AppController {
         // State
         this.allProducts = dataService.getAllProducts();
         this.visibleProducts = [];
+        this.historyStack = []; // ← اضافه شد
+        this.currentCategory = null;
+        this.currentSubcategory = null;
+        this.currentProduct = null;
 
         // ===== ایجاد مدیرها =====
         this.ui = new UIManager();
@@ -78,10 +82,160 @@ class AppController {
             if (window.innerWidth <= 768) {
                 this.bottomNav.show();
             }
+            // در AppController.js - بخش تنظیم renderer
+            this.renderer.onCategoryClick = (category) => {
+                this.selectCategory(category);
+            };
         } catch (error) {
             console.error('❌ [AppController._init] خطا:', error);
             this.loading.hide();
         }
+    }
+
+    /**
+     * انتخاب دسته‌بندی و نمایش زیردسته‌ها
+     * @param {Object} category - دسته‌بندی انتخاب شده
+     */
+    selectCategory(category) {
+        try {
+            if (!category) {
+                console.warn('⚠️ [AppController.selectCategory] دسته‌بندی وجود ندارد');
+                return;
+            }
+
+            this.currentCategory = category;
+            this.historyStack.push('page-main');
+
+            // تغییر صفحه به زیردسته‌ها
+            this.showPage('page-sub');
+
+            // رندر زیردسته‌ها
+            if (this.renderer && this.renderer.renderSubcategories) {
+                const container = document.getElementById('subcategoriesContainer');
+                const titleElement = document.getElementById('subCategoryTitle');
+                this.renderer.renderSubcategories(category, container, titleElement);
+            } else {
+                this._renderSubcategoriesFallback(category);
+            }
+        } catch (error) {
+            console.error('❌ [AppController.selectCategory] خطا:', error);
+        }
+    }
+
+    /**
+     * رندر زیردسته‌ها (fallback در صورت عدم وجود renderer)
+     * @private
+     */
+    _renderSubcategoriesFallback(category) {
+        const container = document.getElementById('subcategoriesContainer');
+        const titleElement = document.getElementById('subCategoryTitle');
+
+        if (titleElement) {
+            titleElement.innerHTML = `
+            <span class="emoji">${category.emoji || '📂'}</span>
+            ${category.name || 'دسته‌بندی'} - زیردسته‌ها
+        `;
+        }
+
+        if (!container) return;
+        container.innerHTML = '';
+
+        const products = category.products || [];
+        if (products.length === 0) {
+            container.innerHTML = `
+            <div style="text-align:center; padding:30px; color:var(--text-muted);">
+                ⚠️ این دسته‌بندی محصولی ندارد
+            </div>
+        `;
+            return;
+        }
+
+        // ===== گروه‌بندی بر اساس category.label (نه constructor.name) =====
+        const groups = {};
+        products.forEach(product => {
+            // استفاده از category.label به جای constructor.name
+            const key = product.category?.label || product.category?.value || 'سایر';
+            if (!groups[key]) groups[key] = [];
+            groups[key].push(product);
+        });
+
+        Object.keys(groups).forEach(groupName => {
+            const card = document.createElement('div');
+            card.className = 'subcategory-card';
+            const items = groups[groupName];
+            const emoji = items[0]?.category?.emoji || '📦';
+            card.innerHTML = `
+            <span class="emoji">${emoji}</span>
+            <div class="name">${groupName}</div>
+            <div class="count">${items.length} محصول</div>
+        `;
+            card.addEventListener('click', () => {
+                this.selectSubcategory(items);
+            });
+            container.appendChild(card);
+        });
+    }
+
+    /**
+     * انتخاب زیردسته و نمایش محصولات
+     * @param {Array} products - لیست محصولات زیردسته
+     */
+    selectSubcategory(products) {
+        try {
+            if (!products || products.length === 0) {
+                console.warn('⚠️ [AppController.selectSubcategory] محصولی وجود ندارد');
+                return;
+            }
+
+            this.currentSubcategory = products;
+            this.historyStack.push('page-sub');
+
+            // تغییر صفحه به محصولات
+            this.showPage('page-products');
+
+            // رندر محصولات
+            if (this.renderer && this.renderer.renderProducts) {
+                const container = document.getElementById('productsContainer');
+                this.renderer.renderProducts(products, container);
+            } else {
+                this._renderProductsFallback(products);
+            }
+        } catch (error) {
+            console.error('❌ [AppController.selectSubcategory] خطا:', error);
+        }
+    }
+
+    /**
+     * رندر محصولات (fallback)
+     * @private
+     */
+    _renderProductsFallback(products) {
+        const container = document.getElementById('productsContainer');
+        if (!container) return;
+        container.innerHTML = '';
+
+        products.forEach(product => {
+            const card = document.createElement('div');
+            card.className = 'product-card';
+
+            const price = product.getFormattedPrice?.() ||
+                new Intl.NumberFormat('fa-IR').format(product.price || 0);
+            const stockStatus = product.getStockStatus?.() || 'نامشخص';
+            const stockClass = product.getStockClass?.() || 'available';
+            const stockEmoji = product.getStockEmoji?.() || '✅';
+
+            card.innerHTML = `
+            <div class="product-name">${product.name || 'بدون نام'}</div>
+            <div class="product-price">${price} تومان</div>
+            <span class="product-stock ${stockClass}">${stockEmoji} ${stockStatus}</span>
+        `;
+
+            card.addEventListener('click', () => {
+                this.showProductDetail(product);
+            });
+
+            container.appendChild(card);
+        });
     }
 
     _setupCallbacks() {
@@ -275,27 +429,73 @@ class AppController {
         this.ui.showToast(result.message, result.success ? 'success' : 'error');
     }
 
+    /**
+     * بازگشت به صفحه قبلی
+     */
     _goBack() {
-        const lastPage = this.navigation.goBack();
-        if (!lastPage) return;
-
-        this.breadcrumb.pop();
-
-        if (lastPage === 'page-main') {
-            this.navigation.showPage('page-main');
-            this.breadcrumb.reset();
-        } else if (lastPage === 'page-sub') {
-            this.navigation.showPage('page-sub');
-            if (this.navigation.currentCategory) {
-                this._renderSubcategories(this.navigation.currentCategory);
+        try {
+            if (this.historyStack.length === 0) {
+                console.warn('⚠️ [AppController._goBack] تاریخچه خالی است');
+                this.navigation.showPage('page-main');
+                return;
             }
-        } else if (lastPage === 'page-products') {
-            this.navigation.showPage('page-products');
-            if (this.navigation.currentSubcategory) {
-                this.renderer.renderProducts(this.navigation.currentSubcategory, document.getElementById('productsContainer'));
+
+            const lastPage = this.historyStack.pop();
+            this.showPage(lastPage);
+
+            // بازگرداندن وضعیت بر اساس صفحه
+            if (lastPage === 'page-main') {
+                this.currentCategory = null;
+                this.currentSubcategory = null;
+                this.breadcrumb.reset();
+            } else if (lastPage === 'page-sub' && this.currentCategory) {
+                this._renderSubcategories(this.currentCategory);
+            } else if (lastPage === 'page-products' && this.currentSubcategory) {
+                this.renderer.renderProducts(this.currentSubcategory, document.getElementById('productsContainer'));
             }
+
+            this.scrollManager.scrollToTop();
+        } catch (error) {
+            console.error('❌ [AppController._goBack] خطا:', error);
         }
-        this.scrollManager.scrollToTop();
+    }
+
+    /**
+     * نمایش صفحه مشخص
+     * @param {string} pageId - شناسه صفحه (page-main, page-sub, page-products, page-detail, page-search)
+     */
+    showPage(pageId) {
+        try {
+            // مخفی کردن همه صفحات
+            document.querySelectorAll('.page').forEach(p => {
+                p.classList.remove('active');
+            });
+
+            // نمایش صفحه مورد نظر
+            const page = document.getElementById(pageId);
+            if (page) {
+                page.classList.add('active');
+            } else {
+                console.warn(`⚠️ [AppController.showPage] صفحه "${pageId}" پیدا نشد`);
+            }
+
+            // نمایش/مخفی کردن دکمه بازگشت
+            const backBtn = document.getElementById('backBtn');
+            if (backBtn) {
+                if (pageId === 'page-main') {
+                    backBtn.classList.add('hidden');
+                } else {
+                    backBtn.classList.remove('hidden');
+                }
+            }
+
+            // انتشار رویداد تغییر صفحه
+            if (window.eventBus) {
+                window.eventBus.emit(AppEvents.PAGE_CHANGED, pageId);
+            }
+        } catch (error) {
+            console.error('❌ [AppController.showPage] خطا:', error);
+        }
     }
 
     _handleBreadcrumbNav(page, index) {
